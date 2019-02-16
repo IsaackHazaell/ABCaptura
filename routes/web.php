@@ -22,3 +22,5 @@ Auth::routes();
 Route::get('/home', function(){
   return view('admin.dashboard');
 });
+
+Route::resource('construction','ConstructionController');
