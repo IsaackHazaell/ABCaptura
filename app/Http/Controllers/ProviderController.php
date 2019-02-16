@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Provider;
+use App\Address;
 use DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -49,7 +50,19 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        Provider::create($request->all());
+        //dd($request->street);
+        $provider = Provider::create($request->all());
+        if($request->street != null)
+        {
+          $address = New Address;
+          $address->street = $request->street;
+          $address->colony = $request->colony;
+          $address->town = $request->town;
+          $address->state = $request->state;
+          $address->provider_id = $provider->id;
+          $address->save();
+          //Address::create($request->all());
+        }
         return view('provider.index');
     }
 
