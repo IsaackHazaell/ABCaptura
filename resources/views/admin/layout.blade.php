@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ABCaptura | Main</title>
+  <title>AB Captura | Main</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -58,9 +58,9 @@ desired effect
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>ABC</b></span>
+      <span class="logo-mini"><b>AB</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>ABCaptura </b></span>
+      <span class="logo-lg"><b>AB Captura </b></span>
     </a>
 
     <!-- Header Navbar -->
@@ -87,6 +87,18 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <!--<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>-->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-male"></i> <span>Obra</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">Lista de obras</a></li>
+            <li><a href="{{ url('construction/create') }}">Crear obra</a></li>
+          </ul>
+        </li>
+
         <li class="treeview">
           <a href="#"><i class="fa fa-male"></i> <span>Usuarios</span>
             <span class="pull-right-container">
