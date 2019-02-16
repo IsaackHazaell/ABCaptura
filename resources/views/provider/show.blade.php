@@ -26,6 +26,8 @@
     </div>
   </div>
 
+  @include('address.show')
+
   <div class="form-row">
     <div class="form-group col-md-12">
       <button class="btn btn-primary"
