@@ -130,8 +130,8 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Lista de proveedores</a></li>
-            <li><a href="#">Agregar proveedor</a></li>
+            <li><a href="{{ url('provider') }}">Lista de proveedores</a></li>
+            <li><a href="{{ url('provider/create') }}">Agregar proveedor</a></li>
           </ul>
         </li>
       <!-- /.sidebar-menu -->

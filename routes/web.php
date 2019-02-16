@@ -24,3 +24,7 @@ Route::get('/home', function(){
 });
 
 Route::resource('construction','ConstructionController');
+
+//Providers rout's
+Route::resource('provider','ProviderController');
+Route::get('showTable','ProviderController@showTable')->name('provider.showTable');

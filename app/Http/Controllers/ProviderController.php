@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Provider;
+use DB;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ProviderController extends Controller
 {
@@ -14,7 +16,19 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        //
+        return view('provider.index');
+    }
+
+    public function showTable()
+    {
+      $providers = DB::table('providers')
+        ->select('providers.*')
+        ->get();
+//dd($providers);
+        return Datatables::of($providers)
+        ->addColumn('btn', 'provider.actions')
+        ->rawColumns(['btn'])
+      ->make(true);
     }
 
     /**
@@ -24,7 +38,7 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        //
+        return view('provider.create');
     }
 
     /**
@@ -35,7 +49,8 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Provider::create($request->all());
+        return view('provider.index');
     }
 
     /**
@@ -46,7 +61,7 @@ class ProviderController extends Controller
      */
     public function show(Provider $provider)
     {
-        //
+        return view('provider.show')->with('provider',$provider);
     }
 
     /**
