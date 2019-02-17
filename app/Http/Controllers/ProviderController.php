@@ -25,7 +25,7 @@ class ProviderController extends Controller
       $providers = DB::table('providers')
         ->select('providers.*')
         ->get();
-//dd($providers);
+
         return Datatables::of($providers)
         ->addColumn('btn', 'provider.actions')
         ->rawColumns(['btn'])
@@ -50,7 +50,6 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->street);
         $provider = Provider::create($request->all());
         if($request->street != null)
         {
@@ -61,7 +60,6 @@ class ProviderController extends Controller
           $address->state = $request->state;
           $address->provider_id = $provider->id;
           $address->save();
-          //Address::create($request->all());
         }
         return view('provider.index');
     }
@@ -74,7 +72,17 @@ class ProviderController extends Controller
      */
     public function show(Provider $provider)
     {
-        return view('provider.show')->with('provider',$provider);
+        $address = DB::table('addresses')->where('provider_id', $provider->id)->first();
+
+        if(empty($address))
+        {
+          $address = New Address;
+          $address->street = null;
+          $address->colony = null;
+          $address->town = null;
+          $address->state = null;
+        }
+        return view('provider.show')->with('provider',$provider)->with('address',$address);
     }
 
     /**
