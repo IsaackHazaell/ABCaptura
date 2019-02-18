@@ -10,5 +10,5 @@ class Address extends Model
     {
       return $this->belongsTo(Provider::class);
     }
-    //protected $fillable = ['street', 'colony', 'town', 'state'];
+    protected $fillable = ['street', 'colony', 'town', 'state'];
 }

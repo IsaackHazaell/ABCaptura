@@ -11,7 +11,6 @@
           {{csrf_field()}}
         <div class="modal-body">
             <input type="hidden" name="id" id="id">
-            <input type="hidden" name="address" id="address">
         @include('provider.form')
         </div>
         <div class="modal-footer">

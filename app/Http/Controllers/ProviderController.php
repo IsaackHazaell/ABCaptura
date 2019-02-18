@@ -101,22 +101,27 @@ class ProviderController extends Controller
      */
     public function update(Request $request)
     {
-      dd($request);
-      $provider = Provider::findOrFail($request->client_id);
-      $provider->prestige = $request->prestige;
-      $provider->comments = $request->comments;
-      $provider->save();
+      //dd($request->all());
+      $provider = Provider::findOrFail($request->id);
+      $input = $request->all();
+      $provider->fill($input)->save();
 
-      $data = data_contact::findOrFail($client->data_contact_id);
+      $address = Address::where('provider_id', $request->id)->firstOrFail();
+      $address->fill($input)->save();
+      /*$provider->name = $request->name;
+      $provider->comments = $request->comments;
+      $provider->save();*/
+
+      /*$data = data_contact::findOrFail($client->data_contact_id);
       $data->name = $request->name;
       $data->lastname = $request->lastname;
       $data->phone1 = $request->phone1;
       $data->phone2 = $request->phone2;
       $data->email = $request->email;
-      $data->save();
+      $data->save();*/
 
 
-      return view('client.index');
+      return view('provider.index');
     }
 
     /**

@@ -73,7 +73,7 @@ $('#edit').on('show.bs.modal', function (event) {
     var state = button.data('stateprovider')
     //var data_id = button.data('iddata')
     var modal = $(this)
-    modal.find('.modal-body #cli_id').val(id);
+    modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
     modal.find('.modal-body #turn').val(turn);
     modal.find('.modal-body #phone').val(phone);
