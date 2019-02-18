@@ -23,9 +23,11 @@ class ProviderController extends Controller
     public function showTable()
     {
       $providers = DB::table('providers')
-        ->select('providers.*')
+        ->select('providers.*','addresses.*')
+        ->join('addresses', 'addresses.provider_id', '=', 'providers.id')
         ->get();
 
+        //dd($providers);
         return Datatables::of($providers)
         ->addColumn('btn', 'provider.actions')
         ->rawColumns(['btn'])
@@ -51,16 +53,19 @@ class ProviderController extends Controller
     public function store(Request $request)
     {
         $provider = Provider::create($request->all());
+
+        $address = New Address;
         if($request->street != null)
-        {
-          $address = New Address;
           $address->street = $request->street;
+        if($request->colony != null)
           $address->colony = $request->colony;
+        if($request->town != null)
           $address->town = $request->town;
+        if($request->state != null)
           $address->state = $request->state;
-          $address->provider_id = $provider->id;
-          $address->save();
-        }
+
+        $address->provider_id = $provider->id;
+        $address->save();
         return view('provider.index');
     }
 
@@ -73,15 +78,6 @@ class ProviderController extends Controller
     public function show(Provider $provider)
     {
         $address = DB::table('addresses')->where('provider_id', $provider->id)->first();
-
-        if(empty($address))
-        {
-          $address = New Address;
-          $address->street = null;
-          $address->colony = null;
-          $address->town = null;
-          $address->state = null;
-        }
         return view('provider.show')->with('provider',$provider)->with('address',$address);
     }
 
@@ -103,9 +99,24 @@ class ProviderController extends Controller
      * @param  \App\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Provider $provider)
+    public function update(Request $request)
     {
-        //
+      dd($request);
+      $provider = Provider::findOrFail($request->client_id);
+      $provider->prestige = $request->prestige;
+      $provider->comments = $request->comments;
+      $provider->save();
+
+      $data = data_contact::findOrFail($client->data_contact_id);
+      $data->name = $request->name;
+      $data->lastname = $request->lastname;
+      $data->phone1 = $request->phone1;
+      $data->phone2 = $request->phone2;
+      $data->email = $request->email;
+      $data->save();
+
+
+      return view('client.index');
     }
 
     /**

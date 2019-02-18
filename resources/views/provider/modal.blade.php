@@ -10,8 +10,9 @@
           {{method_field('patch')}}
           {{csrf_field()}}
         <div class="modal-body">
-            <input type="hidden" name="provider_id" id="prov_id">
-        
+            <input type="hidden" name="id" id="id">
+            <input type="hidden" name="address" id="address">
+        @include('provider.form')
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
