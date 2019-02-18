@@ -26,6 +26,7 @@
               <tr>
                   <th width="10px">Id</th>
                   <th>Nombre</th>
+                  <th>Giro</th>
                   <th>Teléfono 1</th>
                   <th>Correo</th>
                   <th width="120px">Acciones</th>
@@ -113,6 +114,7 @@
               "columns": [
                   {data: 'id'},
                   {data: 'name'},
+                  {data: 'turn'},
                   {data: 'phone'},
                   {data: 'mail'},
                   {data: 'btn'}
