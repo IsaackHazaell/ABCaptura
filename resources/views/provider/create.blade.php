@@ -10,24 +10,7 @@
 
 <form action="{{url('provider')}}" method="post">
   {{csrf_field()}}
-  <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="name">Nombre</label>
-        <input type="text" class="form-control" name="name" id="name">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="phone">Teléfono</label>
-        <input type="number" class="form-control" name="phone" id="phone">
-      </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="mail">Correo</label>
-          <input type="email" class="form-control" name="mail" id="mail">
-        </div>
-    </div>
-
+  @include('provider.form')
     <div class="form-row">
       <div class="form-group col-md-12">
         <button type="submit" class="btn btn-primary">Guardar</button>

@@ -26,6 +26,7 @@
               <tr>
                   <th width="10px">Id</th>
                   <th>Nombre</th>
+                  <th>Giro</th>
                   <th>Teléfono 1</th>
                   <th>Correo</th>
                   <th width="120px">Acciones</th>
@@ -47,7 +48,7 @@
     var csrf_token=$('meta[name="csrf-token"]').attr('content');
     swal({
       title: "Estás seguro?",
-      text: "Se eliminará el cliente",
+      text: "Se eliminará el providere",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -55,12 +56,12 @@
     .then((willDelete) => {
       if (willDelete) {
         $.ajax({
-          url: "{//{url('/client')}}" + '/' + id,
+          url: "{//{url('/provider')}}" + '/' + id,
             type: "POST",
             data: {'_method' : 'DELETE', '_token' : csrf_token},
             success: function (data) {
-              //clients_table.ajax.reload();
-              swal("Cliente eliminado exitosamente", {
+              //providers_table.ajax.reload();
+              swal("providere eliminado exitosamente", {
                 icon: "success",
               });
               }
@@ -68,31 +69,35 @@
 
       };
     });
-  }
+  }*/
 
   $('#edit').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget)
-      var id = button.data('idclient')
-      var name = button.data('nameclient')
-      var lastname = button.data('lastnameclient')
-      var phone1 = button.data('phone1client')
-      var phone2 = button.data('phone2client')
-      var email = button.data('emailclient')
-      var prestige = button.data('prestigeclient')
-      var comments = button.data('commentsclient')
-      var data_id = button.data('iddata')
+      var id = button.data('idprovider')
+      var name = button.data('nameprovider')
+      var turn = button.data('turnprovider')
+      var phone = button.data('phoneprovider')
+      var mail = button.data('mailprovider')
+
+      var street = button.data('streetprovider')
+      var colony = button.data('colonyprovider')
+      var town = button.data('townprovider')
+      var state = button.data('stateprovider')
+      //var data_id = button.data('iddata')
       var modal = $(this)
-      modal.find('.modal-body #cli_id').val(id);
+      modal.find('.modal-body #id').val(id);
       modal.find('.modal-body #name').val(name);
-      modal.find('.modal-body #lastname').val(lastname);
-      modal.find('.modal-body #phone1').val(phone1);
-      modal.find('.modal-body #phone2').val(phone2);
-      modal.find('.modal-body #email').val(email);
-      modal.find('.modal-body #prestige').val(prestige);
-      modal.find('.modal-body #comments').val(comments);
-      modal.find('.modal-body #data_id').val(data_id);
+      modal.find('.modal-body #turn').val(turn);
+      modal.find('.modal-body #phone').val(phone);
+      modal.find('.modal-body #mail').val(mail);
+
+      modal.find('.modal-body #street').val(street);
+      modal.find('.modal-body #colony').val(colony);
+      modal.find('.modal-body #town').val(town);
+      modal.find('.modal-body #state').val(state);
+      //modal.find('.modal-body #data_id').val(data_id);
   });
-*/
+
 
   </script>
 
@@ -113,6 +118,7 @@
               "columns": [
                   {data: 'id'},
                   {data: 'name'},
+                  {data: 'turn'},
                   {data: 'phone'},
                   {data: 'mail'},
                   {data: 'btn'}
