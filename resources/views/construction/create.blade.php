@@ -36,5 +36,4 @@ var select = document.getElementById('status');
 select.onchange = function(){
     this.form.submit();
 };
-document.write("Hola");
 </script>
