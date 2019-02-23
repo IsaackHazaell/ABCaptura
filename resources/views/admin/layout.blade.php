@@ -134,6 +134,18 @@ desired effect
             <li><a href="{{ url('provider/create') }}">Agregar proveedor</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fab fa-product-hunt"></i> <span>Precio Unitario</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('unitPrice') }}">Lista de productos</a></li>
+            <li><a href="{{ url('unitPrice/create') }}">Agregar precio unitario</a></li>
+          </ul>
+        </li>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

@@ -30,4 +30,8 @@ Route::resource('provider','ProviderController');
 Route::get('showTable','ProviderController@showTable')->name('provider.showTable');
 
 //Address providers rout's
-Route::resource('address','AddressController');
+//Route::resource('address','AddressController');
+
+//UnitPrice's rout's
+Route::resource('unitPrice','UnitPriceController');
+Route::get('showTable','UnitPriceController@showTable')->name('unitPrice.showTable');

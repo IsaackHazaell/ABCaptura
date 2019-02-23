@@ -7,28 +7,29 @@
 
 @section('content-header')
   <h1>
-    Proveedores
+    Precios unitarios
   </h1>
 @stop
 
 @section('content')
-      <h2>Lista de Proveedores</h2>
+      <h2>Lista de Productos</h2>
 
 
-        <a href="{{ url('provider/create') }}" class="btn btn-success"
+        <a href="{{ url('unitPrice/create') }}" class="btn btn-success"
         style="Position:Absolute; left:93%; top:13%;">
           <i class="fas fa-plus-square"></i> Agregar</a>
 
 
       <div class="box-body">
-          <table id="providers_table" class="table table-striped table-bordered" style="width:100%">
+          <table id="unitPrices_table" class="table table-striped table-bordered" style="width:100%">
           <thead>
               <tr>
                   <th width="10px">Id</th>
+                  <th>Proveedor</th>
                   <th>Nombre</th>
-                  <th>Giro</th>
-                  <th>Teléfono</th>
-                  <th>Correo</th>
+                  <th>Año</th>
+                  <th>Costo</th>
+                  <th>Unidad</th>
                   <th width="120px">Acciones</th>
               </tr>
           </thead>
@@ -43,7 +44,7 @@
 @section('adminlte_js')
   <script>
 
-  function delete(id)
+  /*function delete(id)
   {
     var csrf_token=$('meta[name="csrf-token"]').attr('content');
     swal({
@@ -56,7 +57,7 @@
     .then((willDelete) => {
       if (willDelete) {
         $.ajax({
-          url: "{{url('/provider')}}" + '/' + id,
+          url: "{//{url('/provider')}}" + '/' + id,
             type: "POST",
             data: {'_method' : 'DELETE', '_token' : csrf_token},
             success: function (data) {
@@ -97,7 +98,7 @@
       modal.find('.modal-body #state').val(state);
       //modal.find('.modal-body #data_id').val(data_id);
   });
-
+*/
 
   </script>
 
@@ -111,16 +112,17 @@
 
   <script>
       $(document).ready(function() {
-          $('#providers_table').DataTable({
+          $('#unitPrices_table').DataTable({
               "processing": true,
               "serverSide": true,
-              "ajax": "{{route('provider.showTable')}}",
+              "ajax": "{{route('unitPrice.showTable')}}",
               "columns": [
                   {data: 'id'},
+                  {data: 'provider_id'},
                   {data: 'name'},
-                  {data: 'turn'},
-                  {data: 'phone'},
-                  {data: 'mail'},
+                  {data: 'year'},
+                  {data: 'cost'},
+                  {data: 'unit'},
                   {data: 'btn'}
               ],
               "language": {
