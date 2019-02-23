@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\construction;
 use Illuminate\Http\Request;
+use DB;
+use Yajra\DataTables\DataTables;
+
 
 class ConstructionController extends Controller
 {
@@ -14,8 +17,29 @@ class ConstructionController extends Controller
      */
     public function index()
     {
-        //
+          return view('construction.index');
     }
+
+    public function showTableC()
+    {
+      $constructions = DB::table('constructions')
+        ->select('constructions.*')
+        ->get();
+        for ($i=0; $i<$constructions->count(); $i++) {
+          if($constructions[$i]->status=="0")
+            $constructions[$i]->status="Activo";
+          else if($constructions[$i]->status=="1")
+            $constructions[$i]->status="Finalizado";
+          else if($constructions[$i]->status=="2")
+              $constructions[$i]->status="Espera";
+        }
+
+        return Datatables::of($constructions)
+        ->addColumn('btn', 'construction.actions')
+        ->rawColumns(['btn'])
+      ->make(true);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,8 +59,19 @@ class ConstructionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        $construction= construction::create($request->all());
+        $status = null;
+        if($request->status=="Activo")
+          $status=0;
+        else if($request->status=="Finalizado")
+          $status=1;
+        else if($request->status=="Espera")
+            $status=2;
+
+        $construction = New Construction;
+        $construction->name = $request->name;
+        $construction->status = $status;
+        $construction->save();
+        return view('construction.index');
     }
 
     /**
@@ -47,7 +82,17 @@ class ConstructionController extends Controller
      */
     public function show(construction $construction)
     {
-        //
+
+      $status = null;
+      if($construction->status==0)
+        $status="Activo";
+      else if($construction->status==1)
+        $status="Finalizado";
+      else if($construction->status==2)
+          $status="Espera";
+
+      $construction->status = $status;
+      return view('construction.show')->with('construction',$construction);
     }
 
     /**
@@ -68,9 +113,29 @@ class ConstructionController extends Controller
      * @param  \App\construction  $construction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, construction $construction)
+    public function update(Request $request)
     {
-        //
+      // dd($construction);
+      $status = null;
+      if($request->status=="Activo")
+        $status=0;
+      else if($request->status=="Finalizado")
+        $status=1;
+      else if($request->status=="Espera")
+          $status=2;
+
+      $construction = Construction::findOrFail($request->id);
+      // $request->status = $status;
+      // dd($request->status);
+      // $input = $request->all();
+      $construction->name = $request->name;
+      $construction->status = $status;
+      $construction->save();
+      // $construction->fill($input)->save();
+
+      // $address = Address::where('provider_id', $request->id)->firstOrFail();
+      // $address->fill($input)->save();
+      return view('construction.index');
     }
 
     /**

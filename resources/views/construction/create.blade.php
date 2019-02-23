@@ -10,23 +10,9 @@
 
 <form action="{{url('construction')}}" method="post">
   {{csrf_field()}}
-  <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="name">Nombre</label>
-        <input type="text" class="form-control" name="name" id="name">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="status">Seleccione el status</label>
-        <select class="form-control" name"status" id="status">
-          <option value="" class="hidden"></option>
-          <option value="1">Activo</option>
-          <option value="2">Finalizado</option>
-          <option value="3">Espera</option>
-        </select>
-      </div>
-    </div>
+  @include('construction.form')
 <div class="form-group col-md-6">
-<button type="submit" class="btn btn-primary">Guardar</button>
+  <button type="submit" class="btn btn-primary">Guardar</button>
 </div>
 </form>
 @endsection

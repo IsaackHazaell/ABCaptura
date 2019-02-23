@@ -94,7 +94,7 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Lista de obras</a></li>
+            <li><a href="{{ url('construction') }}">Lista de obras</a></li>
             <li><a href="{{ url('construction/create') }}">Crear obra</a></li>
           </ul>
         </li>

@@ -23,7 +23,9 @@ Route::get('/home', function(){
   return view('admin.dashboard');
 });
 
+//Construction Routes
 Route::resource('construction','ConstructionController');
+Route::get('showTableC','ConstructionController@showTableC')->name('construction.showTableC');
 
 //Providers rout's
 Route::resource('provider','ProviderController');
