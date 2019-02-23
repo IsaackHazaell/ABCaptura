@@ -14,5 +14,5 @@
   data-stateprovider="{{$state}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
-<a class="btn btn-danger btn-sm" onclick="add( {{ $id }} );" data-id="{{$id}}">
+<a class="btn btn-danger btn-sm" onclick="delete( {{ $id }} );" data-id="{{$id}}">
   <i class="fa fa-trash"></i></a>

@@ -43,7 +43,7 @@
 @section('adminlte_js')
   <script>
 
-  /*function add(id)
+  function delete(id)
   {
     var csrf_token=$('meta[name="csrf-token"]').attr('content');
     swal({
@@ -56,7 +56,7 @@
     .then((willDelete) => {
       if (willDelete) {
         $.ajax({
-          url: "{//{url('/provider')}}" + '/' + id,
+          url: "{{url('/provider')}}" + '/' + id,
             type: "POST",
             data: {'_method' : 'DELETE', '_token' : csrf_token},
             success: function (data) {
@@ -69,7 +69,7 @@
 
       };
     });
-  }*/
+  }
 
   $('#edit').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget)
