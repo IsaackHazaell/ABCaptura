@@ -66,7 +66,14 @@ class ProviderController extends Controller
 
         $address->provider_id = $provider->id;
         $address->save();
-        return view('provider.index');
+
+        $msg = [
+            'title' => 'Modificado!',
+            'text' => 'Proveedor creado exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return redirect('provider')->with('message', $msg);
     }
 
     /**
@@ -115,7 +122,6 @@ class ProviderController extends Controller
         ];
 
       return redirect('provider')->with('message', $msg);
-      //return view('provider.index');
     }
 
     /**
