@@ -114,6 +114,13 @@ class UnitPriceController extends Controller
      */
     public function destroy(UnitPrice $unitPrice)
     {
-        //
+        dd($unitPrice);
+        $msg = [
+            'title' => 'Eliminado!',
+            'type' => 'success',
+            'text' => 'Cliente eliminado exitosamente.'
+        ];
+
+        return response()->json($msg);
     }
 }

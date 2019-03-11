@@ -253,10 +253,11 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 
+<!-- Datatables -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-<script>
-
-</script>
+<!-- Sweet alert-->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 @yield('adminlte_js')
 

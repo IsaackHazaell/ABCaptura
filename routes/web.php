@@ -27,7 +27,7 @@ Route::resource('construction','ConstructionController');
 
 //Providers rout's
 Route::resource('provider','ProviderController');
-Route::get('showTable','ProviderController@showTable')->name('provider.showTable');
+Route::get('showTableP','ProviderController@showTableP')->name('provider.showTableP');
 
 //Address providers rout's
 //Route::resource('address','AddressController');

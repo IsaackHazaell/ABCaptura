@@ -36,13 +36,16 @@
       </table>
       </div>
 
-
+@include('unitPrice.partials.script')
       @include('provider.modal')
-
+@include('unitPrice.partials.script')
 @stop
 
 @section('adminlte_js')
+  @include('unitPrice.partials.script')
   <script>
+
+
 
   /*function delete(id)
   {
@@ -109,49 +112,109 @@
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+  @include('unitPrice.partials.script')
   <script>
-      $(document).ready(function() {
-          $('#unitPrices_table').DataTable({
-              "processing": true,
-              "serverSide": true,
-              "ajax": "{{route('unitPrice.showTable')}}",
-              "columns": [
-                  {data: 'id'},
-                  {data: 'provider_id'},
-                  {data: 'name'},
-                  {data: 'year'},
-                  {data: 'cost'},
-                  {data: 'unit'},
-                  {data: 'btn'}
-              ],
-              "language": {
-                "info": "_TOTAL_ registros",
-                "search": "Buscar",
-                "paginate": {
-                  "next": "Siguinte",
-                  "previous": "Anterior",
-                },
-                "lengthMenu": 'Mostrar <select>'+
-                    '<option value="10">10</option>'+
-                    '<option value="30">30</option>'+
-                    '<option value="-1">Todos</option>'+
-                    '</select> registros',
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "emptyTable": "No hay datos",
-                "zeroRecords": "No hay coincidencias",
-                "infoEmpty": "",
-                "infoFiltered": ""
-              }/*,
-              "initComplete":function(settings, json){
-      console.log(json);
-    }*/
+
+  var table = $('#unitPrices_table').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": "{{route('unitPrice.showTable')}}",
+      "columns": [
+          {data: 'id'},
+          {data: 'provider_id'},
+          {data: 'name'},
+          {data: 'year'},
+          {data: 'cost'},
+          {data: 'unit'},
+          {data: 'btn'}
+      ],
+      /*,"language": {
+                  url: "{//{ asset('/plugins/datatables/spanish.json') }}"
+              }*/
+      "language": {
+        "info": "_TOTAL_ registros",
+        "search": "Buscar",
+        "paginate": {
+          "next": "Siguinte",
+          "previous": "Anterior",
+        },
+        "lengthMenu": 'Mostrar <select>'+
+            '<option value="10">10</option>'+
+            '<option value="30">30</option>'+
+            '<option value="-1">Todos</option>'+
+            '</select> registros',
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "emptyTable": "No hay datos",
+        "zeroRecords": "No hay coincidencias",
+        "infoEmpty": "",
+        "infoFiltered": ""
+      }
+  });
+
+  /*$('body').delegate('.status-customer','click',function(){
+        id_customer = $(this).attr('id_customer');
+
+        swal({
+          title: "Estás seguro?",
+          text: "Se eliminará el providere",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+                /*url: "{//{url('/provider')}}" + '/' + id,
+                type: "POST",
+                data: {'_method' : 'DELETE', '_token' : csrf_token},
+                url: '/unitPrice/' + id_customer ,
+                type: 'DELETE',
+                dataType: 'json',
+                data: {id: id_customer}
+                success: function (data) {
+                  //providers_table.ajax.reload();
+                  swal("providere eliminado exitosamente", {
+                    icon: "success",
+                  });
+                  loadDatatable();
+                  }
+            });
+
+          };
           });
+}*/
 
-
-      });
-
+$('body').delegate('.status-customer','click',function(){
+        id_customer = $(this).attr('id_customer');
+        console.log(id_customer);
+        swal({
+            /*title: 'Está seguro?',
+            text: "Quiéres eliminar esté cliente?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Si!'*/
+            title: "Estás seguro?",
+            text: "Se eliminará el providere",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then(function () {
+            $.ajax({
+                url: '/unitPrice/' + id_customer ,
+                type: 'DELETE'
+                //dataType: 'json',
+                //data: {id: id_customer}
+            }).done(function(data){
+                console.log(data);
+                sAlert(data.title, data.type, data.text);
+                loadDatatable();
+            });
+        });
+    });//BUTTON
 
   </script>
 
