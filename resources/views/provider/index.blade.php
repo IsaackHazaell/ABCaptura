@@ -1,7 +1,6 @@
 @extends('admin.layout')
 
 @section('adminlte_css')
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
   <meta name="csrf-token" = content="{{ csrf_token() }}">
 @stop
 
@@ -30,10 +29,7 @@
           </thead>
       </table>
       </div>
-
-
       @include('provider.modal')
-
 @stop
 
 @section('adminlte_js')

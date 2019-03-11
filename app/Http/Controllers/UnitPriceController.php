@@ -26,7 +26,6 @@ class UnitPriceController extends Controller
         ->select('unit_prices.*')
         ->get();
 
-        //dd($unitPrices);
         return Datatables::of($unitPrices)
         ->addColumn('btn', 'unitPrice.actions')
         ->rawColumns(['btn'])
@@ -41,7 +40,6 @@ class UnitPriceController extends Controller
     public function create()
     {
         $providers = Provider::select('id','name')->get();
-        //dd($providers);
         return view('unitPrice.create', compact('providers'));//->with('providers', $providers);
     }
 

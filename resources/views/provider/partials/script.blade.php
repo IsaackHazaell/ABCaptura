@@ -1,7 +1,7 @@
 <script>
 //DATATABLE
 var table=null;
-var table = $('#providers_table').DataTable({
+table = $('#providers_table').DataTable({
     "processing": true,
     "serverSide": true,
     "ajax": "{{route('provider.showTableP')}}",
@@ -61,22 +61,22 @@ $('#edit').on('show.bs.modal', function (event) {
 
 
 //DELETE
-$('body').delegate('.status-customer','click',function(){
-        id_customer = $(this).attr('id_customer');
+$('body').delegate('.status-provider','click',function(){
+        id_provider = $(this).attr('id_provider');
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
-            text: "Se eliminará el providere",
+            text: "Se eliminará el proveedor",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         }).then(function () {
             $.ajax({
-                url: "{{url('/provider')}}" + '/' + id_customer,
+                url: "{{url('/provider')}}" + '/' + id_provider,
                 headers: {'X-CSRF-TOKEN': csrf_token},
                 type: 'DELETE',
                 dataType: 'json',
-                data: {id: id_customer}
+                data: {id: id_provider}
             }).done(function(data){
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);
