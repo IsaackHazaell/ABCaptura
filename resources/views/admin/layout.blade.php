@@ -134,6 +134,18 @@ desired effect
             <li><a href="{{ url('provider/create') }}">Agregar proveedor</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-money"></i> <span>Fondo</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('fund') }}">Lista de fondos</a></li>
+            <li><a href="{{ url('fund/create') }}">Agregar fondo</a></li>
+          </ul>
+        </li>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

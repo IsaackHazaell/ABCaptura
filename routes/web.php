@@ -33,3 +33,7 @@ Route::get('showTable','ProviderController@showTable')->name('provider.showTable
 
 //Address providers rout's
 Route::resource('address','AddressController');
+
+//Funds rout's
+Route::resource('fund','FundController');
+Route::get('showTable','FundController@showTable')->name('fund.showTable');
