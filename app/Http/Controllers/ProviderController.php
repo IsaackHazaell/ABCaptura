@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Provider;
+use App\Address;
 use DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -19,12 +20,23 @@ class ProviderController extends Controller
         return view('provider.index');
     }
 
-    public function showTable()
+    public function showTableP()
     {
       $providers = DB::table('providers')
-        ->select('providers.*')
+        ->select('providers.*','addresses.*')
+        ->join('addresses', 'addresses.provider_id', '=', 'providers.id')
         ->get();
-//dd($providers);
+
+        for($i=0; $i<$providers->count(); $i++)
+        {
+          if($providers[$i]->category == 0)
+            $providers[$i]->category = "Mano de obra";
+          else if($providers[$i]->category == 1)
+            $providers[$i]->category = "Material";
+            else if($providers[$i]->category == 2)
+              $providers[$i]->category = "Logística";
+        }
+
         return Datatables::of($providers)
         ->addColumn('btn', 'provider.actions')
         ->rawColumns(['btn'])
@@ -49,8 +61,29 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        Provider::create($request->all());
-        return view('provider.index');
+      $request->flash();
+        $provider = Provider::create($request->all());
+
+        $address = New Address;
+        if($request->street != null)
+          $address->street = $request->street;
+        if($request->colony != null)
+          $address->colony = $request->colony;
+        if($request->town != null)
+          $address->town = $request->town;
+        if($request->state != null)
+          $address->state = $request->state;
+
+        $address->provider_id = $provider->id;
+        $address->save();
+
+        $msg = [
+            'title' => 'Creado!',
+            'text' => 'Proveedor creado exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return redirect('provider')->with('message', $msg);
     }
 
     /**
@@ -61,7 +94,8 @@ class ProviderController extends Controller
      */
     public function show(Provider $provider)
     {
-        return view('provider.show')->with('provider',$provider);
+        $address = DB::table('addresses')->where('provider_id', $provider->id)->first();
+        return view('provider.show')->with('provider',$provider)->with('address',$address);
     }
 
     /**
@@ -82,9 +116,22 @@ class ProviderController extends Controller
      * @param  \App\Provider  $provider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Provider $provider)
+    public function update(Request $request)
     {
-        //
+      $provider = Provider::findOrFail($request->id);
+      $input = $request->all();
+      $provider->fill($input)->save();
+
+      $address = Address::where('provider_id', $request->id)->firstOrFail();
+      $address->fill($input)->save();
+
+      $msg = [
+        'title' => 'Modificado!',
+        'text' => 'Proveedor modificado exitosamente.',
+        'icon' => 'success'
+        ];
+
+      return redirect('provider')->with('message', $msg);
     }
 
     /**
@@ -95,6 +142,13 @@ class ProviderController extends Controller
      */
     public function destroy(Provider $provider)
     {
-        //
+        $provider->delete();
+        $msg = [
+            'title' => 'Eliminado!',
+            'text' => 'Proveedor eliminado exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return response()->json($msg);
     }
 }
