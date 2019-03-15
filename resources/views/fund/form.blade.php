@@ -12,6 +12,3 @@
       </select>
     </div>
 </div>
-
-Fondo
-presupuesto_obra_producto

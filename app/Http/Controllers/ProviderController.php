@@ -20,14 +20,23 @@ class ProviderController extends Controller
         return view('provider.index');
     }
 
-    public function showTable()
+    public function showTableP()
     {
       $providers = DB::table('providers')
         ->select('providers.*','addresses.*')
         ->join('addresses', 'addresses.provider_id', '=', 'providers.id')
         ->get();
 
-        //dd($providers);
+        for($i=0; $i<$providers->count(); $i++)
+        {
+          if($providers[$i]->category == 0)
+            $providers[$i]->category = "Mano de obra";
+          else if($providers[$i]->category == 1)
+            $providers[$i]->category = "Material";
+            else if($providers[$i]->category == 2)
+              $providers[$i]->category = "Logística";
+        }
+
         return Datatables::of($providers)
         ->addColumn('btn', 'provider.actions')
         ->rawColumns(['btn'])
@@ -52,6 +61,7 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
+      $request->flash();
         $provider = Provider::create($request->all());
 
         $address = New Address;
@@ -66,7 +76,14 @@ class ProviderController extends Controller
 
         $address->provider_id = $provider->id;
         $address->save();
-        return view('provider.index');
+
+        $msg = [
+            'title' => 'Creado!',
+            'text' => 'Proveedor creado exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return redirect('provider')->with('message', $msg);
     }
 
     /**
@@ -101,27 +118,20 @@ class ProviderController extends Controller
      */
     public function update(Request $request)
     {
-      //dd($request->all());
       $provider = Provider::findOrFail($request->id);
       $input = $request->all();
       $provider->fill($input)->save();
 
       $address = Address::where('provider_id', $request->id)->firstOrFail();
       $address->fill($input)->save();
-      /*$provider->name = $request->name;
-      $provider->comments = $request->comments;
-      $provider->save();*/
 
-      /*$data = data_contact::findOrFail($client->data_contact_id);
-      $data->name = $request->name;
-      $data->lastname = $request->lastname;
-      $data->phone1 = $request->phone1;
-      $data->phone2 = $request->phone2;
-      $data->email = $request->email;
-      $data->save();*/
+      $msg = [
+        'title' => 'Modificado!',
+        'text' => 'Proveedor modificado exitosamente.',
+        'icon' => 'success'
+        ];
 
-
-      return view('provider.index');
+      return redirect('provider')->with('message', $msg);
     }
 
     /**
@@ -132,6 +142,13 @@ class ProviderController extends Controller
      */
     public function destroy(Provider $provider)
     {
-        //
+        $provider->delete();
+        $msg = [
+            'title' => 'Eliminado!',
+            'text' => 'Proveedor eliminado exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return response()->json($msg);
     }
 }
