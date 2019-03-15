@@ -20,6 +20,26 @@ class FundController extends Controller
         return view('fund.index');
     }
 
+    public function showTableF()
+    {
+      $funds = DB::table('funds')
+        ->select('funds.*', 'constructions.*')
+        ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
+        ->get();
+
+        // dd($funds[0]->construction_id);
+        // for($i=0; $i<$funds->count(); $i++)
+        // {
+        //   $funds[$i]->construcion_id = $funds[$i]->construcion_id+$funds[$i]->name;
+        // }
+
+        return Datatables::of($funds)
+        ->addColumn('btn', 'fund.actions')
+        ->rawColumns(['btn'])
+      ->make(true);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -62,7 +82,10 @@ class FundController extends Controller
      */
     public function show(Fund $fund)
     {
-        //
+      $status = null;
+
+      $fund->status = $status;
+      return view('fund.show')->with('fund',$fund);
     }
 
     /**

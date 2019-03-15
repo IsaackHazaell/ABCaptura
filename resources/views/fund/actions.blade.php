@@ -2,7 +2,7 @@
   <i class="fa fa-eye"></i></a>
 
 <button class="btn btn-primary btn-sm"
-  data-idconstruction="{{$id}}"
-  data-nameconstruction="{{$name}}"
-  data-statusconstruction="{{$total}}"
+  data-idfund="{{$id}}"
+  data-construction_id="{{$construction_id}}"
+  data-total="{{$total}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
