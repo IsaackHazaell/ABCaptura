@@ -26,6 +26,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<!-- DATATABLES -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 @yield('adminlte_css')
 
 </head>
@@ -87,6 +90,7 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <!--<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>-->
+
         <li class="treeview">
           <a href="#"><i class="fa fa-male"></i> <span>Obra</span>
             <span class="pull-right-container">
@@ -96,30 +100,6 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="{{ url('construction') }}">Lista de obras</a></li>
             <li><a href="{{ url('construction/create') }}">Crear obra</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#"><i class="fa fa-male"></i> <span>Usuarios</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Lista de usuarios</a></li>
-            <li><a href="#">Crear usuario</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#"><i class="fa fa-briefcase"></i> <span>Clientes</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Lista de clientes</a></li>
-            <li><a href="#">Crear cliente</a></li>
           </ul>
         </li>
 
@@ -241,10 +221,11 @@ desired effect
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 
+<!-- Datatables -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-<script>
-
-</script>
+<!-- Sweet alert-->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 @yield('adminlte_js')
 

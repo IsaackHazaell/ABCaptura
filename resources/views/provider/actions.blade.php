@@ -14,5 +14,6 @@
   data-stateprovider="{{$state}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
-<a class="btn btn-danger btn-sm" onclick="delete( {{ $id }} );" data-id="{{$id}}">
-  <i class="fa fa-trash"></i></a>
+  <a id_provider="{{ $id }}" class="btn btn-danger btn-sm status-provider" provider_name="{{ $name }}">
+      <span class="fa fa-trash"></span>
+  </a>
