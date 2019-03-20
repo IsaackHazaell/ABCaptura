@@ -18,7 +18,7 @@ table = $('#providers_table').DataTable({
       "info": "_TOTAL_ registros",
       "search": "Buscar",
       "paginate": {
-        "next": "Siguinte",
+        "next": "Siguiente",
         "previous": "Anterior",
       },
       "lengthMenu": 'Mostrar <select>'+
@@ -71,7 +71,8 @@ $('body').delegate('.status-provider','click',function(){
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        }).then(function () {
+        }).then((willDelete) => {
+          if (willDelete) {
             $.ajax({
                 url: "{{url('/provider')}}" + '/' + id_provider,
                 headers: {'X-CSRF-TOKEN': csrf_token},
@@ -82,6 +83,7 @@ $('body').delegate('.status-provider','click',function(){
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);
             });
+          }
         });
     });
 
