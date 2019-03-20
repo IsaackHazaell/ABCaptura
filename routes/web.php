@@ -34,3 +34,7 @@ Route::get('showTableP','ProviderController@showTableP')->name('provider.showTab
 //Unity Routes
 Route::resource('unity','UnityController');
 Route::get('showTableU','UnityController@showTableU')->name('unity.showTableU');
+
+//Product Routes
+Route::resource('product','ProductController');
+Route::get('showTableProduct','ProductController@showTableProduct')->name('product.showTableProduct');

@@ -126,6 +126,18 @@ desired effect
             <li><a href="{{ url('unity/create') }}">Agregar unidad</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fab fa-product-hunt"></i> <span> Productos</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('product') }}">Lista de productos</a></li>
+            <li><a href="{{ url('product/create') }}">Agregar producto</a></li>
+          </ul>
+        </li>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
