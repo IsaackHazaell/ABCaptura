@@ -114,6 +114,18 @@ desired effect
             <li><a href="{{ url('provider/create') }}">Agregar proveedor</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fas fa-box-open"></i> <span> Unidad</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('unity') }}">Lista de unidades</a></li>
+            <li><a href="{{ url('unity/create') }}">Agregar unidad</a></li>
+          </ul>
+        </li>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

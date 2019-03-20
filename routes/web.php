@@ -30,3 +30,7 @@ Route::get('showTableC','ConstructionController@showTableC')->name('construction
 //Providers rout's
 Route::resource('provider','ProviderController');
 Route::get('showTableP','ProviderController@showTableP')->name('provider.showTableP');
+
+//Unity Routes
+Route::resource('unity','UnityController');
+Route::get('showTableU','UnityController@showTableU')->name('unity.showTableU');
