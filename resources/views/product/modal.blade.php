@@ -11,7 +11,7 @@
           {{csrf_field()}}
         <div class="modal-body">
             <input type="hidden" name="id" id="id">
-        @include('product.form')
+        <!--@//include('product.partials.form')->with($providers);-->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

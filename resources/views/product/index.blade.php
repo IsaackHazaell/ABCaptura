@@ -29,7 +29,7 @@
           </thead>
       </table>
       </div>
-
+      @include('product.modal')
 @stop
 
 @section('adminlte_js')

@@ -23,7 +23,7 @@ class ProductController extends Controller
   public function showTableProduct()
   {
     $products = DB::table('products')
-      ->select('products.*','providers.*')
+      ->select('providers.*','products.*')
       ->join('providers', 'providers.id', '=', 'products.provider_id')
       ->get();
 
@@ -40,7 +40,7 @@ class ProductController extends Controller
       }
 
       return Datatables::of($products)
-      ->addColumn('btn', 'product.actions')
+      ->addColumn('btn', 'product.partials.buttons')
       ->rawColumns(['btn'])
     ->make(true);
   }
@@ -128,6 +128,14 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+      //dd($product);
+      $product->delete();
+      $msg = [
+          'title' => 'Eliminado!',
+          'text' => 'Proveedor eliminado exitosamente.',
+          'icon' => 'success'
+      ];
+
+      return response()->json($msg);
     }
 }

@@ -62,7 +62,9 @@ $('#edit').on('show.bs.modal', function (event) {
 
 //DELETE
 $('body').delegate('.status-product','click',function(){
+
         id_product = $(this).attr('id_product');
+        //console.log(id_product);
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
@@ -72,6 +74,7 @@ $('body').delegate('.status-product','click',function(){
             dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
+            //console.log(id_product);
             $.ajax({
                 url: "{{url('/product')}}" + '/' + id_product,
                 headers: {'X-CSRF-TOKEN': csrf_token},
