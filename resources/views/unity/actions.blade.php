@@ -4,8 +4,8 @@
 <button class="btn btn-primary btn-sm"
   data-idunity="{{$id}}"
   data-nameunity="{{$name}}"
-  data-turnunity="{{$reference}}"
-  data-phoneunity="{{$equivalent}}"
+  data-referenceunity="{{$reference}}"
+  data-equivalentunity="{{$equivalent}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
   <a id_unity="{{ $id }}" class="btn btn-danger btn-sm status-unity" unity_name="{{ $name }}">

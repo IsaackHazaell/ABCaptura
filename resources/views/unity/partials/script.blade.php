@@ -1,8 +1,3 @@
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 //DATATABLE
 var table=null;
@@ -42,17 +37,16 @@ table = $('#unity_table').DataTable({
 //EDIT
 $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
-    var id = button.data('id')
-    var name = button.data('name')
-    var reference = button.data('reference')
-    var equivalent = button.data('equivalent')
+    var id = button.data('idunity')
+    var name = button.data('nameunity')
+    var reference = button.data('referenceunity')
+    var equivalent = button.data('equivalentunity')
 
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
     modal.find('.modal-body #reference').val(reference);
     modal.find('.modal-body #equivalent').val(equivalent);
-
 });
 
 
@@ -66,7 +60,8 @@ $('body').delegate('.status-unity','click',function(){
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        }).then(function () {
+          }).then((willDelete) => {
+            if (willDelete) {
             $.ajax({
                 url: "{{url('/unity')}}" + '/' + id_unity,
                 headers: {'X-CSRF-TOKEN': csrf_token},
@@ -77,9 +72,9 @@ $('body').delegate('.status-unity','click',function(){
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);
             });
+          }
         });
     });
-
 
 //SWETALERT
 @if (Session::has('message'))

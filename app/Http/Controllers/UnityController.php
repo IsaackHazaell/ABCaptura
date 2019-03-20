@@ -86,7 +86,7 @@ class UnityController extends Controller
      * @param  \App\Unity  $unity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Unity $unity)
+    public function update(Request $request)
     {
       $unity = unity::findOrFail($request->id);
       $input = $request->all();
@@ -101,8 +101,8 @@ class UnityController extends Controller
         'icon' => 'success'
         ];
 
-        return view('unity.index', $msg);
-      //return redirect('unity')->with('message', $msg);
+        //return view('unity.index', $msg);
+        return redirect('unity')->with('message', $msg);
     }
 
     /**
