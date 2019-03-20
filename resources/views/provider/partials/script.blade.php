@@ -15,24 +15,24 @@ table = $('#providers_table').DataTable({
         {data: 'btn'}
     ],
     "language": {
-      "info": "_TOTAL_ registros",
-      "search": "Buscar",
-      "paginate": {
-        "next": "Siguinte",
-        "previous": "Anterior",
-      },
-      "lengthMenu": 'Mostrar <select>'+
-          '<option value="10">10</option>'+
-          '<option value="30">30</option>'+
-          '<option value="-1">Todos</option>'+
-          '</select> registros',
-      "loadingRecords": "Cargando...",
-      "processing": "Procesando...",
-      "emptyTable": "No hay datos",
-      "zeroRecords": "No hay coincidencias",
-      "infoEmpty": "",
-      "infoFiltered": ""
-    }
+  "info": "_TOTAL_ registros",
+  "search": "Buscar",
+  "paginate": {
+    "next": "Siguiente",
+    "previous": "Anterior",
+  },
+  "lengthMenu": 'Mostrar <select>'+
+      '<option value="10">10</option>'+
+      '<option value="30">30</option>'+
+      '<option value="-1">Todos</option>'+
+      '</select> registros',
+  "loadingRecords": "Cargando...",
+  "processing": "Procesando...",
+  "emptyTable": "No hay datos",
+  "zeroRecords": "No hay coincidencias",
+  "infoEmpty": "",
+  "infoFiltered": ""
+}
 });
 
 
@@ -71,7 +71,8 @@ $('body').delegate('.status-provider','click',function(){
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        }).then(function () {
+        }).then((willDelete) => {
+          if (willDelete) {
             $.ajax({
                 url: "{{url('/provider')}}" + '/' + id_provider,
                 headers: {'X-CSRF-TOKEN': csrf_token},
@@ -82,6 +83,7 @@ $('body').delegate('.status-provider','click',function(){
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);
             });
+          }
         });
     });
 
