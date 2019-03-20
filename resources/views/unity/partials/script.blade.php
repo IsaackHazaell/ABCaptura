@@ -1,3 +1,8 @@
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 //DATATABLE
 var table=null;
@@ -16,7 +21,7 @@ table = $('#unity_table').DataTable({
       "info": "_TOTAL_ registros",
       "search": "Buscar",
       "paginate": {
-        "next": "Siguinte",
+        "next": "Siguiente",
         "previous": "Anterior",
       },
       "lengthMenu": 'Mostrar <select>'+

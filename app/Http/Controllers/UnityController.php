@@ -101,7 +101,8 @@ class UnityController extends Controller
         'icon' => 'success'
         ];
 
-      return redirect('unity')->with('message', $msg);
+        return view('unity.index', $msg);
+      //return redirect('unity')->with('message', $msg);
     }
 
     /**
