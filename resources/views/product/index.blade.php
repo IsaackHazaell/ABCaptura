@@ -29,7 +29,7 @@
           </thead>
       </table>
       </div>
-      @include('product.modal')
+      @include('product.modal', ['providers' => $providers])
 @stop
 
 @section('adminlte_js')

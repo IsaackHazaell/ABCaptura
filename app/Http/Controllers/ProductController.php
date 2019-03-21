@@ -17,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-      return view('product.index');
+      $providers = Provider::select('id','name')->get();
+      return view('product.index', compact('providers'));
     }
 
   public function showTableProduct()
@@ -115,9 +116,34 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
-        //
+      $provider_id = "";
+      for($i=0;$i<strlen($request->provider_id);$i++){
+        if($request->provider_id[$i] != " ")
+          $provider_id .= $request->provider_id[$i];
+        else
+          break;
+      }
+
+      $product = Product::findOrFail($request->id);
+      $product->provider_id = $provider_id;
+      $product->concept = $request->concept;
+      $product->description = $request->description;
+      $product->save();
+      /*$request->provider_id = $provider_id;
+
+      $product = Product::findOrFail($request->id);
+      $input = $request->all();
+      $product->fill($input)->save();*/
+
+      $msg = [
+        'title' => 'Modificado!',
+        'text' => 'Proveedor modificado exitosamente.',
+        'icon' => 'success'
+        ];
+
+      return redirect('product')->with('message', $msg);
     }
 
     /**
@@ -128,7 +154,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-      //dd($product);
       $product->delete();
       $msg = [
           'title' => 'Eliminado!',

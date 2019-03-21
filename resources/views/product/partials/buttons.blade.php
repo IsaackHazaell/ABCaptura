@@ -1,6 +1,8 @@
 <button class="btn btn-primary btn-sm"
-  data-idproduct="{{$id}}"
-  data-nameproduct="{{$concept}}"
+  data-id="{{$id}}"
+  data-providerid="{{$provider_id}}"
+  data-conceptproduct="{{$concept}}"
+  data-descriptionproduct="{{$description}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
   <a id_product="{{ $id }}" class="btn btn-danger btn-sm status-product" product_name="{{ $concept }}">
