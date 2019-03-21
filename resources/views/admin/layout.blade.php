@@ -90,8 +90,12 @@ desired effect
         <!-- Optionally, you can add icons to the links -->
         <!--<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>-->
-        <li class="treeview">
 
+        <li class="treeview">
+<<<<<<< HEAD
+
+=======
+>>>>>>> dbc98e75ac65feaef7d936a5818dad378958e60d
           <a href="#"><i class="fa fa-male"></i> <span>Obra</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -116,7 +120,19 @@ desired effect
         </li>
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-money"></i> <span>Fondo</span>
+          <a href="#"><i class="fas fa-box-open"></i> <span> Unidad</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('unity') }}">Lista de unidades</a></li>
+            <li><a href="{{ url('unity/create') }}">Agregar unidad</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fas fa-money"></i> <span> Fondo</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -125,7 +141,6 @@ desired effect
             <li><a href="{{ url('fund') }}">Lista de fondos</a></li>
             <li><a href="{{ url('fund/create') }}">Agregar fondo</a></li>
           </ul>
-        </li>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
@@ -235,6 +250,7 @@ desired effect
 
 <!-- Datatables -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- Sweet alert-->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

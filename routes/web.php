@@ -34,3 +34,7 @@ Route::get('showTableP','ProviderController@showTableP')->name('provider.showTab
 //Funds rout's
 Route::resource('fund','FundController');
 Route::get('showTableF','FundController@showTableF')->name('fund.showTableF');
+
+//Unity Routes
+Route::resource('unity','UnityController');
+Route::get('showTableU','UnityController@showTableU')->name('unity.showTableU');
