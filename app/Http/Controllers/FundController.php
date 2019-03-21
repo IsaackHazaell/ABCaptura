@@ -27,12 +27,6 @@ class FundController extends Controller
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
         ->get();
 
-        // dd($funds[0]->construction_id);
-        // for($i=0; $i<$funds->count(); $i++)
-        // {
-        //   $funds[$i]->construcion_id = $funds[$i]->construcion_id+$funds[$i]->name;
-        // }
-
         return Datatables::of($funds)
         ->addColumn('btn', 'fund.actions')
         ->rawColumns(['btn'])
@@ -82,9 +76,6 @@ class FundController extends Controller
      */
     public function show(Fund $fund)
     {
-      $status = null;
-
-      $fund->status = $status;
       return view('fund.show')->with('fund',$fund);
     }
 
@@ -106,9 +97,19 @@ class FundController extends Controller
      * @param  \App\Fund  $fund
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fund $fund)
+    public function update(Request $request)
     {
-        //
+      $fund = fund::findOrFail($request->id);
+      $input = $request->all();
+      $fund->fill($input)->save();
+
+      $msg = [
+        'title' => 'Modificado!',
+        'text' => 'Fondo modificado exitosamente.',
+        'icon' => 'success'
+        ];
+        //return view('fund.index', $msg);
+        return redirect('fund')->with('message', $msg);
     }
 
     /**
