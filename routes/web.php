@@ -42,3 +42,7 @@ Route::get('showTableU','UnityController@showTableU')->name('unity.showTableU');
 //Product Routes
 Route::resource('product','ProductController');
 Route::get('showTableProduct','ProductController@showTableProduct')->name('product.showTableProduct');
+
+//Price Routes
+Route::resource('price','PriceController');
+Route::get('showTablePrice','PriceController@showTablePrice')->name('price.showTablePrice');

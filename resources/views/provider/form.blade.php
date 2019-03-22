@@ -22,8 +22,6 @@
             <option value="Gestoría">
             <option value="Pintor">
             <option value="Acomodar los cuadros">
-            <option value="Mano de obra">
-            <option value="sabe">
           </datalist>
     </div>
         <div class="form-group col-md-6">

@@ -150,6 +150,18 @@ desired effect
             <li><a href="{{ url('fund/create') }}">Agregar fondo</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fas fa-dollar-sign"></i> <span> Precios</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('price') }}">Lista de precios</a></li>
+            <li><a href="{{ url('price/create') }}">Agregar precio</a></li>
+          </ul>
+        </li>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
