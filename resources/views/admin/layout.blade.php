@@ -92,10 +92,6 @@ desired effect
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>-->
 
         <li class="treeview">
-<<<<<<< HEAD
-
-=======
->>>>>>> dbc98e75ac65feaef7d936a5818dad378958e60d
           <a href="#"><i class="fa fa-male"></i> <span>Obra</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
