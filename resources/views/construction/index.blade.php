@@ -14,7 +14,7 @@
 @section('content')
       <h2>Lista de Obras</h2>
 
-      <a class="btn btn-success btn-md addNew" style="float: right;" href="{{ url('provider/create') }}"><b>Agregar Nuevo</b></a><br><br>
+      <a class="btn btn-success btn-md addNew" style="float: right;" href="{{ url('construction/create') }}"><b>Agregar Nuevo</b></a><br><br>
 
       <div class="box-body">
           <table id="constructions_table" class="table table-striped table-bordered" style="width:100%">
