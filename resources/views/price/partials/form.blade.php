@@ -21,7 +21,7 @@
   <div class="form-row">
       <div class="form-group col-md-6">
         <label for="unity_id">Unidad</label>
-        <select class="form-control" required name="unity_id" id="unity_id">
+        <select class="form-control" required name="product_id" id="product_id">
           @foreach($unities as $unity)
           <option>{{$unity->id}} {{$unity->name}}</option>
           @endforeach

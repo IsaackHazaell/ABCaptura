@@ -36,7 +36,7 @@ class PriceController extends Controller
         ->join('products', 'products.id', '=', 'prices.product_id')
         ->join('unities', 'unities.id', '=', 'prices.unity_id')
         ->get();
-
+        //dd($prices);
         return Datatables::of($prices)
         ->addColumn('btn', 'price.partials.buttons')
         ->rawColumns(['btn'])

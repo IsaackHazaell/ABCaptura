@@ -4,9 +4,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Editar producto</h4>
+        <h4 class="modal-title" id="myModalLabel">Editar precio</h4>
       </div>
-      <form action="{{route('product.update','modifyproduct')}}" method="post">
+      <form action="{{route('price.update','modifyproduct')}}" method="post">
           {{method_field('patch')}}
           {{csrf_field()}}
         <div class="modal-body">

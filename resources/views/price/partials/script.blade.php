@@ -40,14 +40,18 @@ table = $('#prices_table').DataTable({
 $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var id = button.data('id')
-    var provider_id = button.data('providerid')
-    var concept = button.data('conceptproduct')
-    var description = button.data('descriptionproduct')
+    var construction_id = button.data('constructionid')
+    var product_id = button.data('productid')
+    var unity_id = button.data('unityid')
+    var price = button.data('price')
+    var year = button.data('year')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
-    modal.find('.modal-body #provider_id').val(provider_id);
-    modal.find('.modal-body #concept').val(concept);
-    modal.find('.modal-body #description').val(description);
+    modal.find('.modal-body #construction_id').val(construction_id);
+    modal.find('.modal-body #product_id').val(product_id);
+    modal.find('.modal-body #unity_id').val(unity_id);
+    modal.find('.modal-body #price').val(price);
+    modal.find('.modal-body #year').val(year);
 });
 
 
