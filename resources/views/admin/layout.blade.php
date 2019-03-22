@@ -92,7 +92,7 @@ desired effect
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>-->
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-male"></i> <span>Obra</span>
+          <a href="#"><i class="fas fa-hard-hat"></i> <span>Obra</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -162,6 +162,19 @@ desired effect
             <li><a href="{{ url('price/create') }}">Agregar precio</a></li>
           </ul>
         </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fas fa-keyboard"></i> <span> Captura</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('capture') }}">Lista de capturas</a></li>
+            <li><a href="{{ url('capture/create') }}">Agregar captura</a></li>
+          </ul>
+        </li>
+
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
