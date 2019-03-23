@@ -7,8 +7,10 @@ use App\construction;
 use App\Provider;
 use App\Product;
 use App\Price;
+use App\Unity;
 use Illuminate\Http\Request;
 use DB;
+use Yajra\DataTables\DataTables;
 
 class CaptureController extends Controller
 {
@@ -61,6 +63,38 @@ class CaptureController extends Controller
         $funds = construction::select('id','name')->get();
 
         return view('capture.create2')->with('data', $request)->with('funds', $funds)->with('prices', $prices);
+    }
+
+    public function showTablePC(Request $request)
+    {
+
+      //Precio/product_id/unity_id
+      //unidad, producto, cantidad, precio, cargo extra, total, acciones
+      $product_id=substr($request->product_id,1);
+      $product = Product::select('id','concept')->where('id', '=', $product_id)->get();
+      $product_toTable = $product[0]->id . " " . $product[0]->concept;
+      $request->product_id = $product_toTable;
+
+      $unity_id=substr($request->unity_id,1);
+      $unity = Unity::select('id','name')->where('id', '=', $unity_id)->get();
+      $unity_toTable = $unity[0]->id . " " . $unity[0]->name;
+      $request->unity_id = $unity_toTable;
+
+      $toTable = DB::table('products','prices', 'unities')
+        ->select(
+        'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
+        'prices.*',
+        'unities.id as unity_id', 'unities.name as unity_name'
+        )
+        ->where('products.id', '=', $product_id)
+        ->join('prices', 'prices.product_id', '=', 'products.id')
+        ->join('unities', 'unities.id', '=', 'prices.unity_id')
+        ->get();
+
+        return Datatables::of($toTable)
+        //->addColumn('btn', 'capture.partials.buttons')
+        //->rawColumns(['btn'])
+      ->make(true);
     }
 
     /**

@@ -9,18 +9,18 @@
   <p>Obra: {{$data->construction_id}} - Proveedor: {{$data->provider_id}}</p>
 </section>
 
-<form action="{{route('capture.create2')}}" >
+<form action="{{route('capture.showTablePC')}}" >
   {{csrf_field()}}
   @include('capture.partials.form2')
     <div class="form-row">
       <div class="form-group col-md-12">
-        <button type="submit" class="btn btn-primary">Agregar producto</button>
+        <button id="prod" type="submit" class="btn btn-primary">Agregar producto</button>
       </div>
     </div>
 </form>
 
 <div class="box-body">
-    <table id="prices_table" class="table table-striped table-bordered" style="width:100%">
+    <table id="products_capture_table" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
             <th width="10px">Unidad</th>

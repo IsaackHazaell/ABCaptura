@@ -49,5 +49,5 @@ Route::get('showTablePrice','PriceController@showTablePrice')->name('price.showT
 
 //Capture Routes
 Route::resource('capture','CaptureController');
+Route::get('showTablePC','CaptureController@showTablePC')->name('capture.showTablePC');
 Route::get('create2','CaptureController@create2')->name('capture.create2');
-//Route::get('showTableCapture','CaptureController@showTableCapture')->name('price.showTableCapture');
