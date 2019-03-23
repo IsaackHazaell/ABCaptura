@@ -12,8 +12,11 @@
   {{csrf_field()}}
   @include('provider.form')
     <div class="form-row">
-      <div class="form-group col-md-12">
+      <div class="form-group col-md-6">
         <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+      <div class="form-group col-md-6">
+        <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('provider') }}"><b>Lista de proveedores</b></a><br><br>
       </div>
     </div>
 </form>

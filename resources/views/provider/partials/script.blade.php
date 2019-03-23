@@ -10,8 +10,8 @@ table = $('#providers_table').DataTable({
         {data: 'name'},
         {data: 'category'},
         {data: 'turn'},
-        {data: 'phone'},
-        {data: 'mail'},
+        {data: 'company'},
+        {data: 'cellphone'},
         {data: 'btn'}
     ],
     "language": {
@@ -42,7 +42,9 @@ $('#edit').on('show.bs.modal', function (event) {
     var id = button.data('idprovider')
     var name = button.data('nameprovider')
     var turn = button.data('turnprovider')
+    var company = button.data('companyprovider')
     var phone = button.data('phoneprovider')
+    var phone2 = button.data('phonlandlineprovider')
     var mail = button.data('mailprovider')
     var street = button.data('streetprovider')
     var colony = button.data('colonyprovider')
@@ -52,7 +54,9 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
     modal.find('.modal-body #turn').val(turn);
-    modal.find('.modal-body #phone').val(phone);
+    modal.find('.modal-body #company').val(company);
+    modal.find('.modal-body #cellphone').val(phone);
+    modal.find('.modal-body #phonlandline').val(phone2);
     modal.find('.modal-body #mail').val(mail);
     modal.find('.modal-body #street').val(street);
     modal.find('.modal-body #colony').val(colony);
