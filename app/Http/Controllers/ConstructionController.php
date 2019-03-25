@@ -67,8 +67,12 @@ class ConstructionController extends Controller
         else if($request->status=="Espera")
             $status=2;
 
+        $request->status = $status;
         $construction = New Construction;
         $construction->name = $request->name;
+        $construction->honorary = $request->honorary;
+        $construction->date = $request->date;
+        $construction->square_meter = $request->square_meter;
         $construction->status = $status;
         $construction->save();
         return view('construction.index');
@@ -125,10 +129,11 @@ class ConstructionController extends Controller
           $status=2;
 
       $construction = Construction::findOrFail($request->id);
-      // $request->status = $status;
-      // dd($request->status);
-      // $input = $request->all();
+  
       $construction->name = $request->name;
+      $construction->honorary = $request->honorary;
+      $construction->date = $request->date;
+      $construction->square_meter = $request->square_meter;
       $construction->status = $status;
       $construction->save();
       // $construction->fill($input)->save();

@@ -16,6 +16,9 @@ class CreateConstructionsTable extends Migration
         Schema::create('constructions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',128);
+            $table->integer('honorary');
+            $table->date('date');
+            $table->integer('square_meter');
             $table->integer('status');
             $table->timestamps();
         });
