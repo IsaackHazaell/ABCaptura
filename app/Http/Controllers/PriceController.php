@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Price;
-use App\construction;
 use App\Product;
 use App\Unity;
 use DB;
@@ -19,28 +18,60 @@ class PriceController extends Controller
      */
     public function index()
     {
-      $constructions = construction::select('id','name')->get();
       $products = Product::select('id','concept')->get();
       $unities = Unity::select('id','name')->get();
-      return view('price.index')->with('constructions', $constructions)->with('products', $products)->with('unities', $unities);
+      return view('price.index')->with('products', $products)->with('unities', $unities);
     }
 
     public function showTablePrice()
     {
       $prices = DB::table('prices')
-        ->select('constructions.id as id_construction', 'constructions.name as name_construction',
-        'products.id as id_product', 'products.concept as concept_product',
+        ->select('products.id as id_product', 'products.concept as concept_product',
         'unities.id as id_unity', 'unities.name as name_unity',
         'prices.*')
-        ->join('constructions', 'constructions.id', '=', 'prices.construction_id')
         ->join('products', 'products.id', '=', 'prices.product_id')
         ->join('unities', 'unities.id', '=', 'prices.unity_id')
         ->get();
-        //dd($prices);
+        $month="";
+        for($i=0; $i<$prices->count(); $i++)
+        {
+            $month = PriceController::month($prices[$i]->month);
+            $prices[$i]->month = $month;
+        }
+
         return Datatables::of($prices)
         ->addColumn('btn', 'price.partials.buttons')
         ->rawColumns(['btn'])
       ->make(true);
+    }
+
+    public function month($month)
+    {
+          if($month == 1)
+            $month = "Enero";
+          else if($month == 2)
+            $month = "Febrero";
+            else if($month == 3)
+              $month = "Marzo";
+              else if($month == 4)
+                $month = "Abril";
+                else if($month == 5)
+                  $month = "Mayo";
+                  else if($month == 6)
+                    $month = "Junio";
+                    else if($month == 7)
+                      $month = "Julio";
+                      else if($month == 8)
+                        $month = "Agosto";
+                        else if($month == 9)
+                          $month = "Septiembre";
+                          else if($month == 10)
+                            $month = "Octubre";
+                            else if($month == 11)
+                              $month = "Noviembre";
+                              else if($month == 12)
+                                $month = "Diciembre";
+        return $month;
     }
 
     /**
@@ -50,10 +81,9 @@ class PriceController extends Controller
      */
     public function create()
     {
-      $constructions = construction::select('id','name')->get();
       $products = Product::select('id','concept')->get();
       $unities = Unity::select('id','name')->get();
-      return view('price.create')->with('constructions', $constructions)->with('products', $products)->with('unities', $unities);
+      return view('price.create')->with('products', $products)->with('unities', $unities);
     }
 
     /**
@@ -64,14 +94,6 @@ class PriceController extends Controller
      */
     public function store(Request $request)
     {
-      $construction_id = "";
-      for($i=0;$i<strlen($request->construction_id);$i++){
-        if($request->construction_id[$i] != " ")
-          $construction_id .= $request->construction_id[$i];
-        else
-          break;
-      }
-
       $product_id = "";
       for($i=0;$i<strlen($request->product_id);$i++){
         if($request->product_id[$i] != " ")
@@ -89,11 +111,11 @@ class PriceController extends Controller
       }
 
       $price = New Price;
-      $price->construction_id = $construction_id;
       $price->product_id = $product_id;
       $price->unity_id = $unity_id;
       $price->price = $request->price;
       $price->year = $request->year;
+      $price->month = $request->month;
       $price->save();
 
       $msg = [

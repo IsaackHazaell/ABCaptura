@@ -20,17 +20,17 @@
           <thead>
               <tr>
                   <th width="10px">Id</th>
-                  <th>Obra</th>
                   <th>Concepto</th>
                   <th>Unidad</th>
-                  <th>Precio</th>
+                  <th>Precio unitario</th>
                   <th>Año</th>
+                  <th>Mes</th>
                   <th width="120px">Acciones</th>
               </tr>
           </thead>
       </table>
       </div>
-      @include('price.modal', ['constructions' => $constructions, 'products' => $products, 'unities' => $unities])
+      @include('price.modal', ['products' => $products, 'unities' => $unities])
 @stop
 
 @section('adminlte_js')

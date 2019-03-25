@@ -17,13 +17,10 @@ class CreatePricesTable extends Migration
             $table->increments('id');
             $table->integer('year')->nullable();
             $table->decimal('price',10,2);
-            $table->integer('construction_id')->unsigned();
+            $table->integer('month')->unsigned()->nullable();
             $table->integer('product_id')->unsigned();
             $table->integer('unity_id')->unsigned();
             $table->timestamps();
-            $table->foreign('construction_id')->references('id')->on('constructions')
-              ->onDelete('cascade')
-              ->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on('products')
               ->onDelete('cascade')
               ->onUpdate('cascade');

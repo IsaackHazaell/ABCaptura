@@ -7,11 +7,11 @@ table = $('#prices_table').DataTable({
     "ajax": "{{route('price.showTablePrice')}}",
     "columns": [
         {data: 'id'},
-        {data: 'name_construction'},
         {data: 'concept_product'},
         {data: 'name_unity'},
         {data: 'price'},
         {data: 'year'},
+        {data: 'month'},
         {data: 'btn'}
     ],
     "language": {
@@ -45,6 +45,7 @@ $('#edit').on('show.bs.modal', function (event) {
     var unity_id = button.data('unityid')
     var price = button.data('price')
     var year = button.data('year')
+    var month = button.data('month')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #construction_id').val(construction_id);
@@ -52,6 +53,7 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #unity_id').val(unity_id);
     modal.find('.modal-body #price').val(price);
     modal.find('.modal-body #year').val(year);
+    modal.find('.modal-body #month').val(month);
 });
 
 
