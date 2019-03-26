@@ -108,7 +108,7 @@ class FundController extends Controller
         'text' => 'Fondo modificado exitosamente.',
         'icon' => 'success'
         ];
-        //return view('fund.index', $msg);
+        
         return redirect('fund')->with('message', $msg);
     }
 
