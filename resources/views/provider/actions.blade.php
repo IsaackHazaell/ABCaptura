@@ -5,6 +5,7 @@
   data-idprovider="{{$id}}"
   data-nameprovider="{{$name}}"
   data-turnprovider="{{$turn}}"
+  data-categoryprovider="{{$category}}"
   data-companyprovider="{{$company}}"
   data-phoneprovider="{{$cellphone}}"
   data-phonlandlineprovider="{{$phonlandline}}"

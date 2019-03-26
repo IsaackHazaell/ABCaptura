@@ -61,7 +61,6 @@ $('#edit').on('show.bs.modal', function (event) {
 });
 
 function monthAt(month) {
-  var n = month.length;
   var monthGood="";
   for (var i = 0; i < month.length; i++) {
    if(month[i] == " ")
