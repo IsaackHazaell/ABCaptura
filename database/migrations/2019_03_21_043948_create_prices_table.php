@@ -19,14 +19,11 @@ class CreatePricesTable extends Migration
             $table->decimal('price',10,2);
             $table->integer('month')->unsigned()->nullable();
             $table->integer('product_id')->unsigned();
-            $table->integer('unity_id')->unsigned();
+            $table->string('unity',128);
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products')
               ->onDelete('cascade')
               ->onUpdate('cascade');
-              $table->foreign('unity_id')->references('id')->on('unities')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 

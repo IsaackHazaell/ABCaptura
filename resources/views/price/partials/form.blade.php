@@ -1,19 +1,7 @@
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="product_id">Producto</label>
-      <select class="form-control" required name="product_id" id="product_id">
-        @foreach($products as $product)
-        <option>{{$product->id}} {{$product->concept}}</option>
-        @endforeach
-    </select>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="unity_id">Unidad</label>
-      <select class="form-control" required name="unity_id" id="unity_id">
-        @foreach($unities as $unity)
-        <option>{{$unity->id}} {{$unity->name}}</option>
-        @endforeach
-    </select>
+      <label for="unity">Unidad</label>
+      <input type="text" step="any" class="form-control" required name="unity" id="unity">
     </div>
   </div>
 
@@ -25,7 +13,8 @@
       <div class="form-group col-md-6">
         <label for="month">Mes</label>
         <select class="form-control" required name="month" id="month">
-          <option value="1">Enero</option>
+          <option value="">Seleccione el mes</option>
+          <option  value="1">Enero</option>
            <option value="2">Febrero</option>
            <option value="3">Marzo</option>
            <option value="4">Abril</option>
