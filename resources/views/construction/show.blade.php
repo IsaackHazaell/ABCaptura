@@ -41,6 +41,7 @@
         data-square_meterconstruction="{{$construction->square_meter}}"
         data-statusconstruction="{{$construction->status}}"
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
+        <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('construction') }}"><b>Lista de obras</b></a>
     </div>
   </div>
 @endsection
