@@ -23,8 +23,8 @@
                   <th>Nombre</th>
                   <th>Categoría</th>
                   <th>Giro</th>
-                  <th>Teléfono 1</th>
-                  <th>Correo</th>
+                  <th>Empresa</th>
+                  <th>Teléfono celular</th>
                   <th width="120px">Acciones</th>
               </tr>
           </thead>

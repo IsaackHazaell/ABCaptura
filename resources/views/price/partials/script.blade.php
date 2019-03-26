@@ -1,17 +1,17 @@
 <script>
 //DATATABLE
 var table=null;
-table = $('#providers_table').DataTable({
+table = $('#prices_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('provider.showTableP')}}",
+    "ajax": "{{route('price.showTablePrice')}}",
     "columns": [
         {data: 'id'},
-        {data: 'name'},
-        {data: 'category'},
-        {data: 'turn'},
-        {data: 'company'},
-        {data: 'cellphone'},
+        {data: 'name_construction'},
+        {data: 'concept_product'},
+        {data: 'name_unity'},
+        {data: 'price'},
+        {data: 'year'},
         {data: 'btn'}
     ],
     "language": {
@@ -39,50 +39,40 @@ table = $('#providers_table').DataTable({
 //EDIT
 $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
-    var id = button.data('idprovider')
-    var name = button.data('nameprovider')
-    var turn = button.data('turnprovider')
-    var company = button.data('companyprovider')
-    var phone = button.data('phoneprovider')
-    var phone2 = button.data('phonlandlineprovider')
-    var mail = button.data('mailprovider')
-    var street = button.data('streetprovider')
-    var colony = button.data('colonyprovider')
-    var town = button.data('townprovider')
-    var state = button.data('stateprovider')
+    var id = button.data('id')
+    var construction_id = button.data('constructionid')
+    var product_id = button.data('productid')
+    var unity_id = button.data('unityid')
+    var price = button.data('price')
+    var year = button.data('year')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
-    modal.find('.modal-body #name').val(name);
-    modal.find('.modal-body #turn').val(turn);
-    modal.find('.modal-body #company').val(company);
-    modal.find('.modal-body #cellphone').val(phone);
-    modal.find('.modal-body #phonlandline').val(phone2);
-    modal.find('.modal-body #mail').val(mail);
-    modal.find('.modal-body #street').val(street);
-    modal.find('.modal-body #colony').val(colony);
-    modal.find('.modal-body #town').val(town);
-    modal.find('.modal-body #state').val(state);
+    modal.find('.modal-body #construction_id').val(construction_id);
+    modal.find('.modal-body #product_id').val(product_id);
+    modal.find('.modal-body #unity_id').val(unity_id);
+    modal.find('.modal-body #price').val(price);
+    modal.find('.modal-body #year').val(year);
 });
 
 
 //DELETE
-$('body').delegate('.status-provider','click',function(){
-        id_provider = $(this).attr('id_provider');
+$('body').delegate('.status-price','click',function(){
+        id_price = $(this).attr('id_price');
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
-            text: "Se eliminará el proveedor",
+            text: "Se eliminará el precio",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
             $.ajax({
-                url: "{{url('/provider')}}" + '/' + id_provider,
+                url: "{{url('/price')}}" + '/' + id_price,
                 headers: {'X-CSRF-TOKEN': csrf_token},
                 type: 'DELETE',
                 dataType: 'json',
-                data: {id: id_provider}
+                data: {id: id_price}
             }).done(function(data){
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);

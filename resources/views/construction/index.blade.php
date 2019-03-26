@@ -14,7 +14,7 @@
 @section('content')
       <h2>Lista de Obras</h2>
 
-      <a class="btn btn-success btn-md addNew" style="float: right;" href="{{ url('provider/create') }}"><b>Agregar Nuevo</b></a><br><br>
+      <a class="btn btn-success btn-md addNew" style="float: right;" href="{{ url('construction/create') }}"><b>Agregar Nuevo</b></a><br><br>
 
       <div class="box-body">
           <table id="constructions_table" class="table table-striped table-bordered" style="width:100%">
@@ -22,6 +22,9 @@
               <tr>
                   <th width="10px">Id</th>
                   <th>Nombre</th>
+                  <th>Honorario</th>
+                  <th>Fecha</th>
+                  <th>Metros cuadrados</th>
                   <th>Estatus</th>
                   <th width="50px">Acciones</th>
               </tr>
@@ -36,44 +39,22 @@
 @section('adminlte_js')
   <script>
 
-  // function delete(id)
-  // {
-  //   var csrf_token=$('meta[name="csrf-token"]').attr('content');
-  //   swal({
-  //     title: "Estás seguro?",
-  //     text: "Se eliminará el constructione",
-  //     icon: "warning",
-  //     buttons: true,
-  //     dangerMode: true,
-  //   })
-  //   .then((willDelete) => {
-  //     if (willDelete) {
-  //       $.ajax({
-  //         url: "{{url('/construction')}}" + '/' + id,
-  //           type: "POST",
-  //           data: {'_method' : 'DELETE', '_token' : csrf_token},
-  //           success: function (data) {
-  //             //constructions_table.ajax.reload();
-  //             swal("constructione eliminado exitosamente", {
-  //               icon: "success",
-  //             });
-  //             }
-  //       });
-  //
-  //     };
-  //   });
-  // }
-
   $('#edit').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget)
       var id = button.data('idconstruction')
       var name = button.data('nameconstruction')
+      var honorary = button.data('honoraryconstruction')
+      var date = button.data('dateconstruction')
+      var square_meter = button.data('square_meterconstruction')
       var status = button.data('statusconstruction')
 
       //var data_id = button.data('iddata')
       var modal = $(this)
       modal.find('.modal-body #id').val(id);
       modal.find('.modal-body #name').val(name);
+      modal.find('.modal-body #honorary').val(honorary);
+      modal.find('.modal-body #date').val(date);
+      modal.find('.modal-body #square_meter').val(square_meter);
       modal.find('.modal-body #status').val(status);
       //modal.find('.modal-body #data_id').val(data_id);
   });
@@ -98,6 +79,9 @@
               "columns": [
                   {data: 'id'},
                   {data: 'name'},
+                  {data: 'honorary'},
+                  {data: 'date'},
+                  {data: 'square_meter'},
                   {data: 'status'},
                   {data: 'btn'}
               ],

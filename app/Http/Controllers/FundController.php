@@ -76,7 +76,10 @@ class FundController extends Controller
      */
     public function show(Fund $fund)
     {
-      return view('fund.show')->with('fund',$fund);
+      $construction = Construction::findOrFail($fund->construction_id);
+      $fund->construction_id .= " ";
+      $fund->construction_id .= $construction->name;
+      return view('fund.show')->with('fund', $fund);
     }
 
     /**
@@ -108,7 +111,6 @@ class FundController extends Controller
         'text' => 'Fondo modificado exitosamente.',
         'icon' => 'success'
         ];
-        
         return redirect('fund')->with('message', $msg);
     }
 

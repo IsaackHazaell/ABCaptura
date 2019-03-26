@@ -1,17 +1,16 @@
 <script>
 //DATATABLE
 var table=null;
-table = $('#providers_table').DataTable({
+table = $('#products_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('provider.showTableP')}}",
+    "ajax": "{{route('product.showTableProduct')}}",
     "columns": [
         {data: 'id'},
-        {data: 'name'},
+        {data: 'concept'},
+        {data: 'description'},
+        {data: 'provider_id'},
         {data: 'category'},
-        {data: 'turn'},
-        {data: 'company'},
-        {data: 'cellphone'},
         {data: 'btn'}
     ],
     "language": {
@@ -39,50 +38,36 @@ table = $('#providers_table').DataTable({
 //EDIT
 $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
-    var id = button.data('idprovider')
-    var name = button.data('nameprovider')
-    var turn = button.data('turnprovider')
-    var company = button.data('companyprovider')
-    var phone = button.data('phoneprovider')
-    var phone2 = button.data('phonlandlineprovider')
-    var mail = button.data('mailprovider')
-    var street = button.data('streetprovider')
-    var colony = button.data('colonyprovider')
-    var town = button.data('townprovider')
-    var state = button.data('stateprovider')
+    var id = button.data('id')
+    var provider_id = button.data('providerid')
+    var concept = button.data('conceptproduct')
+    var description = button.data('descriptionproduct')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
-    modal.find('.modal-body #name').val(name);
-    modal.find('.modal-body #turn').val(turn);
-    modal.find('.modal-body #company').val(company);
-    modal.find('.modal-body #cellphone').val(phone);
-    modal.find('.modal-body #phonlandline').val(phone2);
-    modal.find('.modal-body #mail').val(mail);
-    modal.find('.modal-body #street').val(street);
-    modal.find('.modal-body #colony').val(colony);
-    modal.find('.modal-body #town').val(town);
-    modal.find('.modal-body #state').val(state);
+    modal.find('.modal-body #provider_id').val(provider_id);
+    modal.find('.modal-body #concept').val(concept);
+    modal.find('.modal-body #description').val(description);
 });
 
 
 //DELETE
-$('body').delegate('.status-provider','click',function(){
-        id_provider = $(this).attr('id_provider');
+$('body').delegate('.status-product','click',function(){
+        id_product = $(this).attr('id_product');
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
-            text: "Se eliminará el proveedor",
+            text: "Se eliminará el producto",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
             $.ajax({
-                url: "{{url('/provider')}}" + '/' + id_provider,
+                url: "{{url('/product')}}" + '/' + id_product,
                 headers: {'X-CSRF-TOKEN': csrf_token},
                 type: 'DELETE',
                 dataType: 'json',
-                data: {id: id_provider}
+                data: {id: id_product}
             }).done(function(data){
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);

@@ -23,7 +23,7 @@
           <thead>
               <tr>
                   <th width="10px">Id</th>
-                  <th>Construcción</th>
+                  <th>Obra</th>
                   <th>Total</th>
                   <th width="120px">Acciones</th>
               </tr>
@@ -35,5 +35,5 @@
 @stop
 
 @section('adminlte_js')
-@include('fund.partials.script')  
+@include('fund.partials.script')
 @stop
