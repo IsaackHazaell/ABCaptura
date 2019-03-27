@@ -75,7 +75,13 @@ class ConstructionController extends Controller
         $construction->square_meter = $request->square_meter;
         $construction->status = $status;
         $construction->save();
-        return view('construction.index');
+        $msg = [
+            'title' => 'Creado!',
+            'text' => 'Obra creada exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return redirect('construction')->with('message', $msg);
     }
 
     /**
@@ -129,7 +135,7 @@ class ConstructionController extends Controller
           $status=2;
 
       $construction = Construction::findOrFail($request->id);
-  
+
       $construction->name = $request->name;
       $construction->honorary = $request->honorary;
       $construction->date = $request->date;
