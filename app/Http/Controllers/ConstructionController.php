@@ -142,11 +142,14 @@ class ConstructionController extends Controller
       $construction->square_meter = $request->square_meter;
       $construction->status = $status;
       $construction->save();
-      // $construction->fill($input)->save();
 
-      // $address = Address::where('provider_id', $request->id)->firstOrFail();
-      // $address->fill($input)->save();
-      return view('construction.index');
+      $msg = [
+        'title' => 'Modificado!',
+        'text' => 'Obra modificada exitosamente.',
+        'icon' => 'success'
+        ];
+
+      return redirect('construction')->with('message', $msg);
     }
 
     /**
@@ -157,6 +160,13 @@ class ConstructionController extends Controller
      */
     public function destroy(construction $construction)
     {
-        //
+      $provider->delete();
+      $msg = [
+          'title' => 'Eliminado!',
+          'text' => 'Obra eliminada exitosamente.',
+          'icon' => 'success'
+      ];
+
+      return response()->json($msg);
     }
 }
