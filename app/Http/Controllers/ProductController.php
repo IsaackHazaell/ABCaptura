@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Provider;
+use App\Price;
 use DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductController extends Controller
 {
@@ -24,26 +26,58 @@ class ProductController extends Controller
   public function showTableProduct()
   {
     $products = DB::table('products')
-      ->select('providers.*','products.*')
+      ->select('providers.*','products.*',
+      'prices.id as price_id', 'prices.price', 'prices.month', 'prices.year', 'prices.unity')
       ->join('providers', 'providers.id', '=', 'products.provider_id')
+      ->join('prices', 'prices.product_id', '=', 'products.id')
       ->get();
-
       for($i=0; $i<$products->count(); $i++)
       {
-        if($products[$i]->category == 0)
+        /*if($products[$i]->category == 0)
           $products[$i]->category = "Mano de obra";
         else if($products[$i]->category == 1)
           $products[$i]->category = "Material";
           else if($products[$i]->category == 2)
-            $products[$i]->category = "Logística";
+            $products[$i]->category = "Logística";*/
 
           $products[$i]->provider_id .= " " . $products[$i]->name;
+          $month = ProductController::month($products[$i]->month);
+          $products[$i]->month = $month;
+          $products[$i]->month .= " " . $products[$i]->year;
       }
-
       return Datatables::of($products)
       ->addColumn('btn', 'product.partials.buttons')
       ->rawColumns(['btn'])
     ->make(true);
+  }
+
+  public function month($month)
+  {
+        if($month == 1)
+          $month = "Enero";
+        else if($month == 2)
+          $month = "Febrero";
+          else if($month == 3)
+            $month = "Marzo";
+            else if($month == 4)
+              $month = "Abril";
+              else if($month == 5)
+                $month = "Mayo";
+                else if($month == 6)
+                  $month = "Junio";
+                  else if($month == 7)
+                    $month = "Julio";
+                    else if($month == 8)
+                      $month = "Agosto";
+                      else if($month == 9)
+                        $month = "Septiembre";
+                        else if($month == 10)
+                          $month = "Octubre";
+                          else if($month == 11)
+                            $month = "Noviembre";
+                            else if($month == 12)
+                              $month = "Diciembre";
+      return $month;
   }
 
     /**
@@ -74,9 +108,17 @@ class ProductController extends Controller
       }
       $product = New Product;
       $product->provider_id = $provider_id;
-      $product->concept =   $request->concept;
-      $product->description =   $request->description;
+      $product->concept = $request->concept;
+      $product->description = $request->description;
       $product->save();
+
+      $price = New Price;
+      $price->product_id = $product->id;
+      $price->unity = $request->unity;
+      $price->price = $request->price;
+      $price->year = $request->year;
+      $price->month = $request->month;
+      $price->save();
 
       $msg = [
           'title' => 'Creado!',
@@ -131,11 +173,10 @@ class ProductController extends Controller
       $product->concept = $request->concept;
       $product->description = $request->description;
       $product->save();
-      /*$request->provider_id = $provider_id;
 
-      $product = Product::findOrFail($request->id);
-      $input = $request->all();
-      $product->fill($input)->save();*/
+      $price = Price::where('product_id', $product->id)->firstOrFail();
+      $price->fill($request->all());
+      $price->save();
 
       $msg = [
         'title' => 'Modificado!',

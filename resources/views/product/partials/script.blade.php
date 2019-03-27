@@ -8,9 +8,11 @@ table = $('#products_table').DataTable({
     "columns": [
         {data: 'id'},
         {data: 'concept'},
-        {data: 'description'},
+        {data: 'unity'},
+        {data: 'price'},
+        {data: 'month'},
         {data: 'provider_id'},
-        {data: 'category'},
+        {data: 'description'},
         {data: 'btn'}
     ],
     "language": {
@@ -42,12 +44,57 @@ $('#edit').on('show.bs.modal', function (event) {
     var provider_id = button.data('providerid')
     var concept = button.data('conceptproduct')
     var description = button.data('descriptionproduct')
+    var unity = button.data('unity')
+    var price = button.data('price')
+    var year = button.data('year')
+    var month = button.data('month')
+    month = monthAt(month);
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #provider_id').val(provider_id);
     modal.find('.modal-body #concept').val(concept);
     modal.find('.modal-body #description').val(description);
+    modal.find('.modal-body #unity').val(unity);
+    modal.find('.modal-body #price').val(price);
+    modal.find('.modal-body #year').val(year);
+    modal.find('.modal-body #month').val(month);
 });
+
+function monthAt(month) {
+  var monthGood="";
+  for (var i = 0; i < month.length; i++) {
+   if(month[i] == " ")
+    break;
+    else {
+      monthGood += month[i];
+    }
+  }
+  if(monthGood == "Enero")
+    month = 1;
+  else if(monthGood =="Febrero")
+    month = 2;
+    else if(monthGood =="Marzo")
+      month = 3;
+      else if(monthGood =="Abril")
+        month = 4;
+        else if(monthGood =="Mayo")
+          month = 5;
+          else if(monthGood =="Junio")
+            month = 6;
+            else if(monthGood =="Julio")
+              month = 7;
+              else if(monthGood =="Agosto")
+                month = 8;
+                else if(monthGood =="Septiembre")
+                  month = 9;
+                  else if(monthGood == "Octubre")
+                    month = 10;
+                    else if(monthGood == "Noviembre")
+                      month = 11;
+                      else if(monthGood == "Diciembre")
+                        month = 12;
+  return month;
+}
 
 
 //DELETE

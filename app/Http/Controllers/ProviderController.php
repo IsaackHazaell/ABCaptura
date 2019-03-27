@@ -95,6 +95,12 @@ class ProviderController extends Controller
     public function show(Provider $provider)
     {
         $address = DB::table('addresses')->where('provider_id', $provider->id)->first();
+        if($provider->category == 0)
+          $provider->category = "Mano de obra";
+        else if($provider->category == 1)
+          $provider->category = "Material";
+          else if($provider->category == 2)
+            $provider->category = "Logística";
         return view('provider.show')->with('provider',$provider)->with('address',$address);
     }
 

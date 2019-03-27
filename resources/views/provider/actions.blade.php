@@ -5,7 +5,10 @@
   data-idprovider="{{$id}}"
   data-nameprovider="{{$name}}"
   data-turnprovider="{{$turn}}"
-  data-phoneprovider="{{$phone}}"
+  data-categoryprovider="{{$category}}"
+  data-companyprovider="{{$company}}"
+  data-phoneprovider="{{$cellphone}}"
+  data-phonlandlineprovider="{{$phonlandline}}"
   data-mailprovider="{{$mail}}"
 
   data-streetprovider="{{$street}}"
