@@ -19,7 +19,7 @@
         <label for="product">Seleccione el producto</label>
         <select class="form-control" required name="product" id="product">
           @foreach($prices as $price)
-          <option value={{$price->price}}/{{$price->product_id}}/{{$price->unity_id}}> {{$price->unity_name}} {{$price->product_concept}} </option>
+          <option value={{$price->price}}/{{$price->product_id}}> {{$price->unity}} {{$price->product_concept}} </option>
           @endforeach
       </select>
       </div>
@@ -48,5 +48,4 @@
       </div>
 
       <input type="hidden" name="product_id" id="product_id">
-      <input type="hidden" name="unity_id" id="unity_id">
     </div>

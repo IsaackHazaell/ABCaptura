@@ -46,16 +46,13 @@ class CaptureController extends Controller
             break;
         }
 
-        $prices = DB::table('products','prices', 'unities')
+        $prices = DB::table('products','prices')
           ->select(
           'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-          'prices.*',
-          'unities.id as unity_id', 'unities.name as unity_name'
-          )
+          'prices.*')
           ->where('providers.id', '=', $provider_id)
           ->join('providers', 'providers.id', '=', 'products.provider_id')
           ->join('prices', 'prices.product_id', '=', 'products.id')
-          ->join('unities', 'unities.id', '=', 'prices.unity_id')
           ->get();
 
           //dd($prices);
@@ -75,20 +72,18 @@ class CaptureController extends Controller
       $product_toTable = $product[0]->id . " " . $product[0]->concept;
       $request->product_id = $product_toTable;
 
-      $unity_id=substr($request->unity_id,1);
+      /*$unity_id=substr($request->unity_id,1);
       $unity = Unity::select('id','name')->where('id', '=', $unity_id)->get();
       $unity_toTable = $unity[0]->id . " " . $unity[0]->name;
-      $request->unity_id = $unity_toTable;
+      $request->unity_id = $unity_toTable;*/
 
-      $toTable = DB::table('products','prices', 'unities')
+      $toTable = DB::table('products','prices')
         ->select(
         'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-        'prices.*',
-        'unities.id as unity_id', 'unities.name as unity_name'
+        'prices.*'
         )
         ->where('products.id', '=', $product_id)
         ->join('prices', 'prices.product_id', '=', 'products.id')
-        ->join('unities', 'unities.id', '=', 'prices.unity_id')
         ->get();
 
         return Datatables::of($toTable)

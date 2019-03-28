@@ -63,11 +63,11 @@ $('#extra').on('change', function (event) {
 });
 
 
-var table=null;
+/*var table=null;
 table = $('#products_capture_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('capture.showTablePC')}}",
+    "ajax": "{//{route('capture.showTablePC')}}",
     "columns": [
         {data: 'id'},
         {data: 'unity_id'},
@@ -97,15 +97,22 @@ table = $('#products_capture_table').DataTable({
   "infoEmpty": "",
   "infoFiltered": ""
 }
-});
+});*/
 
+/*function addProduct()
+{
+  var price = $('#price').val();
+  console.log(price);
+}*/
 
 $('#prod tbody').on('click','tr', function(){
 var table=null;
+var price =   $('#price').val();
+console.log(price);
 table = $('#products_capture_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('capture.showTablePC')}}",
+    "ajax": "{//{route('capture.showTablePC')}}",
     "columns": [
         {data: 'id'},
         {data: 'unity_id'},
