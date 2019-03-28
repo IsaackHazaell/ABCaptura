@@ -27,6 +27,7 @@
         data-construcion_id="{{$fund->construcion_id}}"
         data-total="{{$fund->total}}"
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
+        <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('fund') }}"><b>Lista de fondos</b></a>
     </div>
   </div>
 @endsection

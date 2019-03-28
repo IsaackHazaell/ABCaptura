@@ -67,11 +67,21 @@ class ConstructionController extends Controller
         else if($request->status=="Espera")
             $status=2;
 
+        $request->status = $status;
         $construction = New Construction;
         $construction->name = $request->name;
+        $construction->honorary = $request->honorary;
+        $construction->date = $request->date;
+        $construction->square_meter = $request->square_meter;
         $construction->status = $status;
         $construction->save();
-        return view('construction.index');
+        $msg = [
+            'title' => 'Creado!',
+            'text' => 'Obra creada exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return redirect('construction')->with('message', $msg);
     }
 
     /**
@@ -125,17 +135,21 @@ class ConstructionController extends Controller
           $status=2;
 
       $construction = Construction::findOrFail($request->id);
-      // $request->status = $status;
-      // dd($request->status);
-      // $input = $request->all();
+
       $construction->name = $request->name;
+      $construction->honorary = $request->honorary;
+      $construction->date = $request->date;
+      $construction->square_meter = $request->square_meter;
       $construction->status = $status;
       $construction->save();
-      // $construction->fill($input)->save();
 
-      // $address = Address::where('provider_id', $request->id)->firstOrFail();
-      // $address->fill($input)->save();
-      return view('construction.index');
+      $msg = [
+        'title' => 'Modificado!',
+        'text' => 'Obra modificada exitosamente.',
+        'icon' => 'success'
+        ];
+
+      return redirect('construction')->with('message', $msg);
     }
 
     /**
@@ -146,6 +160,13 @@ class ConstructionController extends Controller
      */
     public function destroy(construction $construction)
     {
-        //
+      $provider->delete();
+      $msg = [
+          'title' => 'Eliminado!',
+          'text' => 'Obra eliminada exitosamente.',
+          'icon' => 'success'
+      ];
+
+      return response()->json($msg);
     }
 }

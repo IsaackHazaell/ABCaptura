@@ -11,9 +11,10 @@
 <form action="{{url('construction')}}" method="post">
   {{csrf_field()}}
   @include('construction.form')
-<div class="form-group col-md-6">
-  <button type="submit" class="btn btn-primary">Guardar</button>
-</div>
+  <div class="form-group col-md-6">
+    <br><button type="submit" class="btn btn-success">Guardar</button>
+    <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('construction') }}"><b>Lista de obras</b></a>
+  </div>
 </form>
 @endsection
 
