@@ -20,3 +20,4 @@
       <label for="description">Descripción adicional</label>
       <input type="text" class="form-control" name="description" id="description">
     </div>
+@include('price.partials.form')

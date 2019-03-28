@@ -26,7 +26,8 @@
   </div>
   <br>
   <div class="form-group col-md-6">
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('fund') }}"><b>Lista de fondos</b></a>
   </div>
 </form>
 @endsection

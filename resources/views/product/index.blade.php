@@ -21,9 +21,11 @@
               <tr>
                   <th width="10px">Id</th>
                   <th>Concepto</th>
-                  <th>Descripción</th>
+                  <th>Unidad</th>
+                  <th>Precio unitario</th>
+                  <th>Mes y año</th>
                   <th>Proveedor</th>
-                  <th>Categoría</th>
+                  <th>Descripción</th>
                   <th width="120px">Acciones</th>
               </tr>
           </thead>
