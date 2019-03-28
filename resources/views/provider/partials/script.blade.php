@@ -43,6 +43,8 @@ $('#edit').on('show.bs.modal', function (event) {
     var name = button.data('nameprovider')
     var turn = button.data('turnprovider')
     var company = button.data('companyprovider')
+    var category = button.data('categoryprovider')
+    category = toCategory(category);
     var phone = button.data('phoneprovider')
     var phone2 = button.data('phonlandlineprovider')
     var mail = button.data('mailprovider')
@@ -55,6 +57,7 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #name').val(name);
     modal.find('.modal-body #turn').val(turn);
     modal.find('.modal-body #company').val(company);
+    modal.find('.modal-body #category').val(category);
     modal.find('.modal-body #cellphone').val(phone);
     modal.find('.modal-body #phonlandline').val(phone2);
     modal.find('.modal-body #mail').val(mail);
@@ -63,6 +66,18 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #town').val(town);
     modal.find('.modal-body #state').val(state);
 });
+
+
+function toCategory(category) {
+    if(category == "Mano de obra")
+      category = 0;
+    else if(category == "Material")
+      category = 1;
+      else if(category == "Logística")
+        category = 2;
+
+    return category;
+}
 
 
 //DELETE
