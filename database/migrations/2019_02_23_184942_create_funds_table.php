@@ -15,8 +15,10 @@ class CreateFundsTable extends Migration
     {
         Schema::create('funds', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('total');
             $table->integer('construction_id')->unsigned();
+            $table->date('date');
+            $table->decimal('remaining');
+            $table->decimal('total');
             $table->timestamps();
             $table->foreign('construction_id')->references('id')->on('constructions')
               ->onDelete('cascade')
