@@ -17,3 +17,21 @@
     </select>
     </div>
   </div>
+
+<div class="form-row">
+  <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="fund_id">Seleccione el fondo</label>
+        <select class="form-control" required name="fund_id" id="fund_id">
+          @foreach($funds as $fund)
+          <option>{{$fund->id}} {{$fund->name}}</option>
+          @endforeach
+      </select>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="date">Seleccione La fecha</label>
+        <input type="date" class="form-control" required name="date" id="date">
+      </div>
+    </div>
+</div>

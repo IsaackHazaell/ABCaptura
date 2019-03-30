@@ -6,7 +6,6 @@ $(document).ready(function () {
 function castearInputProduct()
 {
   var all = document.getElementById("product").value;
-  console.log(all);
   var max = all.length;
   var price = 0
   for (var i = 0; i < max; i++) {
@@ -62,86 +61,8 @@ $('#extra').on('change', function (event) {
 
 });
 
-
-/*var table=null;
-table = $('#products_capture_table').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": "{//{route('capture.showTablePC')}}",
-    "columns": [
-        {data: 'id'},
-        {data: 'unity_id'},
-        {data: 'product_id'},
-        {data: 'quantity'},
-        {data: 'price'},
-        {data: 'extra'},
-        {data: 'total'},
-        {data: 'btn'}
-    ],
-    "language": {
-  "info": "_TOTAL_ registros",
-  "search": "Buscar",
-  "paginate": {
-    "next": "Siguiente",
-    "previous": "Anterior",
-  },
-  "lengthMenu": 'Mostrar <select>'+
-      '<option value="10">10</option>'+
-      '<option value="30">30</option>'+
-      '<option value="-1">Todos</option>'+
-      '</select> registros',
-  "loadingRecords": "Cargando...",
-  "processing": "Procesando...",
-  "emptyTable": "No hay datos",
-  "zeroRecords": "No hay coincidencias",
-  "infoEmpty": "",
-  "infoFiltered": ""
-}
-});*/
-
-/*function addProduct()
+function addProduct()
 {
-  var price = $('#price').val();
-  console.log(price);
-}*/
-
-$('#prod tbody').on('click','tr', function(){
-var table=null;
-var price =   $('#price').val();
-console.log(price);
-table = $('#products_capture_table').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": "{//{route('capture.showTablePC')}}",
-    "columns": [
-        {data: 'id'},
-        {data: 'unity_id'},
-        {data: 'product_id'},
-        {data: 'quantity'},
-        {data: 'price'},
-        {data: 'extra'},
-        {data: 'total'},
-        {data: 'btn'}
-    ],
-    "language": {
-  "info": "_TOTAL_ registros",
-  "search": "Buscar",
-  "paginate": {
-    "next": "Siguiente",
-    "previous": "Anterior",
-  },
-  "lengthMenu": 'Mostrar <select>'+
-      '<option value="10">10</option>'+
-      '<option value="30">30</option>'+
-      '<option value="-1">Todos</option>'+
-      '</select> registros',
-  "loadingRecords": "Cargando...",
-  "processing": "Procesando...",
-  "emptyTable": "No hay datos",
-  "zeroRecords": "No hay coincidencias",
-  "infoEmpty": "",
-  "infoFiltered": ""
+  console.log("HHehe");
 }
-});
-});
 </script>

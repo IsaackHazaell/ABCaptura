@@ -7,7 +7,7 @@ use App\construction;
 use App\Provider;
 use App\Product;
 use App\Price;
-use App\Unity;
+use App\Fund;
 use Illuminate\Http\Request;
 use DB;
 use Yajra\DataTables\DataTables;
@@ -33,7 +33,13 @@ class CaptureController extends Controller
     {
         $constructions = construction::select('id','name')->get();
         $providers = Provider::select('id','name')->get();
-        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers);
+        $funds = DB::table('funds','constructions')
+          ->select(
+          'funds.id',
+          'constructions.name')
+          ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
+          ->get();
+        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers)->with('funds',$funds);
     }
 
     public function create2(Request $request)
