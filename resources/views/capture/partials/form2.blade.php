@@ -3,14 +3,14 @@
         <label for="product">Seleccione el producto</label>
         <select class="form-control" required name="product" id="product">
           @foreach($prices as $price)
-          <option value={{$price->price}}/{{$price->product_id}}> {{$price->unity}} {{$price->product_concept}} </option>
+          <option value={{$price->price}}/{{$price->product_id}}> {{$price->unity}} {{$price->product_concept}} - {{$price->month}} </option>
           @endforeach
       </select>
       </div>
 
       <div class="form-group col-md-6">
         <label for="price">Precio</label>
-        <input type="number" readonly class="form-control" required name="price" id="price">
+        <input type="number" readonly class="form-control" required name="priceCapture" id="priceCapture">
       </div>
     </div>
 

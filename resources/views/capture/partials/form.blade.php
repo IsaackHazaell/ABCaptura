@@ -18,7 +18,7 @@
     </div>
   </div>
 
-<div class="form-row">
+
   <div class="form-row">
       <div class="form-group col-md-6">
         <label for="fund_id">Seleccione el fondo</label>
@@ -34,4 +34,10 @@
         <input type="date" class="form-control" required name="date" id="date">
       </div>
     </div>
-</div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Nuevo Archivo</label>
+          <input type="file" class="form-control" name="file">
+      </div>
+    </div>

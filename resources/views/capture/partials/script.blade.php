@@ -16,7 +16,8 @@ function castearInputProduct()
     //if(i!=0)
       price += all.charAt(i)
   }
-  $('#price').val(price);
+  console.log(price);
+  $('#priceCapture').val(price);
 
   var product_id=0;
   for (var i = price.length; i < max; i++) {
@@ -61,8 +62,121 @@ $('#extra').on('change', function (event) {
 
 });
 
+$("#prod").click(function (e) {
+
+    e.preventDefault();
+    var price = $('#priceCapture').val();
+    var table=null;
+    table = $('#products_capture_table');
+    console.log(price);
+    /*var table=null;
+    table = $('#products_capture_table').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": "{{route('capture.showTablePC')}}",
+        "columns": [
+            {data: 'price'}
+        ],
+        "language": {
+      "info": "_TOTAL_ registros",
+      "search": "Buscar",
+      "paginate": {
+        "next": "Siguiente",
+        "previous": "Anterior",
+      },
+      "lengthMenu": 'Mostrar <select>'+
+          '<option value="10">10</option>'+
+          '<option value="30">30</option>'+
+          '<option value="-1">Todos</option>'+
+          '</select> registros',
+      "loadingRecords": "Cargando...",
+      "processing": "Procesando...",
+      "emptyTable": "No hay datos",
+      "zeroRecords": "No hay coincidencias",
+      "infoEmpty": "",
+      "infoFiltered": ""
+    }
+  });*/
+    $.ajax({
+      //type: "post",
+      url: "{{route('capture.showTablePC')}}",
+      data: {
+          price: price
+      }, success: function (price) {
+              alert("Se ha realizado el POST con exito "+price);
+              table = $('#products_capture_table').DataTable({
+                  "processing": true,
+                  "serverSide": true,
+                  "ajax": "{{route('capture.showTablePC')}}",
+                  "columns": [
+                      {price: 'price'}
+                  ],
+              });
+      }
+    });
+});
+/*
 function addProduct()
 {
   console.log("HHehe");
+
+
+  var table=null;
+  table = $('#products_capture_table').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": "{//{route('capture.showTablePC')}}",
+      "columns": [
+          {data: 'id'},
+          {data: 'unity'},
+          {data: 'price'},
+          {data: 'month'},
+          {data: 'provider_id'},
+          {data: 'btn'}
+      ],
+      "language": {
+    "info": "_TOTAL_ registros",
+    "search": "Buscar",
+    "paginate": {
+      "next": "Siguiente",
+      "previous": "Anterior",
+    },
+    "lengthMenu": 'Mostrar <select>'+
+        '<option value="10">10</option>'+
+        '<option value="30">30</option>'+
+        '<option value="-1">Todos</option>'+
+        '</select> registros',
+    "loadingRecords": "Cargando...",
+    "processing": "Procesando...",
+    "emptyTable": "No hay datos",
+    "zeroRecords": "No hay coincidencias",
+    "infoEmpty": "",
+    "infoFiltered": ""
+  }
+});
+}*/
+
+
+
+
+
+//SWETALERT
+@if (Session::has('message'))
+        sAlert(
+        "{{ Session::get('message.title') }}",
+        "{{ Session::get('message.text') }}",
+        "{{ Session::get('message.icon') }}"
+    );
+@endif
+
+function sAlert(title, text, icon)
+{
+  swal({
+    title: title,
+    text: text,
+    icon: icon,
+    button: "Continue",
+    timer: 3000
+  });
 }
 </script>
