@@ -14,6 +14,14 @@
       <input type="text" class="form-control" value="{{$fund->construction_id}}" readonly name="construction_id" id="construction_id">
     </div>
     <div class="form-group col-md-6">
+      <label for="date">Fecha</label>
+      <input type="text" class="form-control" value="{{$fund->date}}" readonly name="date" id="date">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="remaining">Restante de fondo</label>
+      <input type="text" class="form-control" value="{{$fund->remaining}}" readonly name="remaining" id="remaining">
+    </div>
+    <div class="form-group col-md-6">
       <label for="total">Total</label>
       <input type="text" class="form-control" value="{{$fund->total}}" readonly name="total" id="total">
     </div>
@@ -25,6 +33,8 @@
       <button class="btn btn-primary"
         data-idfund="{{$fund->id}}"
         data-construcion_id="{{$fund->construcion_id}}"
+        data-date="{{$fund->date}}"
+        data-remaining="{{$fund->remaining}}"
         data-total="{{$fund->total}}"
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('fund') }}"><b>Lista de fondos</b></a>
@@ -38,12 +48,16 @@ $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var id = button.data('idfund')
     var construction_id = button.data('construction_id')
+    var date = button.data('date')
+    var remaining = button.data('remaining')
     var total = button.data('total')
 
     //var data_id = button.data('iddata')
     var modal = $(this)
     modal.find('.modal-body #idfund').val(id);
     modal.find('.modal-body #construction_id').val(construction_id);
+    modal.find('.modal-body #date').val(date);
+    modal.find('.modal-body #remaining').val(remaining);
     modal.find('.modal-body #total').val(total);
 
     //modal.find('.modal-body #data_id').val(data_id);

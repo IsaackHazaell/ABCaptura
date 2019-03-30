@@ -8,6 +8,8 @@ table = $('#funds_table').DataTable({
     "columns": [
         {data: 'id'},
         {data: 'name'},
+        {data: 'date'},
+        {data: 'remaining'},
         {data: 'total'},
         {data: 'btn'}
     ],
@@ -38,10 +40,14 @@ $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var id = button.data('idfund')
     var name = button.data('name')
+    var date = button.data('date')
+    var remaining = button.data('remaining')
     var total = button.data('total')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
+    modal.find('.modal-body #date').val(date);
+    modal.find('.modal-body #remaining').val(remaining);
     modal.find('.modal-body #total').val(total);
 });
 
@@ -52,7 +58,7 @@ $('body').delegate('.status-fund','click',function(){
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
-            text: "Se eliminará el proveedor",
+            text: "Se eliminará el fondo",
             icon: "warning",
             buttons: true,
             dangerMode: true,

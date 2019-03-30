@@ -4,5 +4,7 @@
 <button class="btn btn-primary btn-sm"
   data-idfund="{{$id}}"
   data-construction_id="{{$construction_id}}"
+  data-date="{{$date}}"
+  data-remaining="{{$remaining}}"
   data-total="{{$total}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>

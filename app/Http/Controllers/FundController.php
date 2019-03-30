@@ -63,6 +63,8 @@ class FundController extends Controller
       }
       $fund = New Fund;
       $fund->total = $request->total;
+      $fund->date = $request->date;
+      $fund->remaining = $request->remaining;
       $fund->construction_id = $construction_id;
       $fund->save();
       return view('fund.index');
