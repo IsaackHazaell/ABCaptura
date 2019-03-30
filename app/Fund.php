@@ -10,5 +10,5 @@ class Fund extends Model
     {
       return $this->belongsTo(Construction::class);
     }
-    protected $fillable = ['total'];
+    protected $fillable = ['date','remaining','total'];
 }

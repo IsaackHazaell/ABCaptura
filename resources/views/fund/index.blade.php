@@ -24,6 +24,8 @@
               <tr>
                   <th width="10px">Id</th>
                   <th>Obra</th>
+                  <th>Fecha</th>
+                  <th>Restante del fondo</th>
                   <th>Total</th>
                   <th width="120px">Acciones</th>
               </tr>
