@@ -63,43 +63,33 @@ $('#extra').on('change', function (event) {
 });
 
 $("#prod").click(function (e) {
-
     e.preventDefault();
     var price = $('#priceCapture').val();
     var table=null;
     table = $('#products_capture_table');
     console.log(price);
-    /*var table=null;
     table = $('#products_capture_table').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": "{{route('capture.showTablePC')}}",
+        data: {
+            price: price
+        },
+        /*$.ajax({
+          //type: "post",
+          url: "{//{route('capture.showTablePC')}}",
+          data: {
+              price: price
+          }
+        });*/
         "columns": [
             {data: 'price'}
         ],
-        "language": {
-      "info": "_TOTAL_ registros",
-      "search": "Buscar",
-      "paginate": {
-        "next": "Siguiente",
-        "previous": "Anterior",
-      },
-      "lengthMenu": 'Mostrar <select>'+
-          '<option value="10">10</option>'+
-          '<option value="30">30</option>'+
-          '<option value="-1">Todos</option>'+
-          '</select> registros',
-      "loadingRecords": "Cargando...",
-      "processing": "Procesando...",
-      "emptyTable": "No hay datos",
-      "zeroRecords": "No hay coincidencias",
-      "infoEmpty": "",
-      "infoFiltered": ""
-    }
-  });*/
-    $.ajax({
+  });
+});
+    /*$.ajax({
       //type: "post",
-      url: "{{route('capture.showTablePC')}}",
+      url: "{//{route('capture.showTablePC')}}",
       data: {
           price: price
       }, success: function (price) {
@@ -107,14 +97,14 @@ $("#prod").click(function (e) {
               table = $('#products_capture_table').DataTable({
                   "processing": true,
                   "serverSide": true,
-                  "ajax": "{{route('capture.showTablePC')}}",
+                  "ajax": "{//{route('capture.showTablePC')}}",
                   "columns": [
                       {price: 'price'}
                   ],
               });
       }
     });
-});
+});*/
 /*
 function addProduct()
 {
