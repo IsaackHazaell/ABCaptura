@@ -92,7 +92,7 @@ desired effect
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>-->
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-male"></i> <span>Obra</span>
+          <a href="#"><i class="fas fa-hard-hat"></i> <span>Obra</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -136,6 +136,30 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="{{ url('fund') }}">Lista de fondos</a></li>
             <li><a href="{{ url('fund/create') }}">Agregar fondo</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="far fa-edit"></i> <span> Captura</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('capture') }}">Lista de fondos</a></li>
+            <li><a href="{{ url('capture/create') }}">Capturar</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Honorarios</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('honorary') }}">Lista de honorarios</a></li>
+            <li><a href="{{ url('honorary/create') }}">Capturar</a></li>
           </ul>
         </li>
       <!-- /.sidebar-menu -->
