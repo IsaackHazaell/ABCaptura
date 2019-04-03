@@ -24,7 +24,7 @@
         <label for="fund_id">Seleccione el fondo</label>
         <select class="form-control" required name="fund_id" id="fund_id">
           @foreach($funds as $fund)
-          <option>{{$fund->id}} {{$fund->name}}</option>
+          <option>{{$fund->id}} {{$fund->name}} - {{$fund->date}}</option>
           @endforeach
       </select>
       </div>

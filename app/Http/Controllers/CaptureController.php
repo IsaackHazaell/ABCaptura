@@ -35,7 +35,7 @@ class CaptureController extends Controller
         $providers = Provider::select('id','name')->get();
         $funds = DB::table('funds','constructions')
           ->select(
-          'funds.id',
+          'funds.id', 'funds.date',
           'constructions.name')
           ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
           ->get();
