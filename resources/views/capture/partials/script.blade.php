@@ -69,24 +69,39 @@ $("#prod").click(function (e) {
     table = $('#products_capture_table');
     console.log(price);
     table = $('#products_capture_table').DataTable({
+      "bDestroy": true,
+      stateSave: true,
         "processing": true,
         "serverSide": true,
-        "ajax": "{{route('capture.showTablePC')}}",
+        /*"ajax": "{//{route('capture.showTablePC')}}",
+        type: "post",
         data: {
-            price: price
-        },
-        /*$.ajax({
-          //type: "post",
-          url: "{//{route('capture.showTablePC')}}",
+            price: 1
+        },*/
+
+        "ajax": {
+          type: "get",
+          url: "{{route('capture.showTablePC')}}",
           data: {
               price: price
           }
-        });*/
+        },
         "columns": [
+            {data: 'unity'},
+            {data: 'product_concept'},
             {data: 'price'}
         ],
+
   });
+  cleanInputs();
 });
+
+function cleanInputs()
+{
+  $('#quantity').val(0);
+  $('#extra').val(0);
+  castearInputProduct();
+}
     /*$.ajax({
       //type: "post",
       url: "{//{route('capture.showTablePC')}}",

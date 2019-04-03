@@ -111,7 +111,6 @@ class CaptureController extends Controller
 
     public function saveProduct(Request $request)
     {
-        //dd($request);
         $provider_id = "";
         for($i=0;$i<strlen($request->provider_id);$i++){
           if($request->provider_id[$i] != " ")
@@ -144,6 +143,8 @@ class CaptureController extends Controller
 
     public function showTablePC(Request $request)
     {
+
+
       //dd($request);
       //dd($request->price);
 
