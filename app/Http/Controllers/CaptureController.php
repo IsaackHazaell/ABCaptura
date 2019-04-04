@@ -32,13 +32,23 @@ class CaptureController extends Controller
     public function create()
     {
         $constructions = construction::select('id','name')->get();
-        $providers = Provider::select('id','name')->get();
+        $providers = Provider::select('id','name','category')->get();
         $funds = DB::table('funds','constructions')
           ->select(
           'funds.id', 'funds.date',
           'constructions.name')
           ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
           ->get();
+
+          for($i=0; $i<$providers->count(); $i++)
+          {
+            if($providers[$i]->category == 0)
+              $providers[$i]->category = "Mano de obra";
+            else if($providers[$i]->category == 1)
+              $providers[$i]->category = "Material";
+              else if($providers[$i]->category == 2)
+                $providers[$i]->category = "Logística";
+          }
         return view('capture.create')->with('constructions', $constructions)->with('providers', $providers)->with('funds',$funds);
     }
 

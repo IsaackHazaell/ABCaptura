@@ -12,7 +12,7 @@
       <label for="provider_id">Seleccione el proveedor</label>
       <select class="form-control" required name="provider_id" id="provider_id">
         @foreach($providers as $provider)
-        <option>{{$provider->id}} {{$provider->name}}</option>
+        <option>{{$provider->id}} {{$provider->name}}: {{$provider->category}}</option>
         @endforeach
     </select>
     </div>
@@ -40,4 +40,5 @@
         <label>Nuevo Archivo</label>
           <input type="file" class="form-control" name="file">
       </div>
+      
     </div>
