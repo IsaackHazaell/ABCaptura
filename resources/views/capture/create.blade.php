@@ -17,3 +17,7 @@
     </div>
 </form>
 @endsection
+
+@section('adminlte_js')
+  @include('capture.partials.sweetalert')
+@stop

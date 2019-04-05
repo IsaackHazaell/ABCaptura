@@ -35,7 +35,7 @@ class CaptureController extends Controller
         $providers = Provider::select('id','name','category')->get();
         $funds = DB::table('funds','constructions')
           ->select(
-          'funds.id', 'funds.date',
+          'funds.id', 'funds.date', 'funds.remaining',
           'constructions.name')
           ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
           ->get();
@@ -55,39 +55,56 @@ class CaptureController extends Controller
     public function create2(Request $request)
     {
         $provider_id = "";
+        $flag=False;
+        $category="";
         for($i=0;$i<strlen($request->provider_id);$i++){
-          if($request->provider_id[$i] != " ")
+          if($request->provider_id[$i] != " " && $flag==False)
             $provider_id .= $request->provider_id[$i];
-          else
-            break;
+          //else
+          if($request->provider_id[$i-2] == ":")
+          {
+            $flag=True;
+          }
+          if($flag)
+          {
+              $category .= $request->provider_id[$i];
+          }
         }
 
-        $prices = DB::table('products','prices')
+        $remaining = DB::table('funds')
           ->select(
-          'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-          'prices.*')
-          ->where('providers.id', '=', $provider_id)
-          ->join('providers', 'providers.id', '=', 'products.provider_id')
-          ->join('prices', 'prices.product_id', '=', 'products.id')
+          'remaining')
+          ->where('funds.id', '=', $request->fund_id)
           ->get();
+        //dd($provider_id);
+        //dd($remaining[0]->remaining);
+
+        if($category == "Material")
+        {
+          $prices = DB::table('products','prices')
+            ->select(
+            'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
+            'prices.*')
+            ->where('providers.id', '=', $provider_id)
+            ->join('providers', 'providers.id', '=', 'products.provider_id')
+            ->join('prices', 'prices.product_id', '=', 'products.id')
+            ->get();
 
           for($i=0; $i<$prices->count(); $i++)
           {
-            /*if($products[$i]->category == 0)
-              $products[$i]->category = "Mano de obra";
-            else if($products[$i]->category == 1)
-              $products[$i]->category = "Material";
-              else if($products[$i]->category == 2)
-                $products[$i]->category = "Logística";*/
-
               $month = CaptureController::month($prices[$i]->month);
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
           }
 
-        $funds = construction::select('id','name')->get();
-        $providers = Provider::select('id','name')->get();
-        return view('capture.create2')->with('data', $request)->with('prices', $prices)->with('providers',$providers);
+          return view('capture.create2')->with('data', $request)->with('prices', $prices)->with('remaining',$remaining[0]->remaining);
+        }
+        else
+        {
+            return view('capture.create2b')->with('data', $request)->with('remaining',$remaining[0]->remaining);
+        }
+
+
     }
 
     public function month($month)
@@ -153,8 +170,6 @@ class CaptureController extends Controller
 
     public function showTablePC(Request $request)
     {
-
-
       //dd($request);
       //dd($request->price);
 
@@ -189,7 +204,6 @@ class CaptureController extends Controller
           ->join('prices', 'prices.product_id', '=', 'products.id')
           ->get();
 
-
         //dd($toTable);
 
         return Datatables::of($toTable)
@@ -207,7 +221,44 @@ class CaptureController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $constructions = construction::select('id','name')->get();
+        $providers = Provider::select('id','name','category')->get();
+        $funds = DB::table('funds','constructions')
+          ->select(
+          'funds.id', 'funds.date', 'funds.remaining',
+          'constructions.name')
+          ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
+          ->get();
+
+          for($i=0; $i<$providers->count(); $i++)
+          {
+            if($providers[$i]->category == 0)
+              $providers[$i]->category = "Mano de obra";
+            else if($providers[$i]->category == 1)
+              $providers[$i]->category = "Material";
+              else if($providers[$i]->category == 2)
+                $providers[$i]->category = "Logística";
+          }
+
+
+        if($request->remaining < $request->total)
+        {
+          $msg = [
+              'title' => 'Fondo insuficiente!',
+              'text' => 'Seleccione otro fondo',
+              'icon' => 'error'
+          ];
+        }
+        else {
+          $msg = [
+              'title' => 'Capturado correctamente!',
+              'text' => 'Se ha capturado correctamente',
+              'icon' => 'success'
+          ];
+        }
+        //return redirect('construction')->with('message', $msg);
+        return redirect('capture/create')->with('constructions', $constructions)->with('providers', $providers)->with('funds',$funds)->with('message', $msg);
     }
 
     /**

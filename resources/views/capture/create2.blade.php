@@ -9,7 +9,7 @@
   <p>Obra: {{$data->construction_id}} - Proveedor: {{$data->provider_id}}</p>
 </section>
 
-@include('capture.modal', ['providers' => $providers])
+@include('capture.modal', ['provider' => $data->provider_id])
 
   <div class="form-row">
     <div class="form-group col-md-12">
@@ -44,5 +44,5 @@
 @endsection
 
 @section('adminlte_js')
-@include('capture.partials.script2')
+@include('capture.partials.script')
 @stop

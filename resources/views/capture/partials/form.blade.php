@@ -37,8 +37,11 @@
 
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label>Nuevo Archivo</label>
-          <input type="file" class="form-control" name="file">
+        <label for="file">Nuevo Archivo</label>
+          <input type="file" class="form-control" name="file" id="file">
       </div>
-      
+      <div class="form-group col-md-6">
+        <label for="folio">Folio</label>
+          <input type="number" required class="form-control" name="folio" id="folio">
+      </div>
     </div>
