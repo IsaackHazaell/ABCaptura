@@ -20,14 +20,7 @@
 
 
   <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="fund_id">Seleccione el fondo</label>
-        <select class="form-control" required name="fund_id" id="fund_id">
-          @foreach($funds as $fund)
-          <option>{{$fund->id}} {{$fund->name}} - {{$fund->date}}</option>
-          @endforeach
-      </select>
-      </div>
+      
 
       <div class="form-group col-md-6">
         <label for="date">Seleccione La fecha</label>
@@ -42,6 +35,6 @@
       </div>
       <div class="form-group col-md-6">
         <label for="folio">Folio</label>
-          <input type="number" required class="form-control" name="folio" id="folio">
+          <input type="number" class="form-control" name="folio" id="folio">
       </div>
     </div>

@@ -33,12 +33,6 @@ class CaptureController extends Controller
     {
         $constructions = construction::select('id','name')->get();
         $providers = Provider::select('id','name','category')->get();
-        $funds = DB::table('funds','constructions')
-          ->select(
-          'funds.id', 'funds.date', 'funds.remaining',
-          'constructions.name')
-          ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
-          ->get();
 
           for($i=0; $i<$providers->count(); $i++)
           {
@@ -49,11 +43,19 @@ class CaptureController extends Controller
               else if($providers[$i]->category == 2)
                 $providers[$i]->category = "Logística";
           }
-        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers)->with('funds',$funds);
+        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers);
     }
 
     public function create2(Request $request)
     {
+      //dd("Se feue al create2");
+      $funds = DB::table('funds','constructions')
+        ->select(
+        'funds.id', 'funds.date', 'funds.remaining',
+        'constructions.name')
+        ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
+        ->get();
+
         $provider_id = "";
         $flag=False;
         $category="";
@@ -70,12 +72,6 @@ class CaptureController extends Controller
               $category .= $request->provider_id[$i];
           }
         }
-
-        $remaining = DB::table('funds')
-          ->select(
-          'remaining')
-          ->where('funds.id', '=', $request->fund_id)
-          ->get();
         //dd($provider_id);
         //dd($remaining[0]->remaining);
 
@@ -97,11 +93,11 @@ class CaptureController extends Controller
               $prices[$i]->month .= " " . $prices[$i]->year;
           }
 
-          return view('capture.create2')->with('data', $request)->with('prices', $prices)->with('remaining',$remaining[0]->remaining);
+          return view('capture.create2')->with('data', $request)->with('prices', $prices)->with('funds',$funds);
         }
         else
         {
-            return view('capture.create2b')->with('data', $request)->with('remaining',$remaining[0]->remaining);
+            return view('capture.create2b')->with('data', $request)->with('funds',$funds);
         }
 
 
@@ -221,9 +217,18 @@ class CaptureController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-        $constructions = construction::select('id','name')->get();
-        $providers = Provider::select('id','name','category')->get();
+        dd($request);
+        //Guardar captura
+        //Checar categoria
+        //gurdar captura-categoria
+        //descntar fondo
+        //Honorario...
+        //estado de cuenta...
+
+
+
+        $constructions = construction::select('id','name')->where('id', '=', $request->construction_id)->get();
+        $providers = Provider::select('id','name','category')->where('id', '=', $request->provider_id)->get();
         $funds = DB::table('funds','constructions')
           ->select(
           'funds.id', 'funds.date', 'funds.remaining',
