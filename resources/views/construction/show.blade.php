@@ -35,7 +35,7 @@
 
   <div class="form-row">
     <div class="form-group col-md-12">
-      <button class="btn btn-primary"
+      <button class="btn btn-success"
         data-idconstruction="{{$construction->id}}"
         data-nameconstruction="{{$construction->name}}"
         data-honoraryconstruction="{{$construction->honorary}}"
@@ -43,7 +43,7 @@
         data-square_meterconstruction="{{$construction->square_meter}}"
         data-statusconstruction="{{$construction->status}}"
 
-        data-name="{{$client->client_name}}"
+        data-client_name="{{$client->name}}"
         data-cellphone="{{$client->cellphone}}"
         data-phonelandline="{{$client->phonelandline}}"
         data-address="{{$client->address}}"

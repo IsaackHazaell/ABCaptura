@@ -6,8 +6,8 @@
 
 <div class="form-row">
   <div class="form-group col-md-6">
-    <label for="client_name">Nombre</label>
-    <input type="text" class="form-control" name="client_name" id="client_name" value="{{ $client->client_name }}" readonly>
+    <label for="name">Nombre</label>
+    <input type="text" class="form-control" name="name" id="name" value="{{ $client->name }}" readonly>
   </div>
   <div class="form-group col-md-6">
     <label for="cellphone">Celular</label>

@@ -6,8 +6,8 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": "{{route('construction.showTableC')}}",
         "columns": [
-            {data: 'id'},
-            {data: 'name'},
+            {data: 'construction_id'},
+            {data: 'construction_name'},
             {data: 'honorary'},
             {data: 'date'},
             {data: 'square_meter'},
@@ -46,6 +46,11 @@ $('#edit').on('show.bs.modal', function (event) {
     var square_meter = button.data('square_meterconstruction')
     var status = button.data('statusconstruction')
 
+    var client_name = button.data('client_name')
+    var cellphone = button.data('cellphone')
+    var phonelandline = button.data('phonelandline')
+    var address = button.data('address')
+
     //var data_id = button.data('iddata')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
@@ -54,6 +59,12 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #date').val(date);
     modal.find('.modal-body #square_meter').val(square_meter);
     modal.find('.modal-body #status').val(status);
+
+    modal.find('.modal-body #client_name').val(client_name);
+    modal.find('.modal-body #cellphone').val(cellphone);
+    modal.find('.modal-body #phonelandline').val(phonelandline);
+    modal.find('.modal-body #address').val(address);
+
     //modal.find('.modal-body #data_id').val(data_id);
 });
 
