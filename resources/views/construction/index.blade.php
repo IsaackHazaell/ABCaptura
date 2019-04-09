@@ -22,8 +22,8 @@
               <tr>
                   <th width="10px">Id</th>
                   <th>Nombre</th>
-                  <th>Honorario</th>
-                  <th>Fecha</th>
+                  <th>Porcentaje de Honorario</th>
+                  <th>Fecha de Arranque</th>
                   <th>Metros cuadrados</th>
                   <th>Estatus</th>
                   <th width="50px">Acciones</th>

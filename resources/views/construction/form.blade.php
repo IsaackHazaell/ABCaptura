@@ -4,11 +4,11 @@
       <input type="text" class="form-control" name="name" id="name">
     </div>
     <div class="form-group col-md-6">
-      <label for="honorary">Honorario</label>
+      <label for="honorary">Porcentaje de honorarios</label>
       <input type="number" class="form-control" name="honorary" id="honorary">
     </div>
     <div class="form-group col-md-6">
-      <label for="date">Fecha</label>
+      <label for="date">Fecha de arranque</label>
       <input type="date" class="form-control" name="date" id="date">
     </div>
     <div class="form-group col-md-6">
@@ -24,3 +24,5 @@
       </select>
     </div>
 </div>
+
+@include('client.create')

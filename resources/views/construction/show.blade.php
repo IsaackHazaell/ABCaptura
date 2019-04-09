@@ -31,6 +31,8 @@
     </div>
   </div>
 
+  @include('client.show')
+
   <div class="form-row">
     <div class="form-group col-md-12">
       <button class="btn btn-primary"
@@ -40,6 +42,12 @@
         data-dateconstruction="{{$construction->date}}"
         data-square_meterconstruction="{{$construction->square_meter}}"
         data-statusconstruction="{{$construction->status}}"
+
+        data-name="{{$client->client_name}}"
+        data-cellphone="{{$client->cellphone}}"
+        data-phonelandline="{{$client->phonelandline}}"
+        data-address="{{$client->address}}"
+
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('construction') }}"><b>Lista de obras</b></a>
     </div>
