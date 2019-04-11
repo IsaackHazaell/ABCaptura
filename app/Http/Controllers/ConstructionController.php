@@ -178,15 +178,15 @@ class ConstructionController extends Controller
      * @param  \App\construction  $construction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(construction $construction)
-    {
-      $provider->delete();
-      $msg = [
-          'title' => 'Eliminado!',
-          'text' => 'Obra eliminada exitosamente.',
-          'icon' => 'success'
-      ];
+     public function destroy(construction $construction)
+     {
+         $construction->delete();
+         $msg = [
+             'title' => 'Eliminada!',
+             'text' => 'Obra eliminada exitosamente.',
+             'icon' => 'success'
+         ];
 
-      return response()->json($msg);
-    }
+         return response()->json($msg);
+     }
 }

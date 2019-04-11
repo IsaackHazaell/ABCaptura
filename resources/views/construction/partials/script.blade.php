@@ -114,5 +114,4 @@ function sAlert(title, text, icon)
     timer: 3000
   });
 }
-
 </script>
