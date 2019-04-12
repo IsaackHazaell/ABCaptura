@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\Client;
 use App\construction;
 use Illuminate\Http\Request;
-use DB;
 use Yajra\DataTables\DataTables;
 
 
@@ -23,7 +24,10 @@ class ConstructionController extends Controller
     public function showTableC()
     {
       $constructions = DB::table('constructions')
-        ->select('constructions.*')
+        ->select('constructions.*', 'constructions.id as construction_id' ,
+        'constructions.name as construction_name','clients.*',
+        'clients.id as client_id', 'clients.name as client_name')
+        ->join('clients', 'clients.construction_id', '=', 'constructions.id')
         ->get();
         for ($i=0; $i<$constructions->count(); $i++) {
           if($constructions[$i]->status=="0")
@@ -33,7 +37,6 @@ class ConstructionController extends Controller
           else if($constructions[$i]->status=="2")
               $constructions[$i]->status="Espera";
         }
-
         return Datatables::of($constructions)
         ->addColumn('btn', 'construction.actions')
         ->rawColumns(['btn'])
@@ -75,6 +78,15 @@ class ConstructionController extends Controller
         $construction->square_meter = $request->square_meter;
         $construction->status = $status;
         $construction->save();
+
+        $client = New Client;
+        $client->construction_id = $construction->id;
+        $client->name = $request->client_name;
+        $client->cellphone = $request->cellphone;
+        $client->phonelandline = $request->phonelandline;
+        $client->address = $request->address;
+        $client->save();
+
         $msg = [
             'title' => 'Creado!',
             'text' => 'Obra creada exitosamente.',
@@ -92,7 +104,7 @@ class ConstructionController extends Controller
      */
     public function show(construction $construction)
     {
-
+      // $client = DB::table('clients')->where('construction_id', $construction->id)->first();
       $status = null;
       if($construction->status==0)
         $status="Activo";
@@ -102,7 +114,9 @@ class ConstructionController extends Controller
           $status="Espera";
 
       $construction->status = $status;
-      return view('construction.show')->with('construction',$construction);
+      $client = Client::select('*')->where('construction_id', $construction->id)->first();
+      // dd($client->name);
+      return view('construction.show')->with('construction',$construction)->with('client', $client);
     }
 
     /**
@@ -125,7 +139,6 @@ class ConstructionController extends Controller
      */
     public function update(Request $request)
     {
-      // dd($construction);
       $status = null;
       if($request->status=="Activo")
         $status=0;
@@ -143,6 +156,13 @@ class ConstructionController extends Controller
       $construction->status = $status;
       $construction->save();
 
+      $client = Client::where('construction_id', $request->id)->firstOrFail();
+      $client->name = $request->client_name;
+      $client->phonelandline = $request->phonelandline;
+      $client->cellphone = $request->cellphone;
+      $client->address = $request->address;
+      $client->save();
+
       $msg = [
         'title' => 'Modificado!',
         'text' => 'Obra modificada exitosamente.',
@@ -158,15 +178,15 @@ class ConstructionController extends Controller
      * @param  \App\construction  $construction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(construction $construction)
-    {
-      $provider->delete();
-      $msg = [
-          'title' => 'Eliminado!',
-          'text' => 'Obra eliminada exitosamente.',
-          'icon' => 'success'
-      ];
+     public function destroy(construction $construction)
+     {
+         $construction->delete();
+         $msg = [
+             'title' => 'Eliminada!',
+             'text' => 'Obra eliminada exitosamente.',
+             'icon' => 'success'
+         ];
 
-      return response()->json($msg);
-    }
+         return response()->json($msg);
+     }
 }

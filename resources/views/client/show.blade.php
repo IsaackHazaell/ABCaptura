@@ -10,7 +10,7 @@
     <input type="text" class="form-control" name="name" id="name" value="{{ $client->name }}" readonly>
   </div>
   <div class="form-group col-md-6">
-    <label for="cellphone">Celular5</label>
+    <label for="cellphone">Celular</label>
     <input type="text" class="form-control" name="cellphone" id="cellphone" value="{{ $client->cellphone }}" readonly>
   </div>
 </div>
