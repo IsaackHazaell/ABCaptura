@@ -1,7 +1,7 @@
 <script>
 
-$(document).ready(function() {
-    $('#constructions_table').DataTable({
+var table=null;
+table = $('#constructions_table').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": "{{route('construction.showTableC')}}",
@@ -34,7 +34,6 @@ $(document).ready(function() {
           "infoFiltered": ""
         }
     });
-});
 
 
 $('#edit').on('show.bs.modal', function (event) {
@@ -87,6 +86,7 @@ $('body').delegate('.status-construction','click',function(){
                 dataType: 'json',
                 data: {id: id_construction}
             }).done(function(data){
+              console.log("hola");
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);
             });
