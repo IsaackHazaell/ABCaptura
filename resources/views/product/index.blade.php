@@ -22,7 +22,7 @@
                   <th width="10px">Id</th>
                   <th>Concepto</th>
                   <th>Unidad</th>
-                  <th>Precio unitario</th>
+                  <th>Precio unitario sin IVA</th>
                   <th>Mes y año</th>
                   <th>Proveedor</th>
                   <th>Descripción</th>
