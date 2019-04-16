@@ -7,7 +7,7 @@
 <div class="form-row">
   <div class="form-group col-md-6">
     <label for="client_name">Nombre</label>
-    <input type="text" class="form-control" name="client_name" id="client_name">
+    <input type="text" class="form-control" name="client_name" id="client_name" required>
   </div>
   <div class="form-group col-md-6">
     <label for="cellphone">Celular</label>

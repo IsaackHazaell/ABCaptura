@@ -6,7 +6,7 @@ table = $('#funds_table').DataTable({
     "serverSide": true,
     "ajax": "{{route('fund.showTableF')}}",
     "columns": [
-        {data: 'id'},
+        {data: 'fund_id'},
         {data: 'name'},
         {data: 'date'},
         {data: 'remaining'},
