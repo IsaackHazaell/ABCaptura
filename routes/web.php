@@ -47,3 +47,7 @@ Route::get('create2','CaptureController@create2')->name('capture.create2');
 //Honorary Routes
 Route::resource('honorary','HonoraryController');
 Route::get('showTableHo','HonoraryController@showTableHo')->name('honorary.showTableHo');
+
+//Statements Routes
+Route::resource('statement','StatementController');
+Route::get('showTableSt','StatementController@showTableSt')->name('statement.showTableSt');
