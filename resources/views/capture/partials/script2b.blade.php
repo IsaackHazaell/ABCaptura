@@ -1,8 +1,6 @@
 <script>
 //$("#formulario").on("submit", function(e){
 $("#saveCapture").click(function (e) {
-  var honorary = $('input[name="honorary"]:checked').val();
-  var iva = $('input[name="iva"]:checked').val();
   if(valida())
   {
     var text = $('#fund_id').val();
@@ -45,10 +43,10 @@ $("#saveCapture").click(function (e) {
                date: $('#date').val(),
                file: $('#file').val(),
                folio: $('#folio').val(),
-               iva: iva,
-               honorarium: honorary,
                category: $('#category').val(),
-               concept: $('#concept').val()
+               concept: $('#concept').val(),
+               honorarium: $('#honorary').val(),
+               iva: $('#iva').val()
            },
            success: function() {
              swal({

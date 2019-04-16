@@ -22,6 +22,8 @@
         <input type="hidden" name="vaucher" id="vaucher" value={{$data->file}}>
         <input type="hidden" name="folio" id="folio" value={{$data->folio}}>
         <input type="hidden" name="category" id="category" value={{$category}}>
+        <input type="hidden" name="honorary" id="honorary" value={{$data->honorary}}>
+        <input type="hidden" name="iva" id="iva" value={{$data->iva}}>
       </div>
     </div>
     </form>

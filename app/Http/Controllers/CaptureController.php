@@ -11,6 +11,8 @@ use App\Fund;
 use App\Logistic;
 use App\Honorary;
 use App\HonoraryRemaining;
+use App\TemporaryCapture;
+use App\TemporaryCaptureProduct;
 use Illuminate\Http\Request;
 use DB;
 use Yajra\DataTables\DataTables;
@@ -52,6 +54,7 @@ class CaptureController extends Controller
     public function create2(Request $request)
     {
       //dd($request);
+
       $funds = DB::table('funds','constructions')
         ->select(
         'funds.id', 'funds.date', 'funds.remaining',
@@ -80,6 +83,9 @@ class CaptureController extends Controller
 
         if($category == "Material")
         {
+          //Guardamos captura temporal
+          $temporary_capture = CaptureController::saveTemporalCapture($request);
+          //dd($temporary_capture);
           $prices = DB::table('products','prices')
             ->select(
             'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
@@ -95,10 +101,43 @@ class CaptureController extends Controller
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
           }
-          return view('capture.create2')->with('data', $request)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
+          return view('capture.create2')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
         }
         else
             return view('capture.create2b')->with('data', $request)->with('funds',$funds)->with('category',$category);
+    }
+
+    public function saveTemporalCapture($data)
+    {
+        $construction_id="";
+        for($i=0;$i<strlen($data->construction_id);$i++){
+          if($data->construction_id[$i] != " ")
+            $construction_id .= $data->construction_id[$i];
+          else
+            break;
+        }
+
+        $provider_id = "";
+        for($i=0;$i<strlen($data->provider_id);$i++){
+          if($data->provider_id[$i] != " ")
+            $provider_id .= $data->provider_id[$i];
+          else
+            break;
+        }
+
+        $temporary_capture = New TemporaryCapture;
+        $temporary_capture->construction_id = $construction_id;
+        $temporary_capture->provider_id = $provider_id;
+        $temporary_capture->fund_id = 1;
+        $temporary_capture->date = $data->date;
+        $temporary_capture->voucher = $data->file;
+        $temporary_capture->total = 0;
+        $temporary_capture->folio = $data->folio;
+        $temporary_capture->honorarium = $data->honorary;
+        $temporary_capture->iva = $data->iva;
+        $temporary_capture->save();
+
+        return $temporary_capture;
     }
 
     public function month($month)
@@ -164,10 +203,41 @@ class CaptureController extends Controller
 
     public function showTablePC(Request $request)
     {
-      //dd($request);
-      //dd($request->price);
+        //Guardamos en tabla products temporal
+        //dd($request);
+        $price_id="";
+        $flag=false;
+        for($i=0;$i<strlen($request->price);$i++){
+          if($flag)
+            $price_id .= $request->price[$i];
+          if($request->price[$i] == "/")
+            $flag=true;
+        }
+        //dd($request->capture_id);
+        $temporary_product = New TemporaryCaptureProduct;
+        $temporary_product->price_id = $price_id;
+        $temporary_product->capture_id = $request->capture_id;
+        $temporary_product->quantity = $request->quantity;
+        $temporary_product->total = $request->total;
+        $temporary_product->extra = $request->extra;
+        $temporary_product->save();
 
-      //Precio/product_id/unity_id
+
+        //Seleccionamos todos los temporales con el id de esa capturado
+        $toTable = DB::table('temporary_capture_products')
+          ->select(
+            'temporary_capture_products.quantity', 'temporary_capture_products.extra', 'temporary_capture_products.total',
+            'prices.id as price_id', 'prices.price', 'prices.unity',
+            'products.id as product_id', 'products.concept'
+          )
+          ->where('temporary_capture_products.capture_id', '=', $request->capture_id)
+          ->join('prices', 'prices.id', '=', 'temporary_capture_products.price_id')
+          ->join('products', 'products.id', '=', 'prices.product_id')
+          ->get();
+
+          //dd($toTable);
+
+      //Precio/product_id
       //unidad, producto, cantidad, precio, cargo extra, total, acciones
 
       /*$product_id=substr($request->product_id,1);
@@ -189,19 +259,10 @@ class CaptureController extends Controller
         ->join('prices', 'prices.product_id', '=', 'products.id')
         ->get();*/
         //dd($request->price);
-        $toTable = DB::table('products','prices')
-          ->select(
-          'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-          'prices.*'
-          )
-          ->where('prices.price', '=', $request->price)
-          ->join('prices', 'prices.product_id', '=', 'products.id')
-          ->get();
 
-        //dd($toTable);
 
         return Datatables::of($toTable)
-        ->addColumn('btn', 'capture.partials.buttons')
+        ->addColumn('btn', 'capture.partials.buttons_product')
         ->rawColumns(['btn'])
       ->make(true);
       //return redirect();
@@ -215,7 +276,7 @@ class CaptureController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->honorarium);
+        //dd($request);
 
         //Guardar captura
         $capture = Capture::create($request->all());

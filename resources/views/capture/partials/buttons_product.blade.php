@@ -2,4 +2,4 @@
     <span class="fa fa-trash"></span>
 </a>
 
-<!--id_construction="{//{ $id }}"
+<!--id_temporalyProduct="{//{ $id }}"

@@ -16,6 +16,8 @@ class CreateProductsCapturesTable extends Migration
         Schema::create('products_captures', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('quantity');
+          $table->decimal('extra',10,2)->nullable();
+          $table->decimal('total',10,2);
           $table->integer('capture_id')->unsigned();
           $table->integer('price_id')->unsigned();
           $table->timestamps();
