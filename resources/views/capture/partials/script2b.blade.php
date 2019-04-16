@@ -1,9 +1,20 @@
 <script>
 //$("#formulario").on("submit", function(e){
 $("#saveCapture").click(function (e) {
+  var honorary = $('input[name="honorary"]:checked').val();
+  var iva = $('input[name="iva"]:checked').val();
   if(valida())
   {
     var text = $('#fund_id').val();
+    var fund_id="";
+    for (var i = 0; i < text.length; i++) {
+      if(text.charAt(i) == "/")
+      {
+        break;
+      }
+      //if(i!=0)
+        fund_id += text.charAt(i)
+    }
     var remaining = getRemaining(text);
     remaining = parseInt(remaining);
     var total = $('#total').val();
@@ -27,8 +38,28 @@ $("#saveCapture").click(function (e) {
            url: "{{route('capture.store')}}",
            data: {
                remaining: remaining,
-               total: total
-           }
+               total: total,
+               construction_id: $('#construction_id').val(),
+               provider_id: $('#provider_id').val(),
+               fund_id: fund_id,
+               date: $('#date').val(),
+               file: $('#file').val(),
+               folio: $('#folio').val(),
+               iva: iva,
+               honorarium: honorary,
+               category: $('#category').val(),
+               concept: $('#concept').val()
+           },
+           success: function() {
+             swal({
+               title: "Capturado",
+               text: "Se ha capturado correctamente",
+               icon: "success",
+               button: "Continue",
+               timer: 3000
+             });
+             //window.location.reload();
+            }
        });
       /*"ajax": {
         type: "post",

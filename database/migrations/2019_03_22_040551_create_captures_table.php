@@ -15,12 +15,13 @@ class CreateCapturesTable extends Migration
     {
         Schema::create('captures', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('date');
+            $table->date('date');
             $table->decimal('total',10,2);
             $table->integer('iva');
             $table->integer('honorarium');
-            $table->integer('voucher');
+            $table->integer('voucher')->nullable();
             $table->integer('folio')->nullable();
+            $table->string('description',128)->nullable();
             $table->integer('fund_id')->unsigned();
             $table->integer('construction_id')->unsigned();
             $table->integer('provider_id')->unsigned();

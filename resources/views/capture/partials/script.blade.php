@@ -1,5 +1,7 @@
 <script>
 $(document).ready(function () {
+  counter = 1;
+  t = $('#products_capture_table').DataTable( {} );
   castearInputProduct();
 });
 
@@ -65,33 +67,38 @@ $('#extra').on('change', function (event) {
 $("#prod").click(function (e) {
     e.preventDefault();
     var price = $('#priceCapture').val();
-    var table=null;
-    table = $('#products_capture_table');
-    console.log(price);
-    table = $('#products_capture_table').DataTable({
-      "bDestroy": true,
-      stateSave: true,
-        "processing": true,
-        "serverSide": true,
-        /*"ajax": "{//{route('capture.showTablePC')}}",
-        type: "post",
-        data: {
-            price: 1
-        },*/
 
-        "ajax": {
-          type: "get",
-          url: "{{route('capture.showTablePC')}}",
-          data: {
-              price: price
-          }
-        },
-        "columns": [
-            {data: 'unity'},
-            {data: 'product_concept'},
-            {data: 'price'}
-        ],
+    /*table.row.add( [
+            counter +'.1',
+            counter +'.2',
+            counter +'.3',
+            counter +'.4',
+            counter +'.5',
+            @//include('capture.partials.buttons')
+        ] ).draw();
+        counter++;*/
 
+        var table=null;
+        table = $('#products_capture_table');
+        console.log(price);
+        table = $('#products_capture_table').DataTable({
+          "bDestroy": true,
+          stateSave: true,
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+              type: "get",
+              url: "{{route('capture.showTablePC')}}",
+              data: {
+                  price: price
+              }
+            },
+          $('#products_capture_table').DataTable().ajax.reload();
+    /*"columns": [
+        {data: 'unity'},
+        {data: 'product_concept'},
+        {data: 'price'}
+    ],*/
   });
   cleanInputs();
 });
@@ -100,67 +107,9 @@ function cleanInputs()
 {
   $('#quantity').val(0);
   $('#extra').val(0);
+  $('#total').val(0);
   castearInputProduct();
 }
-    /*$.ajax({
-      //type: "post",
-      url: "{//{route('capture.showTablePC')}}",
-      data: {
-          price: price
-      }, success: function (price) {
-              alert("Se ha realizado el POST con exito "+price);
-              table = $('#products_capture_table').DataTable({
-                  "processing": true,
-                  "serverSide": true,
-                  "ajax": "{//{route('capture.showTablePC')}}",
-                  "columns": [
-                      {price: 'price'}
-                  ],
-              });
-      }
-    });
-});*/
-/*
-function addProduct()
-{
-  console.log("HHehe");
-
-
-  var table=null;
-  table = $('#products_capture_table').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "ajax": "{//{route('capture.showTablePC')}}",
-      "columns": [
-          {data: 'id'},
-          {data: 'unity'},
-          {data: 'price'},
-          {data: 'month'},
-          {data: 'provider_id'},
-          {data: 'btn'}
-      ],
-      "language": {
-    "info": "_TOTAL_ registros",
-    "search": "Buscar",
-    "paginate": {
-      "next": "Siguiente",
-      "previous": "Anterior",
-    },
-    "lengthMenu": 'Mostrar <select>'+
-        '<option value="10">10</option>'+
-        '<option value="30">30</option>'+
-        '<option value="-1">Todos</option>'+
-        '</select> registros',
-    "loadingRecords": "Cargando...",
-    "processing": "Procesando...",
-    "emptyTable": "No hay datos",
-    "zeroRecords": "No hay coincidencias",
-    "infoEmpty": "",
-    "infoFiltered": ""
-  }
-});
-}*/
-
 
 
 

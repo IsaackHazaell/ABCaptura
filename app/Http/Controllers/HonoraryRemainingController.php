@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ProductsCapture;
+use App\HonoraryRemaining;
 use Illuminate\Http\Request;
 
-class ProductsCaptureController extends Controller
+class HonoraryRemainingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ProductsCaptureController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ProductsCapture  $productsCapture
+     * @param  \App\HonoraryRemaining  $honoraryRemaining
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductsCapture $productsCapture)
+    public function show(HonoraryRemaining $honoraryRemaining)
     {
         //
     }
@@ -52,10 +52,10 @@ class ProductsCaptureController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ProductsCapture  $productsCapture
+     * @param  \App\HonoraryRemaining  $honoraryRemaining
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductsCapture $productsCapture)
+    public function edit(HonoraryRemaining $honoraryRemaining)
     {
         //
     }
@@ -64,10 +64,10 @@ class ProductsCaptureController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProductsCapture  $productsCapture
+     * @param  \App\HonoraryRemaining  $honoraryRemaining
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductsCapture $productsCapture)
+    public function update(Request $request, HonoraryRemaining $honoraryRemaining)
     {
         //
     }
@@ -75,10 +75,10 @@ class ProductsCaptureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProductsCapture  $productsCapture
+     * @param  \App\HonoraryRemaining  $honoraryRemaining
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductsCapture $productsCapture)
+    public function destroy(HonoraryRemaining $honoraryRemaining)
     {
         //
     }

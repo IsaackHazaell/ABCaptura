@@ -9,7 +9,7 @@
   <p>Obra: {{$data->construction_id}} - Proveedor: {{$data->provider_id}}</p>
 </section>
 
-<form id="formulario" name="formulario" action="">
+<form action="">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
   @include('capture.partials.form2b')
@@ -21,7 +21,7 @@
         <input type="hidden" name="date" id="date" value={{$data->date}}>
         <input type="hidden" name="vaucher" id="vaucher" value={{$data->file}}>
         <input type="hidden" name="folio" id="folio" value={{$data->folio}}>
-
+        <input type="hidden" name="category" id="category" value={{$category}}>
       </div>
     </div>
     </form>

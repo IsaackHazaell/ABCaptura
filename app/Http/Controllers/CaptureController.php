@@ -8,6 +8,9 @@ use App\Provider;
 use App\Product;
 use App\Price;
 use App\Fund;
+use App\Logistic;
+use App\Honorary;
+use App\HonoraryRemaining;
 use Illuminate\Http\Request;
 use DB;
 use Yajra\DataTables\DataTables;
@@ -48,7 +51,7 @@ class CaptureController extends Controller
 
     public function create2(Request $request)
     {
-      //dd("Se feue al create2");
+      //dd($request);
       $funds = DB::table('funds','constructions')
         ->select(
         'funds.id', 'funds.date', 'funds.remaining',
@@ -92,15 +95,10 @@ class CaptureController extends Controller
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
           }
-
-          return view('capture.create2')->with('data', $request)->with('prices', $prices)->with('funds',$funds);
+          return view('capture.create2')->with('data', $request)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
         }
         else
-        {
-            return view('capture.create2b')->with('data', $request)->with('funds',$funds);
-        }
-
-
+            return view('capture.create2b')->with('data', $request)->with('funds',$funds)->with('category',$category);
     }
 
     public function month($month)
@@ -203,10 +201,10 @@ class CaptureController extends Controller
         //dd($toTable);
 
         return Datatables::of($toTable)
-        //->addColumn('btn', 'capture.partials.buttons')
-        //->rawColumns(['btn'])
+        ->addColumn('btn', 'capture.partials.buttons')
+        ->rawColumns(['btn'])
       ->make(true);
-      return redirect();
+      //return redirect();
     }
 
     /**
@@ -217,24 +215,71 @@ class CaptureController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        //dd($request->honorarium);
+
         //Guardar captura
+        $capture = Capture::create($request->all());
+
         //Checar categoria
         //gurdar captura-categoria
+        if($request->category == "Material")
+        {
+            dd("Es material");
+        }
+        else {
+          $logistic = New Logistic;
+          $logistic->capture_id = $capture->id;
+          $logistic->concept = $request->concept;
+          $logistic->save();
+        }
+
         //descntar fondo
+        $fund = Fund::findOrFail($request->fund_id);
+        $fund->remaining = $fund->remaining - $request->total;
+        $fund->save();
+
         //Honorario...
+        $generado=false;
+        if($request->honorarium == 1)
+        {
+          $construction_honorary = construction::findOrFail($request->construction_id);
+          $honorary = New Honorary;
+          $honorary->capture_id = $capture->id;
+          $honorary->provider_id = $request->provider_id;
+          $total = (float)$request->total;
+          $total = $total * $construction_honorary->honorary;
+          $total = $total/100;
+          $honorary->total = $total;
+          //Checar nombre del proveedor, si no es missa:generado=0
+          $provider_name = Provider::findOrFail($request->provider_id);
+          $provider_name = $provider_name->name;
+          if($provider_name == "Missael")
+          {
+            $honorary->status = 1;
+          }
+          else
+          {
+            $generado=true;
+            $honorary->status = 0;
+          }
+          $honorary->save();
+
+          //Honorary_remaining
+          $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $request->construction_id)->firstOrFail();
+          if($generado)
+            $honorary_remaining->remaining += $total;
+          else
+            $honorary_remaining->remaining -= $total;
+          $honorary_remaining->save();
+        }
+
+
         //estado de cuenta...
 
 
 
-        $constructions = construction::select('id','name')->where('id', '=', $request->construction_id)->get();
-        $providers = Provider::select('id','name','category')->where('id', '=', $request->provider_id)->get();
-        $funds = DB::table('funds','constructions')
-          ->select(
-          'funds.id', 'funds.date', 'funds.remaining',
-          'constructions.name')
-          ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
-          ->get();
+        $constructions = construction::select('id','name')->get();
+        $providers = Provider::select('id','name','category')->get();
 
           for($i=0; $i<$providers->count(); $i++)
           {
@@ -246,24 +291,14 @@ class CaptureController extends Controller
                 $providers[$i]->category = "Logística";
           }
 
-
-        if($request->remaining < $request->total)
-        {
-          $msg = [
-              'title' => 'Fondo insuficiente!',
-              'text' => 'Seleccione otro fondo',
-              'icon' => 'error'
-          ];
-        }
-        else {
           $msg = [
               'title' => 'Capturado correctamente!',
               'text' => 'Se ha capturado correctamente',
               'icon' => 'success'
           ];
-        }
         //return redirect('construction')->with('message', $msg);
-        return redirect('capture/create')->with('constructions', $constructions)->with('providers', $providers)->with('funds',$funds)->with('message', $msg);
+        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers);
+        //return redirect('capture/create')->with('constructions', $constructions)->with('providers', $providers)->with('message', $msg);
     }
 
     /**
