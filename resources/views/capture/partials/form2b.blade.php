@@ -17,18 +17,3 @@
       <input type="number" class="form-control" required name="total" id="total">
     </div>
   </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-3">
-      <label for="honorary">Honorario</label>
-      <br>
-      <input type="radio" name="honorary" id="honorary" value="1"> Si<br>
-      <input type="radio" name="honorary" id="honorary" value="0"> No<br>
-    </div>
-    <div class="form-group col-md-3">
-      <label for="iva">Iva</label>
-      <br>
-      <input type="radio" name="iva" id="iva" value="1"> Si<br>
-      <input type="radio" name="iva" id="iva" value="0"> No<br>
-    </div>
-  </div>

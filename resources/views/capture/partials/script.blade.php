@@ -7,6 +7,7 @@ $(document).ready(function () {
 
 function castearInputProduct()
 {
+  //totalFinal();
   var all = document.getElementById("product").value;
   var max = all.length;
   var price = 0
@@ -67,20 +68,8 @@ $('#extra').on('change', function (event) {
 $("#prod").click(function (e) {
     e.preventDefault();
     var price = $('#priceCapture').val();
-
-    /*table.row.add( [
-            counter +'.1',
-            counter +'.2',
-            counter +'.3',
-            counter +'.4',
-            counter +'.5',
-            @//include('capture.partials.buttons')
-        ] ).draw();
-        counter++;*/
-
         var table=null;
         table = $('#products_capture_table');
-        console.log(price);
         table = $('#products_capture_table').DataTable({
           "bDestroy": true,
           stateSave: true,
@@ -90,25 +79,46 @@ $("#prod").click(function (e) {
               type: "get",
               url: "{{route('capture.showTablePC')}}",
               data: {
-                  price: price
+                  price: $('#product').val(),
+                  capture_id: $('#capture_id').val(),
+                  quantity: $('#quantity').val(),
+                  extra: $('#extra').val(),
+                  total: $('#total').val()
               }
             },
-          $('#products_capture_table').DataTable().ajax.reload();
-    /*"columns": [
+    "columns": [
         {data: 'unity'},
-        {data: 'product_concept'},
-        {data: 'price'}
-    ],*/
+        {data: 'concept'},
+        {data: 'quantity'},
+        {data: 'price'},
+        {data: 'extra'},
+        {data: 'total'},
+        {data: 'btn'}
+    ],
   });
   cleanInputs();
 });
 
 function cleanInputs()
 {
+  var totalF = document.getElementById("total_final").value;
+  var totalProducto = document.getElementById("total").value;
+  var totalFinal = parseInt(totalF) + parseInt(totalProducto);
   $('#quantity').val(0);
   $('#extra').val(0);
   $('#total').val(0);
+  $('#total_final').val(totalFinal);
   castearInputProduct();
+}
+
+function totalFinal()
+{
+  /*var total = 0;
+  $('#todos').DataTable().rows().data().each(function(el, index){
+    //Asumiendo que es la columna 5 de cada fila la que quieres agregar a la sumatoria
+    total += el[5];
+  });
+  console.log(total);*/
 }
 
 

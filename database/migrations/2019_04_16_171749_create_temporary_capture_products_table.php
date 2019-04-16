@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTemporariesCapturesTable extends Migration
+class CreateTemporaryCaptureProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,21 @@ class CreateTemporariesCapturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('temporaries_captures', function (Blueprint $table) {
+        Schema::create('temporary_capture_products', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('quantity');
+          $table->decimal('extra',10,2)->nullable();
+          $table->decimal('total',10,2);
           $table->integer('capture_id')->unsigned();
           $table->integer('price_id')->unsigned();
           $table->timestamps();
-          $table->foreign('capture_id')->references('id')->on('captures')
+          $table->foreign('capture_id')->references('id')->on('temporary_captures')
             ->onDelete('cascade')
             ->onUpdate('cascade');
           $table->foreign('price_id')->references('id')->on('prices')
             ->onDelete('cascade')
             ->onUpdate('cascade');
+
         });
     }
 
@@ -35,6 +38,6 @@ class CreateTemporariesCapturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('temporaries_captures');
+        Schema::dropIfExists('temporary_capture_products');
     }
 }

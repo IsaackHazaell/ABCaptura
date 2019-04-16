@@ -3,7 +3,7 @@
         <label for="product">Seleccione el producto</label>
         <select class="form-control" required name="product" id="product">
           @foreach($prices as $price)
-          <option value={{$price->price}}/{{$price->product_id}}> {{$price->unity}} {{$price->product_concept}} - {{$price->month}} </option>
+          <option value={{$price->price}}/{{$price->id}}> {{$price->unity}} {{$price->product_concept}} - {{$price->month}} </option>
           @endforeach
       </select>
       </div>
@@ -30,18 +30,7 @@
         <label for="total">Total</label>
         <input type="number" readonly class="form-control" required name="total" id="total">
       </div>
-      <div class="form-group col-md-3">
-        <label for="honorary">Honorario</label>
-        <br>
-        <input type="radio" name="honorary" id="honorary" value="0"> Si<br>
-        <input type="radio" name="honorary" id="honorary" value="1"> No<br>
-      </div>
-      <div class="form-group col-md-3">
-        <label for="iva">Iva</label>
-        <br>
-        <input type="radio" name="iva" id="iva" value="0"> Si<br>
-        <input type="radio" name="iva" id="iva" value="1"> No<br>
-      </div>
 
       <input type="hidden" name="product_id" id="product_id">
+      <input type="hidden" name="capture_id" id="capture_id" value={{$data->id}}>
     </div>
