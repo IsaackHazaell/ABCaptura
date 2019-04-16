@@ -7,7 +7,7 @@
 
   <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="price">Precio unitario</label>
+        <label for="price">Precio unitario sin IVA</label>
         <input type="number" step="any" class="form-control" required name="price" id="price">
       </div>
       <div class="form-group col-md-6">
