@@ -42,8 +42,10 @@ Route::get('showTableProduct','ProductController@showTableProduct')->name('produ
 //Capture Routes
 Route::resource('capture','CaptureController');
 Route::get('showTablePC','CaptureController@showTablePC')->name('capture.showTablePC');
+Route::post('saveProduct','CaptureController@saveProduct')->name('capture.saveProduct');
 Route::get('create2','CaptureController@create2')->name('capture.create2');
 
 //Honorary Routes
 Route::resource('honorary','HonoraryController');
 Route::get('showTableHo','HonoraryController@showTableHo')->name('honorary.showTableHo');
+Route::get('selectC','HonoraryController@selectC')->name('honorary.selectC');

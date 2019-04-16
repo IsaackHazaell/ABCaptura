@@ -9,15 +9,22 @@
   <p>Obra: {{$data->construction_id}} - Proveedor: {{$data->provider_id}}</p>
 </section>
 
-<form>
-  {{csrf_field()}}
+@include('capture.modal', ['provider' => $data->provider_id])
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <button class="btn btn-success btn-md"
+        data-toggle="modal" data-target="#addProduct" style="float: right;"><i class="fa fa-plus"></i> Crear producto</button>
+    </div>
+  </div>
+
   @include('capture.partials.form2')
     <div class="form-row">
       <div class="form-group col-md-12">
-        <button id="prod" class="btn btn-primary">Agregar producto</button>
+        <button id="prod" name="prod"  class="btn btn-info">Agregar producto</button>
       </div>
     </div>
-</form>
+
 
 <div class="box-body">
     <table id="products_capture_table" class="table table-striped table-bordered" style="width:100%">

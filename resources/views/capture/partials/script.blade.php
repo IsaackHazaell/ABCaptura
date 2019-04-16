@@ -1,12 +1,13 @@
 <script>
 $(document).ready(function () {
+  counter = 1;
+  t = $('#products_capture_table').DataTable( {} );
   castearInputProduct();
 });
 
 function castearInputProduct()
 {
   var all = document.getElementById("product").value;
-  console.log(all);
   var max = all.length;
   var price = 0
   for (var i = 0; i < max; i++) {
@@ -17,7 +18,8 @@ function castearInputProduct()
     //if(i!=0)
       price += all.charAt(i)
   }
-  $('#price').val(price);
+  console.log(price);
+  $('#priceCapture').val(price);
 
   var product_id=0;
   for (var i = price.length; i < max; i++) {
@@ -62,86 +64,73 @@ $('#extra').on('change', function (event) {
 
 });
 
+$("#prod").click(function (e) {
+    e.preventDefault();
+    var price = $('#priceCapture').val();
 
-/*var table=null;
-table = $('#products_capture_table').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": "{//{route('capture.showTablePC')}}",
-    "columns": [
-        {data: 'id'},
-        {data: 'unity_id'},
-        {data: 'product_id'},
-        {data: 'quantity'},
-        {data: 'price'},
-        {data: 'extra'},
-        {data: 'total'},
-        {data: 'btn'}
-    ],
-    "language": {
-  "info": "_TOTAL_ registros",
-  "search": "Buscar",
-  "paginate": {
-    "next": "Siguiente",
-    "previous": "Anterior",
-  },
-  "lengthMenu": 'Mostrar <select>'+
-      '<option value="10">10</option>'+
-      '<option value="30">30</option>'+
-      '<option value="-1">Todos</option>'+
-      '</select> registros',
-  "loadingRecords": "Cargando...",
-  "processing": "Procesando...",
-  "emptyTable": "No hay datos",
-  "zeroRecords": "No hay coincidencias",
-  "infoEmpty": "",
-  "infoFiltered": ""
-}
-});*/
+    /*table.row.add( [
+            counter +'.1',
+            counter +'.2',
+            counter +'.3',
+            counter +'.4',
+            counter +'.5',
+            @//include('capture.partials.buttons')
+        ] ).draw();
+        counter++;*/
 
-/*function addProduct()
+        var table=null;
+        table = $('#products_capture_table');
+        console.log(price);
+        table = $('#products_capture_table').DataTable({
+          "bDestroy": true,
+          stateSave: true,
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+              type: "get",
+              url: "{{route('capture.showTablePC')}}",
+              data: {
+                  price: price
+              }
+            },
+          $('#products_capture_table').DataTable().ajax.reload();
+    /*"columns": [
+        {data: 'unity'},
+        {data: 'product_concept'},
+        {data: 'price'}
+    ],*/
+  });
+  cleanInputs();
+});
+
+function cleanInputs()
 {
-  var price = $('#price').val();
-  console.log(price);
-}*/
-
-$('#prod tbody').on('click','tr', function(){
-var table=null;
-var price =   $('#price').val();
-console.log(price);
-table = $('#products_capture_table').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": "{//{route('capture.showTablePC')}}",
-    "columns": [
-        {data: 'id'},
-        {data: 'unity_id'},
-        {data: 'product_id'},
-        {data: 'quantity'},
-        {data: 'price'},
-        {data: 'extra'},
-        {data: 'total'},
-        {data: 'btn'}
-    ],
-    "language": {
-  "info": "_TOTAL_ registros",
-  "search": "Buscar",
-  "paginate": {
-    "next": "Siguiente",
-    "previous": "Anterior",
-  },
-  "lengthMenu": 'Mostrar <select>'+
-      '<option value="10">10</option>'+
-      '<option value="30">30</option>'+
-      '<option value="-1">Todos</option>'+
-      '</select> registros',
-  "loadingRecords": "Cargando...",
-  "processing": "Procesando...",
-  "emptyTable": "No hay datos",
-  "zeroRecords": "No hay coincidencias",
-  "infoEmpty": "",
-  "infoFiltered": ""
+  $('#quantity').val(0);
+  $('#extra').val(0);
+  $('#total').val(0);
+  castearInputProduct();
 }
-});
-});
+
+
+
+
+//SWETALERT
+@if (Session::has('message'))
+        sAlert(
+        "{{ Session::get('message.title') }}",
+        "{{ Session::get('message.text') }}",
+        "{{ Session::get('message.icon') }}"
+    );
+@endif
+
+function sAlert(title, text, icon)
+{
+  swal({
+    title: title,
+    text: text,
+    icon: icon,
+    button: "Continue",
+    timer: 3000
+  });
+}
 </script>
