@@ -314,7 +314,7 @@ class CaptureController extends Controller
           //Checar nombre del proveedor, si no es missa:generado=0
           $provider_name = Provider::findOrFail($request->provider_id);
           $provider_name = $provider_name->name;
-          if($provider_name == "Missael")
+          if($provider_name == "Arq. Missael Quintero")
           {
             $honorary->status = 1;
           }
