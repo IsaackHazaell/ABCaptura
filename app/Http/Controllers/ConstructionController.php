@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Client;
 use App\construction;
+use App\HonoraryRemaining;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -92,6 +93,11 @@ class ConstructionController extends Controller
             'text' => 'Obra creada exitosamente.',
             'icon' => 'success'
         ];
+
+        $honorary_remaining = New HonoraryRemaining;
+        $honorary_remaining->construction_id = $construction->id;
+        $honorary_remaining->remaining = 0;
+        $honorary_remaining->save();
 
         return redirect('construction')->with('message', $msg);
     }

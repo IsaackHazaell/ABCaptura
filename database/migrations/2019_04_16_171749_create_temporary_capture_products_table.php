@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsCapturesTable extends Migration
+class CreateTemporaryCaptureProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProductsCapturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('products_captures', function (Blueprint $table) {
+        Schema::create('temporary_capture_products', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('quantity');
           $table->decimal('extra',10,2)->nullable();
@@ -21,12 +21,13 @@ class CreateProductsCapturesTable extends Migration
           $table->integer('capture_id')->unsigned();
           $table->integer('price_id')->unsigned();
           $table->timestamps();
-          $table->foreign('capture_id')->references('id')->on('captures')
+          $table->foreign('capture_id')->references('id')->on('temporary_captures')
             ->onDelete('cascade')
             ->onUpdate('cascade');
           $table->foreign('price_id')->references('id')->on('prices')
             ->onDelete('cascade')
             ->onUpdate('cascade');
+
         });
     }
 
@@ -37,6 +38,6 @@ class CreateProductsCapturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products_captures');
+        Schema::dropIfExists('temporary_capture_products');
     }
 }

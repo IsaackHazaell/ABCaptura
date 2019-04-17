@@ -23,7 +23,7 @@ class FundController extends Controller
     public function showTableF()
     {
       $funds = DB::table('funds')
-        ->select('funds.*', 'constructions.*')
+        ->select('funds.*', 'funds.id as fund_id', 'constructions.*', 'constructions.id as construction_id')
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
         ->get();
 
@@ -64,7 +64,7 @@ class FundController extends Controller
       $fund = New Fund;
       $fund->total = $request->total;
       $fund->date = $request->date;
-      $fund->remaining = $request->remaining;
+      $fund->remaining = $request->total;
       $fund->construction_id = $construction_id;
       $fund->save();
       return view('fund.index');
@@ -104,6 +104,7 @@ class FundController extends Controller
      */
     public function update(Request $request)
     {
+      //dd($request);
       $fund = fund::findOrFail($request->id);
       $input = $request->all();
       $fund->fill($input)->save();
@@ -124,6 +125,13 @@ class FundController extends Controller
      */
     public function destroy(Fund $fund)
     {
-        //
+      $fund->delete();
+      $msg = [
+          'title' => 'Eliminado!',
+          'text' => 'Proveedor eliminado exitosamente.',
+          'icon' => 'success'
+      ];
+
+      return response()->json($msg);
     }
 }

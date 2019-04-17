@@ -151,16 +151,18 @@ desired effect
           </ul>
         </li>
 
-        <li class="treeview">
-          <a href="#"><i class="fas fa-file-invoice-dollar"></i> <span> Honorarios</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+        <li>
+          <a href="{{route('honorary.selectC')}}">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span> Honorarios</span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('honorary') }}">Lista de honorarios</a></li>
-            <li><a href="{{ url('honorary/create') }}">Capturar</a></li>
-          </ul>
+        </li>
+
+        <li>
+          <a href="*">
+            <i class="fab fa-medium"></i>
+            <span> Memoria</span>
+          </a>
         </li>
       <!-- /.sidebar-menu -->
     </section>

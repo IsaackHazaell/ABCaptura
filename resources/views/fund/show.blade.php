@@ -49,18 +49,18 @@ $('#edit').on('show.bs.modal', function (event) {
     var id = button.data('idfund')
     var construction_id = button.data('construction_id')
     var date = button.data('date')
-    var remaining = button.data('remaining')
+  var remaining = button.data('remaining')
     var total = button.data('total')
 
-    //var data_id = button.data('iddata')
+    var data_id = button.data('iddata')
     var modal = $(this)
     modal.find('.modal-body #idfund').val(id);
     modal.find('.modal-body #construction_id').val(construction_id);
     modal.find('.modal-body #date').val(date);
-    modal.find('.modal-body #remaining').val(remaining);
+  modal.find('.modal-body #remaining').val(remaining);
     modal.find('.modal-body #total').val(total);
 
-    //modal.find('.modal-body #data_id').val(data_id);
+    modal.find('.modal-body #data_id').val(data_id);
 });
 </script>
 @endsection
