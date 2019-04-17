@@ -203,8 +203,6 @@ class CaptureController extends Controller
 
     public function showTablePC(Request $request)
     {
-        //Guardamos en tabla products temporal
-        //dd($request);
         $price_id="";
         $flag=false;
         for($i=0;$i<strlen($request->price);$i++){
@@ -213,7 +211,7 @@ class CaptureController extends Controller
           if($request->price[$i] == "/")
             $flag=true;
         }
-        //dd($request->capture_id);
+
         $temporary_product = New TemporaryCaptureProduct;
         $temporary_product->price_id = $price_id;
         $temporary_product->capture_id = $request->capture_id;
@@ -222,8 +220,6 @@ class CaptureController extends Controller
         $temporary_product->extra = $request->extra;
         $temporary_product->save();
 
-
-        //Seleccionamos todos los temporales con el id de esa capturado
         $toTable = DB::table('temporary_capture_products')
           ->select(
             'temporary_capture_products.quantity', 'temporary_capture_products.extra', 'temporary_capture_products.total',
@@ -235,37 +231,10 @@ class CaptureController extends Controller
           ->join('products', 'products.id', '=', 'prices.product_id')
           ->get();
 
-          //dd($toTable);
-
-      //Precio/product_id
-      //unidad, producto, cantidad, precio, cargo extra, total, acciones
-
-      /*$product_id=substr($request->product_id,1);
-      $product = Product::select('id','concept')->where('id', '=', $product_id)->get();
-      $product_toTable = $product[0]->id . " " . $product[0]->concept;
-      $request->product_id = $product_toTable;*/
-
-      /*$unity_id=substr($request->unity_id,1);
-      $unity = Unity::select('id','name')->where('id', '=', $unity_id)->get();
-      $unity_toTable = $unity[0]->id . " " . $unity[0]->name;
-      $request->unity_id = $unity_toTable;*/
-
-      /*$toTable = DB::table('products','prices')
-        ->select(
-        'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-        'prices.*'
-        )
-        ->where('products.id', '=', $product_id)
-        ->join('prices', 'prices.product_id', '=', 'products.id')
-        ->get();*/
-        //dd($request->price);
-
-
         return Datatables::of($toTable)
         ->addColumn('btn', 'capture.partials.buttons_product')
         ->rawColumns(['btn'])
       ->make(true);
-      //return redirect();
     }
 
     /**
@@ -276,8 +245,6 @@ class CaptureController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-
         //Guardar captura
         $capture = Capture::create($request->all());
 
@@ -301,39 +268,40 @@ class CaptureController extends Controller
 
         //Honorario...
         $generado=false;
-        if($request->honorarium == 1)
+        //Checar nombre del proveedor, si no es missa:generado=0
+        $provider_name = Provider::findOrFail($request->provider_id);
+        $provider_name = $provider_name->name;
+        if($request->honorarium == 1 || $provider_name == "Arq. Missael Quintero")
         {
+
           $construction_honorary = construction::findOrFail($request->construction_id);
           $honorary = New Honorary;
           $honorary->capture_id = $capture->id;
           $honorary->provider_id = $request->provider_id;
           $total = (float)$request->total;
-          $total = $total * $construction_honorary->honorary;
-          $total = $total/100;
-          $honorary->total = $total;
-          //Checar nombre del proveedor, si no es missa:generado=0
-          $provider_name = Provider::findOrFail($request->provider_id);
-          $provider_name = $provider_name->name;
-          if($provider_name == "Arq. Missael Quintero")
+          if($provider_name != "Arq. Missael Quintero" && $request->honorarium == 1)
           {
-            $honorary->status = 1;
-          }
-          else
-          {
+            $total = $total * $construction_honorary->honorary;
+            $total = $total/100;
             $generado=true;
             $honorary->status = 0;
           }
+          else if($provider_name == "Arq. Missael Quintero" && $request->honorarium == 0)
+          {
+            $honorary->status = 1;
+            $generado=false;
+          }
+          $honorary->total = $total;
           $honorary->save();
-
-          //Honorary_remaining
-          $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $request->construction_id)->firstOrFail();
-          if($generado)
-            $honorary_remaining->remaining += $total;
-          else
-            $honorary_remaining->remaining -= $total;
-          $honorary_remaining->save();
         }
 
+        //Honorary_remaining
+        $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $request->construction_id)->firstOrFail();
+        if($generado)
+          $honorary_remaining->remaining += $total;
+        else
+          $honorary_remaining->remaining -= $total;
+        $honorary_remaining->save();
 
         //estado de cuenta...
 
@@ -357,9 +325,8 @@ class CaptureController extends Controller
               'text' => 'Se ha capturado correctamente',
               'icon' => 'success'
           ];
-        //return redirect('construction')->with('message', $msg);
+
         return view('capture.create')->with('constructions', $constructions)->with('providers', $providers);
-        //return redirect('capture/create')->with('constructions', $constructions)->with('providers', $providers)->with('message', $msg);
     }
 
     /**

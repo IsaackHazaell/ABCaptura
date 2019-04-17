@@ -19,7 +19,6 @@ function castearInputProduct()
     //if(i!=0)
       price += all.charAt(i)
   }
-  console.log(price);
   $('#priceCapture').val(price);
 
   var product_id=0;
@@ -95,33 +94,40 @@ $("#prod").click(function (e) {
         {data: 'total'},
         {data: 'btn'}
     ],
+
+    "footerCallback": function ( row, data, start, end, display ) {
+        var api = this.api(), data;
+
+        // Remove the formatting to get integer data for summation
+        var intVal = function ( i ) {
+            return typeof i === 'string' ?
+                i.replace(/[\$,]/g, '')*1 :
+                typeof i === 'number' ?
+                    i : 0;
+        };
+
+        // Total over all pages
+        total = api
+            .column( 5 )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+      $('#total_final').val(total);
+    }
   });
   cleanInputs();
+
 });
 
 function cleanInputs()
 {
-  var totalF = document.getElementById("total_final").value;
-  var totalProducto = document.getElementById("total").value;
-  var totalFinal = parseInt(totalF) + parseInt(totalProducto);
   $('#quantity').val(0);
   $('#extra').val(0);
   $('#total').val(0);
-  $('#total_final').val(totalFinal);
   castearInputProduct();
 }
-
-function totalFinal()
-{
-  /*var total = 0;
-  $('#todos').DataTable().rows().data().each(function(el, index){
-    //Asumiendo que es la columna 5 de cada fila la que quieres agregar a la sumatoria
-    total += el[5];
-  });
-  console.log(total);*/
-}
-
-
 
 
 //SWETALERT
