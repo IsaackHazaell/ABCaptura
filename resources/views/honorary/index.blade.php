@@ -21,6 +21,7 @@
               <tr>
                   <th width="10px">Proveedor</th>
                   <th>Fecha de captura</th>
+                  <th>Concpeto de captura</th>
                   <th>Total de captura</th>
                   <th>Honorario</th>
                   <th>Estatus</th>

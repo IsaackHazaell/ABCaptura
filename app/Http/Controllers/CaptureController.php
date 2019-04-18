@@ -10,6 +10,7 @@ use App\Price;
 use App\Fund;
 use App\Logistic;
 use App\Honorary;
+use App\ProductsCapture;
 use App\HonoraryRemaining;
 use App\TemporaryCapture;
 use App\TemporaryCaptureProduct;
@@ -53,8 +54,6 @@ class CaptureController extends Controller
 
     public function create2(Request $request)
     {
-      //dd($request);
-
       $funds = DB::table('funds','constructions')
         ->select(
         'funds.id', 'funds.date', 'funds.remaining',
@@ -68,7 +67,6 @@ class CaptureController extends Controller
         for($i=0;$i<strlen($request->provider_id);$i++){
           if($request->provider_id[$i] != " " && $flag==False)
             $provider_id .= $request->provider_id[$i];
-          //else
           if($request->provider_id[$i-2] == ":")
           {
             $flag=True;
@@ -78,14 +76,33 @@ class CaptureController extends Controller
               $category .= $request->provider_id[$i];
           }
         }
-        //dd($provider_id);
-        //dd($remaining[0]->remaining);
+        $construction_id="";
+        for($i=0;$i<strlen($request->construction_id);$i++){
+          if($request->construction_id[$i] != " ")
+            $construction_id .= $request->construction_id[$i];
+          else
+            break;
+        }
+        $request->construction_id = $construction_id;
+
+        $provider_id = "";
+        for($i=0;$i<strlen($request->provider_id);$i++){
+          if($request->provider_id[$i] != " ")
+            $provider_id .= $request->provider_id[$i];
+          else
+            break;
+        }
+        $request["construction_id"] = $construction_id;
+        $request["provider_id"] = $provider_id;
 
         if($category == "Material")
         {
+          //Borramos todos los temporales (de capturas y de productos)
+          DB::table('temporary_captures')->delete();
+          DB::table('temporary_capture_products')->delete();
+
           //Guardamos captura temporal
           $temporary_capture = CaptureController::saveTemporalCapture($request);
-          //dd($temporary_capture);
           $prices = DB::table('products','prices')
             ->select(
             'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
@@ -101,40 +118,25 @@ class CaptureController extends Controller
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
           }
-          return view('capture.create2')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
+          return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
         }
         else
-            return view('capture.create2b')->with('data', $request)->with('funds',$funds)->with('category',$category);
+            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category);
     }
 
     public function saveTemporalCapture($data)
     {
-        $construction_id="";
-        for($i=0;$i<strlen($data->construction_id);$i++){
-          if($data->construction_id[$i] != " ")
-            $construction_id .= $data->construction_id[$i];
-          else
-            break;
-        }
-
-        $provider_id = "";
-        for($i=0;$i<strlen($data->provider_id);$i++){
-          if($data->provider_id[$i] != " ")
-            $provider_id .= $data->provider_id[$i];
-          else
-            break;
-        }
-
         $temporary_capture = New TemporaryCapture;
-        $temporary_capture->construction_id = $construction_id;
-        $temporary_capture->provider_id = $provider_id;
+        $temporary_capture->construction_id = $data->construction_id;
+        $temporary_capture->provider_id = $data->provider_id;
         $temporary_capture->fund_id = 1;
         $temporary_capture->date = $data->date;
         $temporary_capture->voucher = $data->file;
         $temporary_capture->total = 0;
         $temporary_capture->folio = $data->folio;
-        $temporary_capture->honorarium = $data->honorary;
+        $temporary_capture->honorarium = $data->honorarium;
         $temporary_capture->iva = $data->iva;
+        $temporary_capture->concept = $data->concept;
         $temporary_capture->save();
 
         return $temporary_capture;
@@ -248,17 +250,27 @@ class CaptureController extends Controller
         //Guardar captura
         $capture = Capture::create($request->all());
 
-        //Checar categoria
-        //gurdar captura-categoria
         if($request->category == "Material")
         {
-            dd("Es material");
-        }
-        else {
-          $logistic = New Logistic;
-          $logistic->capture_id = $capture->id;
-          $logistic->concept = $request->concept;
-          $logistic->save();
+            //Guardar productos_capture
+            $temporal_products = DB::table('temporary_capture_products')
+              ->select('temporary_capture_products.*')
+              ->where('capture_id', '=', $request->temporary_capture)
+              ->get();
+
+              for($i=0; $i<$temporal_products->count(); $i++)
+              {
+                  $product = New ProductsCapture;
+                  $product->quantity = $temporal_products[$i]->quantity;
+                  $product->extra = $temporal_products[$i]->extra;
+                  $product->total = $temporal_products[$i]->total;
+                  $product->capture_id = $capture->id;
+                  $product->price_id = $temporal_products[$i]->price_id;
+                  $product->save();
+              }
+            //Borramos temporales
+            DB::table('temporary_captures')->delete();
+            DB::table('temporary_capture_products')->delete();
         }
 
         //descntar fondo
@@ -273,7 +285,6 @@ class CaptureController extends Controller
         $provider_name = $provider_name->name;
         if($request->honorarium == 1 || $provider_name == "Arq. Missael Quintero")
         {
-
           $construction_honorary = construction::findOrFail($request->construction_id);
           $honorary = New Honorary;
           $honorary->capture_id = $capture->id;
@@ -293,15 +304,15 @@ class CaptureController extends Controller
           }
           $honorary->total = $total;
           $honorary->save();
-        }
 
-        //Honorary_remaining
-        $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $request->construction_id)->firstOrFail();
-        if($generado)
-          $honorary_remaining->remaining += $total;
-        else
-          $honorary_remaining->remaining -= $total;
-        $honorary_remaining->save();
+          //Honorary_remaining
+          $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $request->construction_id)->firstOrFail();
+          if($generado)
+            $honorary_remaining->remaining += $total;
+          else
+            $honorary_remaining->remaining -= $total;
+          $honorary_remaining->save();
+        }
 
         //estado de cuenta...
 

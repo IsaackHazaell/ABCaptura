@@ -19,5 +19,5 @@
 @endsection
 
 @section('adminlte_js')
-  @include('capture.partials.sweetalert')
+  @include('capture.partials.script')
 @stop

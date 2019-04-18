@@ -1,36 +1,10 @@
-  <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="product">Seleccione el producto</label>
-        <select class="form-control" required name="product" id="product">
-          @foreach($prices as $price)
-          <option value={{$price->price}}/{{$price->id}}> {{$price->unity}} {{$price->product_concept}} - {{$price->month}} </option>
-          @endforeach
-      </select>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="price">Precio</label>
-        <input type="number" readonly class="form-control" required name="priceCapture" id="priceCapture">
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="quantity">Seleccione La cantidad</label>
-        <input type="number" class="form-control" required value=1 name="quantity" id="quantity">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="extra">Cargo adicional</label>
-        <input type="number" class="form-control" required value=0 name="extra" id="extra">
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="total">Total</label>
-        <input type="number" readonly class="form-control" required name="total" id="total">
-      </div>
-
-      <input type="hidden" name="product_id" id="product_id">
-      <input type="hidden" name="capture_id" id="capture_id" value={{$data->id}}>
-    </div>
+<input type="hidden" name="construction_id" id="construction_id" value="{{$data->construction_id}}">
+<input type="hidden" name="provider_id" id="provider_id" value="{{$data->provider_id}}">
+<input type="hidden" name="fund_id" id="fund_id" value="{{$data->fund_id}}">
+<input type="hidden" name="date" id="date" value="{{$data->date}}">
+<input type="hidden" name="vaucher" id="vaucher" value="{{$data->file}}">
+<input type="hidden" name="folio" id="folio" value="{{$data->folio}}">
+<input type="hidden" name="category" id="category" value="{{$category}}">
+<input type="hidden" name="honorary" id="honorary" value="{{$data->honorarium}}">
+<input type="hidden" name="iva" id="iva" value="{{$data->iva}}">
+<input type="hidden" name="conceptt" id="conceptt" value="{{$data->concept}}">

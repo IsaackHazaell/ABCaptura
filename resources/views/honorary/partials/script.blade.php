@@ -18,6 +18,7 @@ table = $('#honoraries_table').DataTable({
     "columns": [
         {data: 'provider_name'},
         {data: 'capture_date'},
+        {data: 'capture_concept'},
         {data: 'capture_total'},
         {data: 'honorary_total'},
         {data: 'status'}

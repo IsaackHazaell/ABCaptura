@@ -1,132 +1,99 @@
 <script>
-$(document).ready(function () {
-  counter = 1;
-  t = $('#products_capture_table').DataTable( {} );
-  castearInputProduct();
+$("#saveCapture").click(function (e) {
+  if(valida())
+  {
+    var text = $('#fund_id').val();
+    var fund_id="";
+    for (var i = 0; i < text.length; i++) {
+      if(text.charAt(i) == "/")
+      {
+        break;
+      }
+      fund_id += text.charAt(i)
+    }
+    var remaining = getRemaining(text);
+    remaining = parseInt(remaining);
+    var total = $('#total').val();
+    total = parseFloat(total);
+    if(remaining < total)
+    {
+      swal({
+        title: "Fondo insuficiente!",
+        text: "El fondo es de $" + remaining,
+        icon: "error",
+        button: "Continue",
+        timer: 3000
+      });
+    }
+    else {
+      $.ajax({
+           type: "post",
+           headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+           url: "{{route('capture.store')}}",
+           data: {
+               remaining: remaining,
+               total: total,
+               construction_id: $('#construction_id').val(),
+               provider_id: $('#provider_id').val(),
+               fund_id: fund_id,
+               date: $('#date').val(),
+               file: $('#file').val(),
+               folio: $('#folio').val(),
+               category: $('#category').val(),
+               concept: $('#conceptt').val(),
+               honorarium: $('#honorary').val(),
+               iva: $('#iva').val(),
+               temporary_capture: $('#capture_id').val()
+           },
+           success: function() {
+             swal({
+               title: "Capturado",
+               text: "Se ha capturado correctamente",
+               icon: "success",
+               button: "Continue",
+               timer: 3000
+             });
+            }
+       });
+    }
+  }
+    else {
+      swal({
+        title: "Error",
+        text: "Datos incorrectos",
+        icon: "warning",
+        button: "Continue",
+        timer: 3000
+      });
+    }
 });
 
-function castearInputProduct()
+function valida()
 {
-  //totalFinal();
-  var all = document.getElementById("product").value;
-  var max = all.length;
-  var price = 0
-  for (var i = 0; i < max; i++) {
-    if(all.charAt(i) == "/")
-    {
-      break;
-    }
-    //if(i!=0)
-      price += all.charAt(i)
-  }
-  $('#priceCapture').val(price);
-
-  var product_id=0;
-  for (var i = price.length; i < max; i++) {
-    if(all.charAt(i) == "/")
-    {
-      break;
-    }
-    //if(i!=0)
-      product_id += all.charAt(i)
-  }
-  $('#product_id').val(product_id);
-
-  var unity_id=0;
-  for (var i = price.length+product_id.length; i < max; i++) {
-    if(all.charAt(i) == "/")
-    {
-      break;
-    }
-    //if(i!=0)
-      unity_id += all.charAt(i)
-  }
-  $('#unity_id').val(unity_id);
-
-  var quantity = document.getElementById("quantity").value;
-  var extra = document.getElementById("extra").value;
-  var total = parseInt(price * quantity) + parseInt(extra);
-  $('#total').val(total);
+    var x = parseFloat($('#total').val());
+      if (isNaN(x))
+          return false;
+      else
+          return true;
 }
 
-$('#product').on('change', function (event) {
-  castearInputProduct();
-
-});
-
-$('#quantity').on('change', function (event) {
-  castearInputProduct();
-
-});
-
-$('#extra').on('change', function (event) {
-  castearInputProduct();
-
-});
-
-$("#prod").click(function (e) {
-    e.preventDefault();
-    var price = $('#priceCapture').val();
-        var table=null;
-        table = $('#products_capture_table');
-        table = $('#products_capture_table').DataTable({
-          "bDestroy": true,
-          stateSave: true,
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-              type: "get",
-              url: "{{route('capture.showTablePC')}}",
-              data: {
-                  price: $('#product').val(),
-                  capture_id: $('#capture_id').val(),
-                  quantity: $('#quantity').val(),
-                  extra: $('#extra').val(),
-                  total: $('#total').val()
-              }
-            },
-    "columns": [
-        {data: 'unity'},
-        {data: 'concept'},
-        {data: 'quantity'},
-        {data: 'price'},
-        {data: 'extra'},
-        {data: 'total'},
-        {data: 'btn'}
-    ],
-
-    "footerCallback": function ( row, data, start, end, display ) {
-        var api = this.api(), data;
-
-        // Remove the formatting to get integer data for summation
-        var intVal = function ( i ) {
-            return typeof i === 'string' ?
-                i.replace(/[\$,]/g, '')*1 :
-                typeof i === 'number' ?
-                    i : 0;
-        };
-
-        // Total over all pages
-        total = api
-            .column( 5 )
-            .data()
-            .reduce( function (a, b) {
-                return intVal(a) + intVal(b);
-            }, 0 );
-
-      $('#total_final').val(total);
-    }
-  });
-  cleanInputs();
-
-});
-
-function cleanInputs()
+function getRemaining(text)
 {
-  $('#quantity').val(0);
-  $('#extra').val(0);
-  $('#total').val(0);
-  castearInputProduct();
+  var remaining="";
+  var flag=false;
+  for (var i=0; i < text.length; i++) {
+    if(flag)
+    {
+      remaining+=text.charAt(i)
+    }
+    if(text.charAt(i) == "/")
+    {
+      flag=true;
+    }
+  }
+  return remaining;
 }
 
 

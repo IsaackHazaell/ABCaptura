@@ -21,7 +21,7 @@ class CreateTemporaryCapturesTable extends Migration
           $table->integer('honorarium');
           $table->integer('voucher')->nullable();
           $table->integer('folio')->nullable();
-          $table->string('description',128)->nullable();
+          $table->string('concept',128);
           $table->integer('fund_id')->unsigned();
           $table->integer('construction_id')->unsigned();
           $table->integer('provider_id')->unsigned();
