@@ -27,7 +27,7 @@ class CaptureController extends Controller
      */
     public function index()
     {
-        //
+        return view('capture.index');
     }
 
     /**
@@ -205,26 +205,29 @@ class CaptureController extends Controller
 
     public function showTablePC(Request $request)
     {
-        $price_id="";
-        $flag=false;
-        for($i=0;$i<strlen($request->price);$i++){
-          if($flag)
-            $price_id .= $request->price[$i];
-          if($request->price[$i] == "/")
-            $flag=true;
-        }
+        if($request->price != null && $request->quantity != 0)
+        {
+            $price_id="";
+            $flag=false;
+            for($i=0;$i<strlen($request->price);$i++){
+              if($flag)
+                $price_id .= $request->price[$i];
+              if($request->price[$i] == "/")
+                $flag=true;
+            }
 
-        $temporary_product = New TemporaryCaptureProduct;
-        $temporary_product->price_id = $price_id;
-        $temporary_product->capture_id = $request->capture_id;
-        $temporary_product->quantity = $request->quantity;
-        $temporary_product->total = $request->total;
-        $temporary_product->extra = $request->extra;
-        $temporary_product->save();
+            $temporary_product = New TemporaryCaptureProduct;
+            $temporary_product->price_id = $price_id;
+            $temporary_product->capture_id = $request->capture_id;
+            $temporary_product->quantity = $request->quantity;
+            $temporary_product->total = $request->total;
+            $temporary_product->extra = $request->extra;
+            $temporary_product->save();
+        }
 
         $toTable = DB::table('temporary_capture_products')
           ->select(
-            'temporary_capture_products.quantity', 'temporary_capture_products.extra', 'temporary_capture_products.total',
+            'temporary_capture_products.id as temporary_id', 'temporary_capture_products.quantity', 'temporary_capture_products.extra', 'temporary_capture_products.total',
             'prices.id as price_id', 'prices.price', 'prices.unity',
             'products.id as product_id', 'products.concept'
           )
@@ -237,6 +240,38 @@ class CaptureController extends Controller
         ->addColumn('btn', 'capture.partials.buttons_product')
         ->rawColumns(['btn'])
       ->make(true);
+    }
+
+    public function deleteTemporalCaptureProduct(Request $request)
+    {
+
+        $product = TemporaryCaptureProduct::findOrFail($request->id);
+        //dd($product);
+        $product->delete();
+        $msg = [
+            'title' => 'Eliminado!',
+            'text' => 'Se removió el producto de la captura',
+            'icon' => 'success'
+        ];
+
+        return response()->json($msg);
+    }
+
+    public function showTableCa()
+    {
+        $toTable = DB::table('captures')
+          ->select(
+              'constructions.id as construction_id', 'constructions.name as construction_name',
+                'providers.id as provider_id', 'providers.name as provider_name',
+                'captures.*', 'captures.id as capture_id', 'captures.date as capture_date', 'captures.total as capture_total', 'captures.concept as capture_concept')
+              ->join('constructions', 'captures.construction_id', '=', 'constructions.id')
+              ->join('providers', 'captures.provider_id', '=', 'providers.id')
+              ->get();
+
+          return Datatables::of($toTable)
+          ->addColumn('btn', 'capture.partials.buttons')
+          ->rawColumns(['btn'])
+        ->make(true);
     }
 
     /**

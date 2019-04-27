@@ -1,19 +1,17 @@
 <script>
 //DATATABLE
 var table=null;
-table = $('#honoraries_table').DataTable({
-//var jobs = JSON.parse("{//{ json_encode($construction_id) }}");
-
+table = $('#capture_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('honorary.showTableHo', ['construction_id'=> $construction_id])}}",
+    "ajax": "{{route('capture.showTableCa')}}",
     "columns": [
+        {data: 'construction_name'},
         {data: 'provider_name'},
         {data: 'capture_date'},
         {data: 'capture_concept'},
         {data: 'capture_total'},
-        {data: 'honorary_total'},
-        {data: 'status'}
+        {data: 'btn'}
     ],
     "language": {
   "info": "_TOTAL_ registros",

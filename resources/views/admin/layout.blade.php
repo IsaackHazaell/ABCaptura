@@ -146,7 +146,7 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('capture') }}">Lista de fondos</a></li>
+            <li><a href="{{ url('capture') }}">Lista de capturas</a></li>
             <li><a href="{{ url('capture/create') }}">Capturar</a></li>
           </ul>
         </li>
