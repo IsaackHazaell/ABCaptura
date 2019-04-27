@@ -34,6 +34,7 @@ Route::get('showTableP','ProviderController@showTableP')->name('provider.showTab
 //Funds rout's
 Route::resource('fund','FundController');
 Route::get('showTableF','FundController@showTableF')->name('fund.showTableF');
+Route::get('showTableFC','FundController@showTableFC')->name('fund.showTableFC');
 
 //Product Routes
 Route::resource('product','ProductController');

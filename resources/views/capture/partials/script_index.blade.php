@@ -35,6 +35,32 @@ table = $('#capture_table').DataTable({
 }
 });
 
+//DELETE
+$('body').delegate('.delete-capture','click',function(){
+        id_capture = $(this).attr('id_capture');
+        var csrf_token=$('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: "Estás seguro?",
+            text: "Se eliminará el proveedor",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+                url: "{{url('/capture')}}" + '/' + id_capture,
+                headers: {'X-CSRF-TOKEN': csrf_token},
+                type: 'DELETE',
+                dataType: 'json',
+                data: {id: id_capture}
+            }).done(function(data){
+              table.ajax.reload();
+              sAlert(data.title, data.text, data.icon);
+            });
+          }
+        });
+    });
+
 //SWETALERT
 @if (Session::has('message'))
         sAlert(

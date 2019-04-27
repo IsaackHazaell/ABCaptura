@@ -20,7 +20,7 @@
           <thead>
               <tr>
                   <th>Obra</th>
-                  <th>Proveed0r</th>
+                  <th>Proveedor</th>
                   <th>Fecha de captura</th>
                   <th>Concepto de captura</th>
                   <th>Total</th>

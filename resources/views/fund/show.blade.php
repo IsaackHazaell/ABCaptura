@@ -40,9 +40,27 @@
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('fund') }}"><b>Lista de fondos</b></a>
     </div>
   </div>
+
+  <div class="box-body">
+      <h3>Capturas relacionadas al fondo:</h3>
+      <table id="capture_table" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+          <tr>
+              <th>Obra</th>
+              <th>Proveedor</th>
+              <th>Fecha de captura</th>
+              <th>Concepto de captura</th>
+              <th>Total</th>
+              <th>Comprobante</th>
+              <th>Acciones</th>
+          </tr>
+      </thead>
+  </table>
+  </div>
 @endsection
 
 @section('adminlte_js')
+    @include('fund.partials.script_index')
 <script>
 $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)

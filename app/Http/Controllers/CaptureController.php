@@ -410,7 +410,7 @@ class CaptureController extends Controller
               'icon' => 'success'
           ];
 
-        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers);
+        return view('capture.index');
     }
 
     /**
@@ -456,6 +456,33 @@ class CaptureController extends Controller
      */
     public function destroy(Capture $capture)
     {
-        //
+        //dd($capture);
+        //Ajustar estado de cuenta
+
+
+        //Ajustar fondo
+        $fund = Fund::findOrFail($capture->fund_id);
+        $fund->remaining = $fund->remaining + $capture->total;
+        $fund->save();
+
+        //Ajustar honorariosRemaining:
+        $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $capture->construction_id)->firstOrFail();
+        $honorary = Honorary::where('capture_id', '=', $capture->id)->firstOrFail();
+        if($honorary_remaining->status == 0)
+          $honorary_remaining->remaining -= $honorary->total;
+        else
+          $honorary_remaining->remaining += $honorary->total;
+        $honorary_remaining->save();
+
+        //Borrar captura
+        $capture->delete();
+
+        $msg = [
+            'title' => 'Eliminado!',
+            'text' => 'Captura eliminada exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return response()->json($msg);
     }
 }
