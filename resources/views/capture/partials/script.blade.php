@@ -39,7 +39,7 @@ $("#saveCapture").click(function (e) {
                provider_id: $('#provider_id').val(),
                fund_id: fund_id,
                date: $('#date').val(),
-               file: $('#file').val(),
+               voucher: $('#voucher').val(),
                folio: $('#folio').val(),
                category: $('#category').val(),
                concept: $('#conceptt').val(),

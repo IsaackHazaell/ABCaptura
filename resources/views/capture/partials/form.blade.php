@@ -24,8 +24,8 @@
         <input type="date" class="form-control" required name="date" id="date">
       </div>
       <div class="form-group col-md-6">
-        <label for="file">Comprobante</label>
-          <input type="file" class="form-control" name="file" id="file">
+        <label for="voucher">Comprobante</label>
+          <input type="file" class="form-control" name="voucher" id="voucher">
       </div>
   </div>
 

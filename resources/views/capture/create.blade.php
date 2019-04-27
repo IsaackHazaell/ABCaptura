@@ -7,7 +7,7 @@
   </h1>
 </section>
 
-<form action="{{route('capture.create2')}}" >
+<form action="{{route('capture.create2') }}" enctype="multipart/form-data" method="post">
   {{csrf_field()}}
   @include('capture.partials.form')
     <div class="form-row">

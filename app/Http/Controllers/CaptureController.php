@@ -54,6 +54,19 @@ class CaptureController extends Controller
 
     public function create2(Request $request)
     {
+        //dd($request);
+        if($request->hasFile('voucher'))
+        {
+            //dd($request->voucher);
+
+            //$file = $request->file('voucher');
+            //$name = time().$file->getClientOriginalName();
+            //$file->move(public_pathc().'/vouchers/', $name);
+            $request->voucher = $request->file('voucher')->store('public');
+            //$temporary_capture->voucher = $data->file('voucher')->store('public');
+        }
+        //dd($request->voucher);
+
       $funds = DB::table('funds','constructions')
         ->select(
         'funds.id', 'funds.date', 'funds.remaining',
@@ -102,7 +115,11 @@ class CaptureController extends Controller
           DB::table('temporary_capture_products')->delete();
 
           //Guardamos captura temporal
+          //dd($request->file('voucher'));
+
           $temporary_capture = CaptureController::saveTemporalCapture($request);
+
+
           $prices = DB::table('products','prices')
             ->select(
             'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
@@ -118,26 +135,42 @@ class CaptureController extends Controller
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
           }
+          //dd($temporary_capture);
           return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
         }
         else
             return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category);
+
     }
 
     public function saveTemporalCapture($data)
     {
-        $temporary_capture = New TemporaryCapture;
-        $temporary_capture->construction_id = $data->construction_id;
-        $temporary_capture->provider_id = $data->provider_id;
+        $temporary_capture = (new TemporaryCapture)->fill( $data->all() );
+
+        if($data->hasFile('voucher'))
+        {
+            //dd($request->voucher);
+
+            //$file = $request->file('voucher');
+            //$name = time().$file->getClientOriginalName();
+            //$file->move(public_pathc().'/vouchers/', $name);
+            //$request->voucher = $request->file('voucher')->store('public');
+            $temporary_capture->voucher = $data->file('voucher')->store('public');
+        }
+
+        //$temporary_capture = New TemporaryCapture;
+        //$temporary_capture->construction_id = $data->construction_id;
+        //$temporary_capture->provider_id = $data->provider_id;
         $temporary_capture->fund_id = 1;
-        $temporary_capture->date = $data->date;
-        $temporary_capture->voucher = $data->file;
+        //$temporary_capture->date = $data->date;
         $temporary_capture->total = 0;
-        $temporary_capture->folio = $data->folio;
-        $temporary_capture->honorarium = $data->honorarium;
-        $temporary_capture->iva = $data->iva;
-        $temporary_capture->concept = $data->concept;
+        //$temporary_capture->folio = $data->folio;
+        //$temporary_capture->honorarium = $data->honorarium;
+        //$temporary_capture->iva = $data->iva;
+        //$temporary_capture->concept = $data->concept;
         $temporary_capture->save();
+
+        //dd($temporary_capture);
 
         return $temporary_capture;
     }
@@ -244,9 +277,7 @@ class CaptureController extends Controller
 
     public function deleteTemporalCaptureProduct(Request $request)
     {
-
         $product = TemporaryCaptureProduct::findOrFail($request->id);
-        //dd($product);
         $product->delete();
         $msg = [
             'title' => 'Eliminado!',
@@ -268,6 +299,14 @@ class CaptureController extends Controller
               ->join('providers', 'captures.provider_id', '=', 'providers.id')
               ->get();
 
+              for($i=0; $i<$toTable->count(); $i++)
+              {
+                if($toTable[$i]->voucher == null)
+                  $toTable[$i]->voucher = "NO";
+                else if($toTable[$i]->voucher != null)
+                  $toTable[$i]->voucher = "SI";
+              }
+
           return Datatables::of($toTable)
           ->addColumn('btn', 'capture.partials.buttons')
           ->rawColumns(['btn'])
@@ -284,7 +323,6 @@ class CaptureController extends Controller
     {
         //Guardar captura
         $capture = Capture::create($request->all());
-
         if($request->category == "Material")
         {
             //Guardar productos_capture
@@ -383,7 +421,8 @@ class CaptureController extends Controller
      */
     public function show(Capture $capture)
     {
-        //
+        //dd($capture);
+        return view('capture.show')->with('capture',$capture);
     }
 
     /**

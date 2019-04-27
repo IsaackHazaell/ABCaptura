@@ -20,10 +20,11 @@
           <thead>
               <tr>
                   <th>Obra</th>
-                  <th>Proveedr</th>
+                  <th>Proveed0r</th>
                   <th>Fecha de captura</th>
                   <th>Concepto de captura</th>
                   <th>Total</th>
+                  <th>Comprobante</th>
                   <th width="120px">Acciones</th>
               </tr>
           </thead>

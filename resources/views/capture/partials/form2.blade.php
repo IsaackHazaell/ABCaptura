@@ -2,7 +2,7 @@
 <input type="hidden" name="provider_id" id="provider_id" value="{{$data->provider_id}}">
 <input type="hidden" name="fund_id" id="fund_id" value="{{$data->fund_id}}">
 <input type="hidden" name="date" id="date" value="{{$data->date}}">
-<input type="hidden" name="vaucher" id="vaucher" value="{{$data->file}}">
+<input type="hidden" name="voucher" id="voucher" value="{{$data->voucher}}">
 <input type="hidden" name="folio" id="folio" value="{{$data->folio}}">
 <input type="hidden" name="category" id="category" value="{{$category}}">
 <input type="hidden" name="honorary" id="honorary" value="{{$data->honorarium}}">

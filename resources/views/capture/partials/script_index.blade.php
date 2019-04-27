@@ -11,6 +11,7 @@ table = $('#capture_table').DataTable({
         {data: 'capture_date'},
         {data: 'capture_concept'},
         {data: 'capture_total'},
+        {data: 'voucher'},
         {data: 'btn'}
     ],
     "language": {
