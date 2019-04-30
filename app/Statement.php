@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Statement extends Model
 {
-    protected $fillable = ['total', 'remaining'];
+    protected $fillable = ['status','total', 'remaining'];
 }

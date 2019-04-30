@@ -15,9 +15,18 @@ class CreateStatementsTable extends Migration
     {
         Schema::create('statements', function (Blueprint $table) {
             $table->increments('id');
-            $table->increments('total');
-            $table->increments('remaining');
+            $table->integer('construction_id')->unsigned();
+            $table->integer('provider_id')->unsigned();
+            $table->integer('status');
+            $table->decimal('total');
+            $table->decimal('remaining');
             $table->timestamps();
+            $table->foreign('construction_id')->references('id')->on('constructions')
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
+            $table->foreign('provider_id')->references('id')->on('providers')
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
         });
     }
 
