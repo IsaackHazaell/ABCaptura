@@ -3,18 +3,14 @@
 
 <button class="btn btn-primary btn-sm"
   data-idstatement="{{$statement_id}}"
-  data-namestatement="{{$statement_name}}"
-  data-honorarystatement="{{$honorary}}"
-  data-datestatement="{{$date}}"
-  data-square_meterstatement="{{$square_meter}}"
+  data-nameconstruction="{{$construction_name}}"
+  data-nameprovider="{{$provider_name}}"
   data-statusstatement="{{$status}}"
+  data-remainingstatement="{{$remaining}}"
+  data-totalstatement="{{$total}}"
 
-  data-client_name="{{$client_name}}"
-  data-cellphone="{{$cellphone}}"
-  data-phonelandline="{{$phonelandline}}"
-  data-address="{{$address}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
-  <a id_statement="{{ $statement_id }}" class="btn btn-danger btn-sm status-statement" statement_name="{{ $statement_name }}">
+  <a id_statement="{{ $statement_id }}" class="btn btn-danger btn-sm status-statement">
       <span class="fa fa-trash"></span>
   </a>

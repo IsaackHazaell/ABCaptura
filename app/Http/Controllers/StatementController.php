@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
-use app\Provider;
+use App\Provider;
 use App\Statement;
 use App\Construction;
 use Illuminate\Http\Request;
@@ -49,10 +49,9 @@ class StatementController extends Controller
     public function create()
     {
         $constructions = Construction::select('id', 'name')->get();
-        return view('statement.create', compact('constructions'));
-
         $providers = Provider::select('id', 'name')->get();
-        return view('statement.create', compact('providers'));
+        return view('statement.create')->with('constructions', $constructions)
+        ->with('providers', $providers);
     }
 
     /**
@@ -63,30 +62,16 @@ class StatementController extends Controller
      */
     public function store(Request $request)
     {
-      $construction_id = "";
-      for($i=0;$i<strlen($request->construction);$i++)
-      {
-        if($request->construction[$i] != " ")
-          $construction_id .= $request->construction[$i];
-        else
-          break;
-      }
-      $provider_id = "";
-      for($i=0;$i<strlen($request->provider);$i++)
-      {
-        if($request->provider[$i] != " ")
-          $provider_id .= $request->provider[$i];
-        else
-          break;
-      }
-      $statement = New Statement;
-      $statement->status = $request->status;
-      $statement->total = $request->total;
+      $statement = (new Statement)->fill($request->all());
       $statement->remaining = $request->total;
-      $statement->construction_id = $construction_id;
-      $statement->provider_id = $provider_id;
       $statement->save();
-      return view('statement.index');
+
+      $msg = [
+        'title' => 'Guardado!',
+        'text' => 'Estado de cuenta guardado exitosamente.',
+        'icon' => 'success'
+        ];
+        return redirect('statement')->with('message', $msg);
     }
 
     /**
@@ -97,7 +82,13 @@ class StatementController extends Controller
      */
     public function show(Statement $statement)
     {
-        //
+      $construction = Construction::findOrFail($statement->construction_id);
+      $provider = Provider::findOrFail($statement->provider_id);
+      if($statement->status=="0")
+        $statement->status="Liquidado";
+      else if($statement->status=="1")
+        $statement->status="Activo";
+      return view('statement.show')->with('statement', $statement)->with('provider', $provider)->with('construction', $construction);
     }
 
     /**
@@ -118,9 +109,9 @@ class StatementController extends Controller
      * @param  \App\Statement  $statement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Statement $statement)
+    public function update(Request $request)
     {
-      $statement = statement::findOrFail($request->id);
+      $statement = Statement::findOrFail($request->id);
       $input = $request->all();
       $statement->fill($input)->save();
 
@@ -140,6 +131,13 @@ class StatementController extends Controller
      */
     public function destroy(Statement $statement)
     {
-        //
+      $statement->delete();
+      $msg = [
+          'title' => 'Eliminado!',
+          'text' => 'Proveedor eliminado exitosamente.',
+          'icon' => 'success'
+      ];
+
+      return response()->json($msg);
     }
 }

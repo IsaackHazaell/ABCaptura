@@ -6,8 +6,8 @@ table = $('#statements_table').DataTable({
         "serverSide": true,
         "ajax": "{{route('statement.showTableSt')}}",
         "columns": [
-            {data: 'construction'},
-            {data: 'provider'},
+            {data: 'construction_name'},
+            {data: 'provider_name'},
             {data: 'status'},
             {data: 'total'},
             {data: 'remaining'},
@@ -34,17 +34,29 @@ table = $('#statements_table').DataTable({
         }
     });
 
-
+//EDIT
 $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var id = button.data('idstatement')
+    var construction = button.data('nameconstruction')
+    var provider = button.data('nameprovider')
     var status = button.data('statusstatement')
+    if(status == "Activo")
+    {
+      status = 1;
+    }
+    else
+    {
+      status = 0;
+    }
     var total = button.data('totalstatement')
     var remaining = button.data('remainingstatement')
 
     //var data_id = button.data('iddata')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
+    modal.find('.modal-body #construction_id').val(construction)
+    modal.find('.modal-body #provider_id').val(provider)
     modal.find('.modal-body #status').val(status);
     modal.find('.modal-body #total').val(total);
     modal.find('.modal-body #remaining').val(remaining);

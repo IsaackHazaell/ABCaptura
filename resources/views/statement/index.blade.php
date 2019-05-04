@@ -19,7 +19,7 @@
           <table id="statements_table" class="table table-striped table-bordered" style="width:100%">
           <thead>
               <tr>
-                  <th width="10px">Id</th>
+                  <!-- <th width="10px">Id</th> -->
                   <th>Obra</th>
                   <th>Proveedor</th>
                   <th>Estatus</th>
