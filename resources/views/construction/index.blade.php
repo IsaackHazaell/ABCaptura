@@ -26,7 +26,7 @@
                   <th>Fecha de Arranque</th>
                   <th>Metros cuadrados</th>
                   <th>Estatus</th>
-                  <th width="50px">Acciones</th>
+                  <th width="100px">Acciones</th>
               </tr>
           </thead>
       </table>
