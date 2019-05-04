@@ -83,7 +83,6 @@ $('body').delegate('.status-statement','click',function(){
                 dataType: 'json',
                 data: {id: id_statement}
             }).done(function(data){
-              console.log("hola");
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);
             });
