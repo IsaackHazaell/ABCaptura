@@ -81,4 +81,5 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #data_id').val(data_id);
 });
 </script>
+@include('fund.partials.script')
 @endsection

@@ -59,3 +59,7 @@ Route::resource('memory', 'MemoryController', ['only' => [
 ]]);
 Route::get('showTableM','MemoryController@showTableM')->name('memory.showTableM');
 Route::get('selectCM','MemoryController@selectCM')->name('memory.selectCM');
+
+//Statements Routes
+Route::resource('statement','StatementController');
+Route::get('showTableSt','StatementController@showTableSt')->name('statement.showTableSt');
