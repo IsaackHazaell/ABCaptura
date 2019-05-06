@@ -53,3 +53,7 @@ Route::get('selectC','HonoraryController@selectC')->name('honorary.selectC');
 //Statements Routes
 Route::resource('statement','StatementController');
 Route::get('showTableSt','StatementController@showTableSt')->name('statement.showTableSt');
+
+//Statements Routes
+Route::resource('user','UserController');
+Route::get('showTableU','UserController@showTableSt')->name('user.showTableU');

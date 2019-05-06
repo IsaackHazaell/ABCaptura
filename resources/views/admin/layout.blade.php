@@ -59,13 +59,12 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{{ url('home') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>AB</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>AB Captura </b></span>
     </a>
-
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
@@ -73,7 +72,6 @@ desired effect
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
-
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
@@ -160,6 +158,18 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="{{ url('statement') }}">Lista de estados de cuenta</a></li>
             <li><a href="{{ url('statement/create') }}">Agregar estado de cuenta</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span> Usuarios</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('user') }}">Lista de Usuarios</a></li>
+            <li><a href="{{ url('user/create') }}">Agregar usuario</a></li>
           </ul>
         </li>
 
