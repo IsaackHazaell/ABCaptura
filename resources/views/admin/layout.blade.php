@@ -159,7 +159,7 @@ desired effect
         </li>
 
         <li>
-          <a href="*">
+          <a href="{{route('memory.selectCM')}}">
             <i class="fab fa-medium"></i>
             <span> Memoria</span>
           </a>

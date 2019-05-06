@@ -52,3 +52,10 @@ Route::delete('deleteTemporalCaptureProduct','CaptureController@deleteTemporalCa
 Route::resource('honorary','HonoraryController');
 Route::get('showTableHo','HonoraryController@showTableHo')->name('honorary.showTableHo');
 Route::get('selectC','HonoraryController@selectC')->name('honorary.selectC');
+
+//Honorary Routes
+Route::resource('memory', 'MemoryController', ['only' => [
+    'index', 'show'
+]]);
+Route::get('showTableM','MemoryController@showTableM')->name('memory.showTableM');
+Route::get('selectCM','MemoryController@selectCM')->name('memory.selectCM');

@@ -7,4 +7,8 @@
         @endforeach
     </select>
     </div>
+    <div class="form-group col-md-6">
+      <label for="month">Seleccione el mes</label>
+      <input type="month" class="form-control" name="month" placeholder="AAAA-MM" required>
+    </div>
 </div>
