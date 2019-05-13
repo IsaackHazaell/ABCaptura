@@ -6,7 +6,6 @@ table = $('#users_table').DataTable({
     "serverSide": true,
     "ajax": "{{route('user.showTableU')}}",
     "columns": [
-        {data: 'id'},
         {data: 'name'},
         {data: 'email'},
         {data: 'user_type'},

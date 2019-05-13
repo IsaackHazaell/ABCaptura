@@ -21,7 +21,14 @@ class UserController extends Controller
 
     public function showTableU()
     {
+      $users = DB::table('users')
+        ->select('users.*')
+        ->get();
 
+        return Datatables::of($users)
+        ->addColumn('btn', 'user.actions')
+        ->rawColumns(['btn'])
+      ->make(true);
     }
 
 
@@ -43,7 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+      
     }
 
     /**
