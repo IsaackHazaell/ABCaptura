@@ -1,5 +1,25 @@
 <script>
+var total = document.getElementById("subtotal_iva");
+
+total.addEventListener("click", function() {
+    getIva();
+});
+total.addEventListener("change", function() {
+    getIva();
+})
+
+function getIva()
+{
+    var iva = {{$data->iva}};
+    if(iva == 1)
+    {
+        var total = $('#subtotal_iva').val();
+        $('#total').val(total * 1.16);
+    }
+}
+
 $("#saveCapture").click(function (e) {
+    getIva();
   if(valida())
   {
     var text = $('#fund_id').val();

@@ -43,6 +43,14 @@
         </table>
 
         <div class="form-row">
+            @if($data->iva == 1)
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="subtotal_iva">Sub total sin iva</label>
+                    <input type="number" class="form-control" required name="subtotal_iva" id="subtotal_iva" readonly>
+                </div>
+            </div>
+            @endif
           <div class="form-group col-md-6">
             <label for="total">Total</label>
             <input type="number" readonly class="form-control" required name="total" id="total">

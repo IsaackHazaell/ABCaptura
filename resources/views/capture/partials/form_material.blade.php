@@ -27,7 +27,7 @@
 
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="total">Total</label>
+        <label for="total_product">Total</label>
         <input type="number" readonly class="form-control" required name="total_product" id="total_product">
       </div>
 

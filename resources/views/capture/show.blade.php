@@ -6,17 +6,13 @@
         <small>{{$capture->id}}</small>
       </h1>
     </section>
- <img class="img-responsive" src="/storage/{{ $capture->voucher }}">
- <img src="{{ url('storage/app/'.$capture->voucher) }}" alt="" title="" />
- <img src="{{ Storage::url("/storage/{$capture->voucher}") }}" alt="" />
+
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="voucher">Comprobante</label>
-
+      <label for="voucher">Comprobante:</label>
+      <img class="img-responsive" src="{{ Storage::url("../storage/{$capture->voucher}") }}" width="300" height="300"/>
     </div>
-
-
-  </div>
+</div>
 
     <div class="form-group col-md-6">
       <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('capture') }}"><b>Lista de Capturas</b></a><br><br>

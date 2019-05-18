@@ -115,7 +115,8 @@ function chargeTable()
             return intVal(a) + intVal(b);
         }, 0 );
 
-  $('#total').val(total);
+  $('#subtotal_iva').val(total);
+  getIva();
 }
 });
 cleanInputs();

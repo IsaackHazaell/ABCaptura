@@ -13,6 +13,7 @@ use App\Honorary;
 use App\ProductsCapture;
 use App\HonoraryRemaining;
 use App\TemporaryCapture;
+use App\Statement;
 use App\TemporaryCaptureProduct;
 use Illuminate\Http\Request;
 use DB;
@@ -356,13 +357,14 @@ class CaptureController extends Controller
         //Checar nombre del proveedor, si no es missa:generado=0
         $provider_name = Provider::findOrFail($request->provider_id);
         $provider_name = $provider_name->name;
+
         if($request->honorarium == 1 || $provider_name == "Arq. Missael Quintero")
         {
           $construction_honorary = construction::findOrFail($request->construction_id);
           $honorary = New Honorary;
+          $total = (float)$request->total;
           $honorary->capture_id = $capture->id;
           $honorary->provider_id = $request->provider_id;
-          $total = (float)$request->total;
           if($provider_name != "Arq. Missael Quintero" && $request->honorarium == 1)
           {
             $total = $total * $construction_honorary->honorary;
@@ -388,8 +390,11 @@ class CaptureController extends Controller
         }
 
         //estado de cuenta...
-
-
+        $statement = Statement::where('construction_id', '=', $request->construction_id)
+        ->where('provider_id', '=', $request->provider_id)
+        ->firstOrFail();
+        $statement->remaining -= $request->total;
+        $statement->save();
 
         $constructions = construction::select('id','name')->get();
         $providers = Provider::select('id','name','category')->get();
@@ -458,11 +463,15 @@ class CaptureController extends Controller
     {
         //dd($capture);
         //Ajustar estado de cuenta
-
+        $statement = Statement::where('construction_id', '=', $request->construction_id)
+        ->where('provider_id', '=', $request->provider_id)
+        ->firstOrFail();
+        $statement->remaining += $capture->total;
+        $statement->save();
 
         //Ajustar fondo
         $fund = Fund::findOrFail($capture->fund_id);
-        $fund->remaining = $fund->remaining + $capture->total;
+        $fund->remaining += $capture->total;
         $fund->save();
 
         //Ajustar honorariosRemaining:
