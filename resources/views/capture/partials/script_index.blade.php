@@ -1,19 +1,18 @@
 <script>
 //DATATABLE
 var table=null;
-table = $('#honoraries_table').DataTable({
-//var jobs = JSON.parse("{//{ json_encode($construction_id) }}");
-
+table = $('#capture_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('honorary.showTableHo', ['construction_id'=> $construction_id])}}",
+    "ajax": "{{route('capture.showTableCa')}}",
     "columns": [
+        {data: 'construction_name'},
         {data: 'provider_name'},
         {data: 'capture_date'},
         {data: 'capture_concept'},
         {data: 'capture_total'},
-        {data: 'honorary_total'},
-        {data: 'status'}
+        {data: 'voucher'},
+        {data: 'btn'}
     ],
     "language": {
   "info": "_TOTAL_ registros",
@@ -35,6 +34,32 @@ table = $('#honoraries_table').DataTable({
   "infoFiltered": ""
 }
 });
+
+//DELETE
+$('body').delegate('.delete-capture','click',function(){
+        id_capture = $(this).attr('id_capture');
+        var csrf_token=$('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: "Estás seguro?",
+            text: "Se eliminará la captura",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+                url: "{{url('/capture')}}" + '/' + id_capture,
+                headers: {'X-CSRF-TOKEN': csrf_token},
+                type: 'DELETE',
+                dataType: 'json',
+                data: {id: id_capture}
+            }).done(function(data){
+              table.ajax.reload();
+              sAlert(data.title, data.text, data.icon);
+            });
+          }
+        });
+    });
 
 //SWETALERT
 @if (Session::has('message'))

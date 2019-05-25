@@ -35,18 +35,18 @@
 <div class="form-row">
   <div class="form-group col-md-6">
     <label for="cellphone">Teléfono celular</label>
-    <input type="number" class="form-control" required name="cellphone" id="cellphone" value="{{$provider->cellphone}}" readonly>
+    <input type="text" class="form-control" required name="cellphone" id="cellphone" value="{{$provider->cellphone}}" readonly>
   </div>
   <div class="form-group col-md-6">
     <label for="phonlandline">Teléfono fijo</label>
-    <input type="number" class="form-control" name="phonlandline" id="phonlandline" value="{{$provider->phonlandline}}" readonly>
+    <input type="text" class="form-control" name="phonlandline" id="phonlandline" value="{{$provider->phonlandline}}" readonly>
   </div>
 </div>
 
 <div class="form-row">
       <div class="form-group col-md-6">
         <label for="mail">Correo</label>
-        <input type="email" class="form-control" name="mail" id="mail" value="{{$provider->mail}}" readonly>
+        <input type="text" class="form-control" name="mail" id="mail" value="{{$provider->mail}}" readonly>
       </div>
 </div>
 

@@ -40,8 +40,46 @@
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('fund') }}"><b>Lista de fondos</b></a>
     </div>
   </div>
+
+  <div class="box-body">
+      <h3>Capturas relacionadas al fondo:</h3>
+      <table id="capture_table" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+          <tr>
+              <th>Obra</th>
+              <th>Proveedor</th>
+              <th>Fecha de captura</th>
+              <th>Concepto de captura</th>
+              <th>Total</th>
+              <th>Comprobante</th>
+              <th>Acciones</th>
+          </tr>
+      </thead>
+  </table>
+  </div>
 @endsection
 
 @section('adminlte_js')
+    @include('fund.partials.script_index')
+<script>
+$('#edit').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var id = button.data('idfund')
+    var construction_id = button.data('construction_id')
+    var date = button.data('date')
+  var remaining = button.data('remaining')
+    var total = button.data('total')
+
+    var data_id = button.data('iddata')
+    var modal = $(this)
+    modal.find('.modal-body #idfund').val(id);
+    modal.find('.modal-body #construction_id').val(construction_id);
+    modal.find('.modal-body #date').val(date);
+  modal.find('.modal-body #remaining').val(remaining);
+    modal.find('.modal-body #total').val(total);
+
+    modal.find('.modal-body #data_id').val(data_id);
+});
+</script>
 @include('fund.partials.script')
 @endsection

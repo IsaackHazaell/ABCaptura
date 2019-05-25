@@ -18,18 +18,18 @@ class HonoraryController extends Controller
      */
     public function index(Request $request)
     {
-        $construction = $request->construction_id;
+        /*$construction = $request->construction_id;
         $construction_id = "";
         for($i=0; $i<strlen($construction); $i++)
         {
           if($construction[$i] == " ")
             break;
           $construction_id .= $construction[$i];
-        }
-        $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $construction_id)->firstOrFail();
+      }*/
+        $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $request->construction_id)->firstOrFail();
         $honorary_remaining = $honorary_remaining->remaining;
 
-        $construction = Construction::select('id','name','honorary')->where('id', '=', $construction_id)->firstOrFail();
+        $construction = Construction::select('id','name','honorary')->where('id', '=', $request->construction_id)->firstOrFail();
 
         $construction_id = $construction->id;
 

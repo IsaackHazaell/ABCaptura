@@ -1,6 +1,9 @@
 <script>
 $(document).ready(function () {
   castearInputProduct();
+  var table=null;
+  table = $('#products_capture_table');
+  chargeTable();
 });
 
 function castearInputProduct()
@@ -60,61 +63,70 @@ $('#extra').on('change', function (event) {
 
 $("#prod").click(function (e) {
     e.preventDefault();
-    var price = $('#priceCapture').val();
-        var table=null;
-        table = $('#products_capture_table');
-        table = $('#products_capture_table').DataTable({
-          "bDestroy": true,
-          stateSave: true,
-          "ordering": false,
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-              type: "get",
-              url: "{{route('capture.showTablePC')}}",
-              data: {
-                  price: $('#product').val(),
-                  capture_id: $('#capture_id').val(),
-                  quantity: $('#quantity').val(),
-                  extra: $('#extra').val(),
-                  total: $('#total_product').val()
-              }
-            },
-    "columns": [
-        {data: 'unity'},
-        {data: 'concept'},
-        {data: 'quantity'},
-        {data: 'price'},
-        {data: 'extra'},
-        {data: 'total'},
-        {data: 'btn'}
-    ],
-
-    "footerCallback": function ( row, data, start, end, display ) {
-        var api = this.api(), data;
-
-        // Remove the formatting to get integer data for summation
-        var intVal = function ( i ) {
-            return typeof i === 'string' ?
-                i.replace(/[\$,]/g, '')*1 :
-                typeof i === 'number' ?
-                    i : 0;
-        };
-
-        // Total over all pages
-        total = api
-            .column( 5 )
-            .data()
-            .reduce( function (a, b) {
-                return intVal(a) + intVal(b);
-            }, 0 );
-
-      $('#total').val(total);
-    }
-  });
-  cleanInputs();
-
+    chargeTable();
 });
+
+function chargeTable()
+{
+    var price = $('#priceCapture').val();
+    table = $('#products_capture_table').DataTable({
+      "bDestroy": true,
+      stateSave: true,
+      "ordering": false,
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+          type: "get",
+          url: "{{route('capture.showTablePC')}}",
+          data: {
+              price: $('#product').val(),
+              capture_id: $('#capture_id').val(),
+              quantity: $('#quantity').val(),
+              extra: $('#extra').val(),
+              total: $('#total_product').val()
+          }
+        },
+"columns": [
+    {data: 'unity'},
+    {data: 'concept'},
+    {data: 'quantity'},
+    {data: 'price'},
+    {data: 'extra'},
+    {data: 'total'},
+    {data: 'btn'}
+],
+
+"footerCallback": function ( row, data, start, end, display ) {
+    var api = this.api(), data;
+
+    // Remove the formatting to get integer data for summation
+    var intVal = function ( i ) {
+        return typeof i === 'string' ?
+            i.replace(/[\$,]/g, '')*1 :
+            typeof i === 'number' ?
+                i : 0;
+    };
+
+    // Total over all pages
+    total = api
+        .column( 5 )
+        .data()
+        .reduce( function (a, b) {
+            return intVal(a) + intVal(b);
+        }, 0 );
+
+    if({{$data->iva}} == 1)
+    {
+        $('#subtotal_iva').val(total);
+        getIva();
+    }
+    else
+        $('#total').val(total);
+
+}
+});
+cleanInputs();
+}
 
 function cleanInputs()
 {
@@ -123,4 +135,32 @@ function cleanInputs()
   $('#total_product').val(0);
   castearInputProduct();
 }
+
+//DELETE
+$('body').delegate('.delete-product','click',function(){
+        id_temporal_capture_prod = $(this).attr('id_temporalyProduct');
+        console.log(id_temporal_capture_prod);
+        var csrf_token=$('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: "Estás seguro?",
+            text: "Se eliminará el producto de la captura",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+                //url: "{//{url('/provider')}}" + '/' + id_temporal_capture_prod,
+                url: "{{route('capture.deleteTemporalCaptureProduct')}}",
+                headers: {'X-CSRF-TOKEN': csrf_token},
+                type: 'DELETE',
+                dataType: 'json',
+                data: {id: id_temporal_capture_prod}
+            }).done(function(data){
+                chargeTable();
+              sAlert(data.title, data.text, data.icon);
+            });
+          }
+        });
+    });
 </script>

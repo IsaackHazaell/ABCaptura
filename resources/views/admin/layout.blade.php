@@ -135,6 +135,18 @@ desired effect
         </li>
 
         <li class="treeview">
+          <a href="#"><i class="fa fa-file-text"></i> <span>Estado de cuenta</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('statement') }}">Lista de estados de cuenta</a></li>
+            <li><a href="{{ url('statement/create') }}">Agregar estado de cuenta</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
           <a href="#"><i class="fa fa-money"></i> <span> Fondo</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -153,20 +165,8 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('capture') }}">Lista de fondos</a></li>
+            <li><a href="{{ url('capture') }}">Lista de capturas</a></li>
             <li><a href="{{ url('capture/create') }}">Capturar</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#"><i class="fa fa-file-text"></i> <span> Estado de cuenta</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('statement') }}">Lista de estados de cuenta</a></li>
-            <li><a href="{{ url('statement/create') }}">Agregar estado de cuenta</a></li>
           </ul>
         </li>
 
@@ -190,7 +190,7 @@ desired effect
         </li>
 
         <li>
-          <a href="*">
+          <a href="{{route('memory.selectCM')}}">
             <i class="fab fa-medium"></i>
             <span> Memoria</span>
           </a>

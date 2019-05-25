@@ -17,7 +17,7 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="quantity">Seleccione La cantidad</label>
-        <input type="number" class="form-control" required value=1 name="quantity" id="quantity">
+        <input type="number" class="form-control" required value=0 name="quantity" id="quantity">
       </div>
       <div class="form-group col-md-6">
         <label for="extra">Cargo adicional</label>
@@ -27,7 +27,7 @@
 
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="total">Total</label>
+        <label for="total_product">Total</label>
         <input type="number" readonly class="form-control" required name="total_product" id="total_product">
       </div>
 

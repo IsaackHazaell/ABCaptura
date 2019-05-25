@@ -9,8 +9,6 @@
 
 <form action="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
     @include('capture.modal', ['provider' => $data->provider_id])
 
     <div class="form-row">
@@ -43,6 +41,14 @@
         </table>
 
         <div class="form-row">
+            @if($data->iva == 1)
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="subtotal_iva">Sub total sin iva</label>
+                    <input type="number" class="form-control" required name="subtotal_iva" id="subtotal_iva" readonly>
+                </div>
+            </div>
+            @endif
           <div class="form-group col-md-6">
             <label for="total">Total</label>
             <input type="number" readonly class="form-control" required name="total" id="total">
@@ -67,4 +73,5 @@
 @section('adminlte_js')
     @include('capture.partials.script')
     @include('capture.partials.script_material')
+    @include('capture.partials.script_iva')
 @stop
