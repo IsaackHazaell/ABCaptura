@@ -6,6 +6,7 @@ use DB;
 use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -24,7 +25,7 @@ class UserController extends Controller
       $users = DB::table('users')
         ->select('users.*')
         ->get();
-
+        //dd($users);
         return Datatables::of($users)
         ->addColumn('btn', 'user.actions')
         ->rawColumns(['btn'])
@@ -50,7 +51,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      
+      $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'max:255'],
+        'password' => ['required', 'string', 'max:255'],
+        'user_type' => ['required'],
+      ]);
+
+      $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'user_type' => $request->user_type,
+      ]);
+
+      $msg = [
+          'title' => 'Creado!',
+          'text' => 'Usuario creado exitosamente.',
+          'icon' => 'success',
+      ];
+
+      return redirect('user')->with('message', $msg);
+
     }
 
     /**

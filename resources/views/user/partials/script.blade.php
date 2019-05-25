@@ -8,6 +8,7 @@ table = $('#users_table').DataTable({
     "columns": [
         {data: 'name'},
         {data: 'email'},
+        {data: 'password'},
         {data: 'user_type'},
         {data: 'btn'}
     ],
@@ -39,11 +40,13 @@ $('#edit').on('show.bs.modal', function (event) {
     var id = button.data('iduser')
     var name = button.data('name')
     var email = button.data('email')
+    var password = button.data('password')
     var user_type = button.data('user_type')
 
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
     modal.find('.modal-body #email').val(email);
+    modal.find('.modal-body #password').val(password);
     modal.find('.modal-body #user_type').val(user_type);
 });
 
@@ -54,7 +57,7 @@ $('body').delegate('.status-user','click',function(){
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
-            text: "Se eliminará el proveedor",
+            text: "Se eliminará el usuario",
             icon: "warning",
             buttons: true,
             dangerMode: true,

@@ -72,6 +72,15 @@ desired effect
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
+      <a class="btn btn-seccondary" style="float: right; padding: 15px; font-weight: bold;" href="{{ route('logout') }}"
+           onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+           {{ __('SALIR') }}
+      </a>
+      <!-- <a class="btn btn-success btn-md addNew" style="float: right;" href="{{ url('fund/create') }}"><b>Agregar Nuevo</b></a> -->
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+      </form>
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->

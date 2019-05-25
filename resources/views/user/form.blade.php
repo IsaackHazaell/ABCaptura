@@ -14,8 +14,8 @@
     <div class="form-group col-md-6">
       <label for="user_type">Seleccione el tipo de usuario</label>
       <select class="form-control" name="user_type" id="user_type">
-        <option>Administrador</option>
-        <option>Estándar</option>
+        <option value="Admin">Administrador</option>
+        <option value="User">Estándar</option>
       </select>
     </div>
 </div>
