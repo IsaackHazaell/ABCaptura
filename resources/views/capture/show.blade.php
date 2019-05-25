@@ -16,4 +16,5 @@
 @endsection
 
 @section('adminlte_js')
+    @include('capture.partials.script_show')
 @stop

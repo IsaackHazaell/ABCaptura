@@ -1,19 +1,16 @@
 <script>
-//DATATABLE Capture
-var tableC=null;
-var id_fund = $(this).attr('id_fund');
-tableC = $('#capture_table').DataTable({
+var tablePCS=null;
+tablePCS = $('#products_capture_show_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('fund.showTableFC', ['fund_id'=> $fund->id])}}",
+    "ajax": "{{route('capture.showTablePCshow', ['capture_id' => $capture->id])}}",
     "columns": [
-        {data: 'construction_name'},
-        {data: 'provider_name'},
-        {data: 'capture_date'},
-        {data: 'capture_concept'},
-        {data: 'capture_total'},
-        {data: 'voucher'},
-        {data: 'btn'}
+        {data: 'concept'},
+        {data: 'unity'},
+        {data: 'price'},
+        {data: 'quantity'},
+        {data: 'extra'},
+        {data: 'total'}
     ],
     "language": {
       "info": "_TOTAL_ registros",

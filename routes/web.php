@@ -42,6 +42,7 @@ Route::get('showTableProduct','ProductController@showTableProduct')->name('produ
 
 //Capture Routes
 Route::resource('capture','CaptureController');
+Route::get('showTablePCshow','CaptureController@showTablePCshow')->name('capture.showTablePCshow');
 Route::get('showTablePC','CaptureController@showTablePC')->name('capture.showTablePC');
 Route::get('showTableCa','CaptureController@showTableCa')->name('capture.showTableCa');
 Route::post('saveProduct','CaptureController@saveProduct')->name('capture.saveProduct');

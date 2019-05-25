@@ -52,8 +52,22 @@
 
     @if($isProduct)
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <h1>vale verga hay productos jejejeje</h1>
-          </div>
+            <div class="box-body">
+                <div class="form-group col-md-12">
+                    <h3>Productos:</h3>
+                    <table id="products_capture_show_table" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Unidad</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Costo adicional</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
     @endif

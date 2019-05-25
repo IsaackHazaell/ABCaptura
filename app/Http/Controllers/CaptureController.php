@@ -421,16 +421,29 @@ class CaptureController extends Controller
         else
             $capture->honorarium = "Si";
 
-        if($isProduct)
+        //if($isProduct)
             return view('capture.show')->with('capture',$capture)
                 ->with('isProduct',$isProduct)
-                ->with('products',$products)
                 ->with('provider',$provider->name)
                 ->with('construction',$construction->name);
-        else
-            return view('capture.show')->with('capture',$capture)->with('isProduct',$isProduct)
+        /*else
+            return view('capture.show')->with('capture',$capture)
+                ->with('isProduct',$isProduct)
                 ->with('provider',$provider->name)
-                ->with('construction',$construction->name);
+                ->with('construction',$construction->name);*/
+    }
+
+    public function showTablePCshow(Request $request)
+    {
+        //dd($request);
+        $products = DB::table('products_captures')
+          ->select('*')
+          ->where('capture_id', '=', $request->capture_id)
+          ->join('prices', 'products_captures.price_id', '=', 'prices.id')
+          ->join('products', 'prices.product_id', '=', 'products.id')
+          ->get();
+        return Datatables::of($products)
+      ->make(true);
     }
 
     /**
