@@ -15,11 +15,11 @@
     </div>
     <div class="form-group col-md-6">
       <label for="honorary">Honorario</label>
-      <input type="number" class="form-control" value="{{$construction->honorary}}" readonly name="honorary" id="honorary">
+      <input type="text" class="form-control" value="{{$construction->honorary}}" readonly name="honorary" id="honorary">
     </div>
     <div class="form-group col-md-6">
       <label for="date">Fecha</label>
-      <input type="date" class="form-control" value="{{$construction->date}}" readonly name="date" id="date">
+      <input type="text" class="form-control" value="{{$construction->date}}" readonly name="date" id="date">
     </div>
     <div class="form-group col-md-6">
       <label for="square_meter">Metros cuadrados</label>

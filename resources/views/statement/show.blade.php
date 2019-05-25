@@ -24,11 +24,11 @@
     </div>
     <div class="form-group col-md-6">
       <label for="total">Total</label>
-      <input type="number" class="form-control" value="{{$statement->total}}" readonly name="total" id="total">
+      <input type="text" class="form-control" value="{{$statement->total}}" readonly name="total" id="total">
     </div>
     <div class="form-group col-md-6">
       <label for="remaining">Restante</label>
-      <input type="number" class="form-control" value="{{$statement->remaining}}" readonly name="remaining" id="remaining">
+      <input type="text" class="form-control" value="{{$statement->remaining}}" readonly name="remaining" id="remaining">
     </div>
   </div>
 

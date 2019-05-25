@@ -87,7 +87,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-      $providers = Provider::select('id','name')->get();
+      $providers = Provider::select('id','name')->where('category',1)->get();
       return view('product.create', compact('providers'));
     }
 

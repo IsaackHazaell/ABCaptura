@@ -9,8 +9,6 @@
 
 <form action="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
     @include('capture.modal', ['provider' => $data->provider_id])
 
     <div class="form-row">
@@ -75,4 +73,5 @@
 @section('adminlte_js')
     @include('capture.partials.script')
     @include('capture.partials.script_material')
+    @include('capture.partials.script_iva')
 @stop

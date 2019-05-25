@@ -41,7 +41,7 @@ $('body').delegate('.delete-capture','click',function(){
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
-            text: "Se eliminará el proveedor",
+            text: "Se eliminará la captura",
             icon: "warning",
             buttons: true,
             dangerMode: true,

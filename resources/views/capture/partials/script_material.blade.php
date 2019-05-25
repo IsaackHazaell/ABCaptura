@@ -115,8 +115,14 @@ function chargeTable()
             return intVal(a) + intVal(b);
         }, 0 );
 
-  $('#subtotal_iva').val(total);
-  getIva();
+    if({{$data->iva}} == 1)
+    {
+        $('#subtotal_iva').val(total);
+        getIva();
+    }
+    else
+        $('#total').val(total);
+
 }
 });
 cleanInputs();

@@ -21,8 +21,8 @@
               <tr>
                   <th>Obra</th>
                   <th>Proveedor</th>
-                  <th>Fecha de captura</th>
-                  <th>Concepto de captura</th>
+                  <th>Fecha</th>
+                  <th>Concepto</th>
                   <th>Total</th>
                   <th>Comprobante</th>
                   <th width="120px">Acciones</th>

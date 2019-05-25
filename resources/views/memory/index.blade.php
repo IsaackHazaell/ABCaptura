@@ -19,40 +19,10 @@
             <div class="form-group col-md-12">
                 <br>
             </div>
-      </div>
-
-      <h4>Sin honorarios:</h4>
-      <div class="box-body">
-          <table id="memory_table" class="table table-striped table-bordered" style="width:100%">
-          <thead>
-              <tr>
-                  <th>Fecha</th>
-                  <th>Proveedor</th>
-                  <th>Concepto</th>
-                  <th>Factura</th>
-                  <th>Total</th>
-                  <th>Folio</th>
-              </tr>
-          </thead>
-      </table>
-      </div>
-
-      <div class="form-row">
-          <div class="form-group col-md-8">
-            <label for="total_without_h">Total sin honorarios</label>
-            <input type="text" class="form-control" name="total_without_h" id="total_without_h" readonly>
-        </div>
-      </div>
-
-      <div class="form-row">
-            <div class="form-group col-md-12">
-                <br>
-            </div>
             <div class="form-group col-md-12">
                 <h4>Con honorarios (%{{ $contruction->honorary }})</h4>
             </div>
       </div>
-
 
             <div class="box-body">
                 <table id="memory_table_honorary" class="table table-striped table-bordered" style="width:100%">
@@ -72,6 +42,41 @@
                 <div class="form-group col-md-8">
                     <label for="total_with_h">Total con honorarios</label>
                     <input type="text" class="form-control" name="total_with_h" id="total_with_h" readonly>
+              </div>
+            </div>
+
+            <div class="form-row">
+                  <div class="form-group col-md-12">
+                      <br>
+                  </div>
+            </div>
+
+            <div class="form-row">
+                  <div class="form-group col-md-12">
+                      <br>
+                      <h4>Sin honorarios:</h4>
+                  </div>
+            </div>
+
+            <div class="box-body">
+                <table id="memory_table" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Concepto</th>
+                        <th>Factura</th>
+                        <th>Total</th>
+                        <th>Folio</th>
+                    </tr>
+                </thead>
+            </table>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label for="total_without_h">Total sin honorarios</label>
+                  <input type="text" class="form-control" name="total_without_h" id="total_without_h" readonly>
               </div>
             </div>
 
