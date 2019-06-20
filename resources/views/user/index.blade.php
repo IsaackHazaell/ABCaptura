@@ -28,6 +28,7 @@
           </thead>
       </table>
       </div>
+      @include('user.modal')
 @stop
 
 @section('adminlte_js')

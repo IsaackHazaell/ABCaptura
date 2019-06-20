@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AB Captura | Main</title>
+  <title>AB | Captura</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -64,6 +64,8 @@ desired effect
       <span class="logo-mini"><b>AB</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>AB Captura </b></span>
+      <!-- <img src="img/ablogo.jpg" width="25%" height="100%" alt=""> -->
+      <br>
     </a>
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -195,6 +197,7 @@ desired effect
             <span> Memoria</span>
           </a>
         </li>
+
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

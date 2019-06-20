@@ -72,16 +72,17 @@
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
-                        <!-- @if (Route::has('register'))
+                        @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
-                        @endif -->
+                        @endif
                     @endauth
                 </div>
             @endif
 
             <div class="content">
                 <div class="title m-b-md">
-                    ABCaptura
+                    Sistema Arquitectura en Balance
+                    <img src="img/ablogo.jpg" width="25%" height="25%" style="display: block; margin-left: auto; margin-right: auto; ">
                 </div>
             </div>
         </div>

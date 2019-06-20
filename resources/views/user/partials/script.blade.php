@@ -42,6 +42,7 @@ $('#edit').on('show.bs.modal', function (event) {
     var email = button.data('email')
     var password = button.data('password')
     var user_type = button.data('user_type')
+    var modal = $(this)
 
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
