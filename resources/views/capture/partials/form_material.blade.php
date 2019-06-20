@@ -1,6 +1,6 @@
   <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="product">Seleccione el producto</label>
+        <label for="product">Producto</label>
         <select class="form-control" required name="product" id="product">
           @foreach($prices as $price)
           <option value={{$price->price}}/{{$price->id}}> {{$price->unity}} {{$price->product_concept}} - {{$price->month}} </option>
@@ -16,7 +16,7 @@
 
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="quantity">Seleccione La cantidad</label>
+        <label for="quantity">Cantidad</label>
         <input type="number" class="form-control" required value=0 name="quantity" id="quantity">
       </div>
       <div class="form-group col-md-6">

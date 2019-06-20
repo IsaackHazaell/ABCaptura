@@ -1,6 +1,6 @@
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="construction_id">Seleccione la obra</label>
+      <label for="construction_id">Obra</label>
       <select class="form-control" required name="construction_id" id="construction_id">
         @foreach($constructions as $construction)
         <option>{{$construction->id}} {{$construction->name}}</option>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="form-group col-md-6">
-      <label for="provider_id">Seleccione el proveedor</label>
+      <label for="provider_id">Proveedor</label>
       <select class="form-control" required name="provider_id" id="provider_id">
         @foreach($providers as $provider)
         <option>{{$provider->id}} {{$provider->name}}: {{$provider->category}}</option>
@@ -20,7 +20,7 @@
 
   <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="date">Seleccione La fecha</label>
+        <label for="date">Fecha</label>
         <input type="date" class="form-control" required name="date" id="date">
       </div>
       <div class="form-group col-md-6">
