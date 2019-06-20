@@ -35,5 +35,5 @@
 @stop
 
 @section('adminlte_js')
-@include('product.partials.script')
+    @include('product.partials.script')
 @stop

@@ -1,18 +1,18 @@
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="construction_id">Seleccione la obra</label>
+      <label for="construction_id">Obra</label>
       <input type="text" class="form-control" readonly name="construction_id" id="construction_id" value="{{ $construction }}">
     </div>
 
     <div class="form-group col-md-6">
-      <label for="provider_id">Seleccione el proveedor</label>
+      <label for="provider_id">Proveedor</label>
       <input type="text" class="form-control" readonly name="provider_id" id="provider_id" value="{{ $provider }}">
     </div>
   </div>
 
   <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="date">Seleccione La fecha</label>
+        <label for="date">Fecha</label>
         <input type="date" class="form-control" name="date" id="date" value="{{ $capture->date }}" readonly>
       </div>
   </div>

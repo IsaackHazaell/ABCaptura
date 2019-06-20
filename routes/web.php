@@ -48,6 +48,7 @@ Route::get('showTableCa','CaptureController@showTableCa')->name('capture.showTab
 Route::post('saveProduct','CaptureController@saveProduct')->name('capture.saveProduct');
 Route::post('create2','CaptureController@create2')->name('capture.create2');
 Route::delete('deleteTemporalCaptureProduct','CaptureController@deleteTemporalCaptureProduct')->name('capture.deleteTemporalCaptureProduct');
+Route::post('editProducts','CaptureController@editProducts')->name('capture.editProducts');
 
 //Honorary Routes
 Route::resource('honorary','HonoraryController');
