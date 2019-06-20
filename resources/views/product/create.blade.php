@@ -14,8 +14,6 @@
   <div class="form-row">
     <div class="form-group col-md-12">
       <button type="submit" class="btn btn-primary">Guardar</button>
-    </div>
-    <div class="form-group col-md-12">
       <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('product') }}"><b>Lista de productos</b></a><br><br>
     </div>
   </div>

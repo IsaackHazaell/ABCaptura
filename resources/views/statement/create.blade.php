@@ -37,11 +37,7 @@
     <label for="total">Total</label>
     <input type="number" class="form-control" name="total" id="total">
   </div>
-  <!-- <div class="form-group col-md-6">
-    <label for="remaining">Restante del fondo</label>
-    <input type="number" class="form-control" name="remaining" id="remaining">
-  </div> -->
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-12">
     <br><button type="submit" class="btn btn-success">Guardar</button>
     <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('statement') }}"><b>Lista de estados de cuenta</b></a>
   </div>
