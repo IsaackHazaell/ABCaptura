@@ -23,6 +23,17 @@
         <option>Finalizado</option>
       </select>
     </div>
-</div>
 
-@include('client.create')
+</div>
+<div class="form-group col-md-12">
+  <h3>Cliente</h3>
+</div>
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="client_id">Seleccione cliente</label>
+      <select class="form-control" name="client_id" id="client_id">
+        @foreach ($clients as $cliente)
+          <option value="{{$cliente->id}}">{{$cliente->email}}</option>
+        @endforeach
+      </select>
+  </div>

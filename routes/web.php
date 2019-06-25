@@ -23,6 +23,8 @@ Route::get('/home', function(){
   return view('admin.dashboard');
 });
 
+//Clients routes
+Route::resource('client','ClientController');
 //Construction Routes
 Route::resource('construction','ConstructionController');
 Route::get('showTableC','ConstructionController@showTableC')->name('construction.showTableC');

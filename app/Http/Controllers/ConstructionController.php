@@ -56,7 +56,8 @@ class ConstructionController extends Controller
      */
     public function create()
     {
-        return view('construction.create');
+      $clients = Client::all();
+        return view('construction.create', compact('clients'));
     }
 
     /**
@@ -82,15 +83,16 @@ class ConstructionController extends Controller
         $construction->date = $request->date;
         $construction->square_meter = $request->square_meter;
         $construction->status = $status;
+        $construction->client_id = $request->client_id;
         $construction->save();
-
+/*
         $client = New Client;
         $client->construction_id = $construction->id;
         $client->name = $request->client_name;
         $client->cellphone = $request->cellphone;
         $client->phonelandline = $request->phonelandline;
         $client->address = $request->address;
-        $client->save();
+        $client->save(); */
 
         $msg = [
             'title' => 'Creado!',
