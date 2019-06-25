@@ -93,16 +93,16 @@
               </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <form class="form-control" action="{{route ('memory.pdf')}}" method="post">
+          <div class="form-row"style="float: right;">
+            <div class="col-md-12">
+              <form class="btn btn" action="{{route ('memory.pdf')}}" method="post">
                 @csrf
                 <input type="hidden" name="name" value="{{ $contruction->name }}">
                 <input type="hidden" name="honorary" value="{{ $contruction->honorary }}">
                 <input type="hidden" name="total_funds" value="{{ $total_funds }}">
                 <input type="hidden" name="date" value="{{ $date }}">
-                <input type="hidden" name="id" value="{{ $construction_id }}">
-                <button class="bnt btn-info" type="submit" name="button">Exportar PDF</button>
+                <input type="hidden" name="construction_id" value="{{ $construction_id }}">
+                <button class="btn btn float-right" type="submit" name="button" ><i class="far fa-file-pdf"> Exportar</i></button>
               </form>
 
           </div>

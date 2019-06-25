@@ -167,6 +167,7 @@ class MemoryController extends Controller
 
     public function getMH($request)
     {
+
       $month = "";
       $year = "";
       $flag=false;
@@ -182,8 +183,8 @@ class MemoryController extends Controller
           else
               $year .= $request->date[$i];
       }
-      //dd($year);
-      $toTable = Capture::whereYear('captures.date', '=', $year)
+
+      $toTable2 = Capture::whereYear('captures.date', '=', $year)
             ->whereMonth('captures.date', '=', $month)
             ->where('construction_id', '=', $request->construction_id)
             ->where('honorarium', '=', 1)
@@ -195,16 +196,16 @@ class MemoryController extends Controller
             'honoraries.total as honorary_total')*/
             ->get();
 
-            for($i=0; $i<$toTable->count(); $i++)
+            for($i=0; $i<$toTable2->count(); $i++)
             {
-              if($toTable[$i]->voucher == null)
-                $toTable[$i]->voucher = "NO";
-              else if($toTable[$i]->voucher != null)
-                $toTable[$i]->voucher = "SI";
+              if($toTable2[$i]->voucher == null)
+                $toTable2[$i]->voucher = "NO";
+              else if($toTable2[$i]->voucher != null)
+                $toTable2[$i]->voucher = "SI";
             }
 
-
-            return $toTable;
+            //dd($toTable2);
+            return $toTable2;
 
     }
 
@@ -222,16 +223,19 @@ class MemoryController extends Controller
 
     public function generatePDF(Request $request)
     {
-      //dd($request->name);
-      //$cons = ['name' => $request->name, 'honorary' => $request->honorary ];
-      $name = construction::select('name','honorary')->where('id',$request->id)->firstOrFail();
-    //  $name = construction::select('name','honorary')->where('id',$request->construction_id)->firstOrFail();
-      //dd($request->month);
-    //  $totalFunds = MemoryController::getFundsMonth($request->month, $request->construction_id);
 
-        $data = ['construction_id'=> $request->id, 'date' => $request->date, 'contruction'=> $name, 'total_funds'=>$request->total_funds];
+      $name = construction::select('name','honorary')->where('id',$request->construction_id)->firstOrFail();
+        $data = ['construction_id'=> $request->construction_id, 'date' => $request->date, 'contruction'=> $name, 'total_funds'=>$request->total_funds];
+      //  dd($data_complete);
+        $table1 = $this->getM($request);
+        $table2 = $this->getMH($request);
+        $totalM = 0;
+        $totalMH = 0;
 
-        $pdf = PDF::loadView('memory.index', $data);
+    //    dd($table2);
+
+      //  dd($table2);
+        $pdf = PDF::loadView('memory.indexPDF', $data, compact('table2', 'table1', 'totalM', 'totalMH'));
 
         //dd($pdf);
         return $pdf->download('reporte.pdf');
