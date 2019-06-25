@@ -100,6 +100,7 @@ desired effect
         <!--<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>-->
 
+      @can('create', Auth::user())
         <li class="treeview">
           <a href="#"><i class="fa fa-user"></i> <span> Usuarios</span>
             <span class="pull-right-container">
@@ -190,7 +191,7 @@ desired effect
             <span> Honorarios</span>
           </a>
         </li>
-
+      @endcan
         <li>
           <a href="{{route('memory.selectCM')}}">
             <i class="fab fa-medium"></i>

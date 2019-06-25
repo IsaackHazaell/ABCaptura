@@ -9,9 +9,13 @@ use App\construction;
 use App\Capture;
 use App\Client;
 use Yajra\DataTables\DataTables;
-
+use PDF;
 class MemoryController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
     public function selectCM()
     {
         $constructions = construction::select('id','name')->get();
@@ -109,44 +113,50 @@ class MemoryController extends Controller
         return $total;
     }
 
+    public function getM($request)
+    {
+      $month = "";
+      $year = "";
+      $flag=false;
+      for($i=0; $i<strlen($request->date); $i++)
+      {
+          if($request->date[$i] == "-")
+          {
+              $flag = true;
+              $i++;
+          }
+          if($flag)
+              $month .= $request->date[$i];
+          else
+              $year .= $request->date[$i];
+      }
+      //dd($year);
+      $toTable = Capture::whereYear('captures.date', '=', $year)
+            ->whereMonth('captures.date', '=', $month)
+            ->where('construction_id', '=', $request->construction_id)
+            ->where('honorarium', '=', 0)
+            ->join('providers', 'captures.provider_id', '=', 'providers.id')
+            //->join('honoraries', 'captures.id', '=', 'honoraries.capture_id')
+            ->select('captures.date as capture_date', 'captures.concept as capture_concept',
+            'captures.voucher', 'captures.total as capture_total', 'captures.folio as capture_folio',
+            'providers.name as provider_name')/*,
+            'honoraries.total as honorary_total')*/
+            ->get();
+
+            for($i=0; $i<$toTable->count(); $i++)
+            {
+              if($toTable[$i]->voucher == null)
+                $toTable[$i]->voucher = "NO";
+              else if($toTable[$i]->voucher != null)
+                $toTable[$i]->voucher = "SI";
+            }
+
+            return $toTable;
+    }
     public function showTableM(Request $request)
     {
-        $month = "";
-        $year = "";
-        $flag=false;
-        for($i=0; $i<strlen($request->date); $i++)
-        {
-            if($request->date[$i] == "-")
-            {
-                $flag = true;
-                $i++;
-            }
-            if($flag)
-                $month .= $request->date[$i];
-            else
-                $year .= $request->date[$i];
-        }
-        //dd($year);
-        $toTable = Capture::whereYear('captures.date', '=', $year)
-              ->whereMonth('captures.date', '=', $month)
-              ->where('construction_id', '=', $request->construction_id)
-              ->where('honorarium', '=', 0)
-              ->join('providers', 'captures.provider_id', '=', 'providers.id')
-              //->join('honoraries', 'captures.id', '=', 'honoraries.capture_id')
-              ->select('captures.date as capture_date', 'captures.concept as capture_concept',
-              'captures.voucher', 'captures.total as capture_total', 'captures.folio as capture_folio',
-              'providers.name as provider_name')/*,
-              'honoraries.total as honorary_total')*/
-              ->get();
 
-              for($i=0; $i<$toTable->count(); $i++)
-              {
-                if($toTable[$i]->voucher == null)
-                  $toTable[$i]->voucher = "NO";
-                else if($toTable[$i]->voucher != null)
-                  $toTable[$i]->voucher = "SI";
-              }
-
+        $toTable = $this->getM($request);
               //dd($toTable[0]);
 
           return Datatables::of($toTable)
@@ -155,50 +165,75 @@ class MemoryController extends Controller
         ->make(true);
     }
 
+    public function getMH($request)
+    {
+      $month = "";
+      $year = "";
+      $flag=false;
+      for($i=0; $i<strlen($request->date); $i++)
+      {
+          if($request->date[$i] == "-")
+          {
+              $flag = true;
+              $i++;
+          }
+          if($flag)
+              $month .= $request->date[$i];
+          else
+              $year .= $request->date[$i];
+      }
+      //dd($year);
+      $toTable = Capture::whereYear('captures.date', '=', $year)
+            ->whereMonth('captures.date', '=', $month)
+            ->where('construction_id', '=', $request->construction_id)
+            ->where('honorarium', '=', 1)
+            ->join('providers', 'captures.provider_id', '=', 'providers.id')
+            //->join('honoraries', 'captures.id', '=', 'honoraries.capture_id')
+            ->select('captures.date as capture_date', 'captures.concept as capture_concept',
+            'captures.voucher', 'captures.total as capture_total', 'captures.folio as capture_folio',
+            'providers.name as provider_name')/*,
+            'honoraries.total as honorary_total')*/
+            ->get();
+
+            for($i=0; $i<$toTable->count(); $i++)
+            {
+              if($toTable[$i]->voucher == null)
+                $toTable[$i]->voucher = "NO";
+              else if($toTable[$i]->voucher != null)
+                $toTable[$i]->voucher = "SI";
+            }
+
+
+            return $toTable;
+
+    }
 
     public function showTableMH(Request $request)
     {
-        $month = "";
-        $year = "";
-        $flag=false;
-        for($i=0; $i<strlen($request->date); $i++)
-        {
-            if($request->date[$i] == "-")
-            {
-                $flag = true;
-                $i++;
-            }
-            if($flag)
-                $month .= $request->date[$i];
-            else
-                $year .= $request->date[$i];
-        }
-        //dd($year);
-        $toTable = Capture::whereYear('captures.date', '=', $year)
-              ->whereMonth('captures.date', '=', $month)
-              ->where('construction_id', '=', $request->construction_id)
-              ->where('honorarium', '=', 1)
-              ->join('providers', 'captures.provider_id', '=', 'providers.id')
-              //->join('honoraries', 'captures.id', '=', 'honoraries.capture_id')
-              ->select('captures.date as capture_date', 'captures.concept as capture_concept',
-              'captures.voucher', 'captures.total as capture_total', 'captures.folio as capture_folio',
-              'providers.name as provider_name')/*,
-              'honoraries.total as honorary_total')*/
-              ->get();
-
-              for($i=0; $i<$toTable->count(); $i++)
-              {
-                if($toTable[$i]->voucher == null)
-                  $toTable[$i]->voucher = "NO";
-                else if($toTable[$i]->voucher != null)
-                  $toTable[$i]->voucher = "SI";
-              }
-
               //dd($toTable[0]);
+
+          $toTable = $this->getMH($request);
 
           return Datatables::of($toTable)
           //->addColumn('btn', 'memory.partials.buttons')
           //->rawColumns(['btn'])
         ->make(true);
+    }
+
+    public function generatePDF(Request $request)
+    {
+      //dd($request->name);
+      //$cons = ['name' => $request->name, 'honorary' => $request->honorary ];
+      $name = construction::select('name','honorary')->where('id',$request->id)->firstOrFail();
+    //  $name = construction::select('name','honorary')->where('id',$request->construction_id)->firstOrFail();
+      //dd($request->month);
+    //  $totalFunds = MemoryController::getFundsMonth($request->month, $request->construction_id);
+
+        $data = ['construction_id'=> $request->id, 'date' => $request->date, 'contruction'=> $name, 'total_funds'=>$request->total_funds];
+
+        $pdf = PDF::loadView('memory.index', $data);
+
+        //dd($pdf);
+        return $pdf->download('reporte.pdf');
     }
 }

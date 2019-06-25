@@ -44,7 +44,13 @@
             @if($capture->voucher != null)
                 <div class="form-group col-md-6">
                   <label for="voucher">Comprobante:</label>
-                  <img class="img-responsive" src="{{ Storage::url("../storage/{$capture->voucher}") }}" width="300" height="300"/>
+              <!--    <img class="img-responsive" src="{{ Storage::url("../storage/{$capture->voucher}") }}" width="300" height="300"/>
+            -->
+
+            <br>
+                  <a href="{{ route('capture.download', ['id' => $capture->id ]) }}">
+                    <i class="fas fa-file" style="width:15; height:15;"></i>
+                    Descargar </a>
                 </div>
             @endif
         </div>

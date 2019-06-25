@@ -41,6 +41,7 @@ Route::resource('product','ProductController');
 Route::get('showTableProduct','ProductController@showTableProduct')->name('product.showTableProduct');
 
 //Capture Routes
+Route::get('download/{id}', 'CaptureController@download' )->name('capture.download');
 Route::resource('capture','CaptureController');
 Route::get('showTablePCshow','CaptureController@showTablePCshow')->name('capture.showTablePCshow');
 Route::get('showTablePC','CaptureController@showTablePC')->name('capture.showTablePC');
@@ -50,12 +51,14 @@ Route::post('create2','CaptureController@create2')->name('capture.create2');
 Route::delete('deleteTemporalCaptureProduct','CaptureController@deleteTemporalCaptureProduct')->name('capture.deleteTemporalCaptureProduct');
 Route::post('editProducts','CaptureController@editProducts')->name('capture.editProducts');
 
+
 //Honorary Routes
 Route::resource('honorary','HonoraryController');
 Route::get('showTableHo','HonoraryController@showTableHo')->name('honorary.showTableHo');
 Route::get('selectC','HonoraryController@selectC')->name('honorary.selectC');
 
 //Memory Routes
+Route::post('generate-pdf','MemoryController@generatePDF')->name('memory.pdf');
 Route::resource('memory', 'MemoryController', ['only' => [
     'index', 'show'
 ]]);
