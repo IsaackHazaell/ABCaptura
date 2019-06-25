@@ -18,9 +18,13 @@ use App\TemporaryCaptureProduct;
 use Illuminate\Http\Request;
 use DB;
 use Yajra\DataTables\DataTables;
-
+use Illuminate\Support\Facades\Storage;
 class CaptureController extends Controller
 {
+  public function __construct()
+  {
+    $this->middleware('admin');
+  }
     //Category: 0=Mano de obra, 1=Material, 2=Logística
     /**
      * Display a listing of the resource.
@@ -625,7 +629,7 @@ class CaptureController extends Controller
                 ->with('prices', $prices)
                 ->with('funds',$funds)
                 ->with('category',$provider->category)->render();
-                
+
             return response()->json(array('success' => true, 'html'=>$returnHTML));
             //return $data;
         }
@@ -840,5 +844,12 @@ class CaptureController extends Controller
 
         return response()->json($msg);
     }
+
+  public function download($id)
+  {
+    $capture = Capture::find($id);
+  //  dd($capture);
+    return Storage::download($capture->voucher);
+  }
 
 }

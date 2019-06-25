@@ -15,7 +15,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-      if(\Auth::User()->rol != 'Admin')
+      if(\Auth::User()->user_type != 'Admin')
      {
        return redirect()->back()->with([
          'mensaje' => 'Sin permisos'
