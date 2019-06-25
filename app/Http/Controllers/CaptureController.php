@@ -18,7 +18,9 @@ use App\TemporaryCaptureProduct;
 use Illuminate\Http\Request;
 use DB;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+
 class CaptureController extends Controller
 {
   public function __construct()
@@ -44,7 +46,10 @@ class CaptureController extends Controller
     public function create()
     {
         $constructions = construction::select('id','name')->get();
-        $providers = Provider::select('id','name','category')->get();
+        $providers = DB::table('statements')
+          ->select('providers.*')
+          ->join('providers', 'providers.id', '=', 'statements.provider_id')
+          ->get();
 
           for($i=0; $i<$providers->count(); $i++)
           {
@@ -200,13 +205,15 @@ class CaptureController extends Controller
 
     public function saveProduct(Request $request)
     {
-        $provider_id = "";
-        for($i=0;$i<strlen($request->provider_id);$i++){
+        //dd($request->provider_id);
+        $provider_id = $request->provider_id;
+        /*for($i=0;$i<strlen($request->provider_id);$i++){
           if($request->provider_id[$i] != " ")
             $provider_id .= $request->provider_id[$i];
           else
             break;
-        }
+        }*/
+
         $product = New Product;
         $product->provider_id = $provider_id;
         $product->concept = $request->concept;
@@ -220,14 +227,13 @@ class CaptureController extends Controller
         $price->year = $request->year;
         $price->month = $request->month;
         $price->save();
-
         $msg = [
             'title' => 'Creado!',
             'text' => 'Producto creado exitosamente.',
             'icon' => 'success'
         ];
-
-        return back()->with('message', $msg);
+        return Redirect::back()->with('message', $msg);
+        //return back()->with('message', $msg);
     }
 
     public function showTablePC(Request $request)
