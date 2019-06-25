@@ -108,38 +108,6 @@ function getRemaining(text)
   return remaining;
 }
 
-//EDIT
-/*$('#edit').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget)
-    var id = button.data('idprovider')
-    var name = button.data('nameprovider')
-    var turn = button.data('turnprovider')
-    var company = button.data('companyprovider')
-    var category = button.data('categoryprovider')
-    category = toCategory(category);
-    var phone = button.data('phoneprovider')
-    var phone2 = button.data('phonlandlineprovider')
-    var mail = button.data('mailprovider')
-    var street = button.data('streetprovider')
-    var colony = button.data('colonyprovider')
-    var town = button.data('townprovider')
-    var state = button.data('stateprovider')
-    var modal = $(this)
-    modal.find('.modal-body #id').val(id);
-    modal.find('.modal-body #name').val(name);
-    modal.find('.modal-body #turn').val(turn);
-    modal.find('.modal-body #company').val(company);
-    modal.find('.modal-body #category').val(category);
-    modal.find('.modal-body #cellphone').val(phone);
-    modal.find('.modal-body #phonlandline').val(phone2);
-    modal.find('.modal-body #mail').val(mail);
-    modal.find('.modal-body #street').val(street);
-    modal.find('.modal-body #colony').val(colony);
-    modal.find('.modal-body #town').val(town);
-    modal.find('.modal-body #state').val(state);
-});*/
-
-
 //SWETALERT
 @if (Session::has('message'))
         sAlert(

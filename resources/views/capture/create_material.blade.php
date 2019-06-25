@@ -9,14 +9,6 @@
 
 <form action="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @include('capture.modal', ['provider' => $data->provider_id])
-
-    <div class="form-row">
-        <div class="form-group col-md-12">
-            <button class="btn btn-success btn-md"
-                data-toggle="modal" data-target="#addProduct" style="float: right;"><i class="fa fa-plus"></i> Crear producto</button>
-        </div>
-    </div>
 
     @include('capture.partials.form_material')
         <div class="form-row">
