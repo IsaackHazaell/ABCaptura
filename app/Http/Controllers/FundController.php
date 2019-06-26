@@ -98,7 +98,13 @@ class FundController extends Controller
       $fund->remaining = $request->total;
       $fund->construction_id = $construction_id;
       $fund->save();
-      return view('fund.index');
+      $msg = [
+          'title' => 'Creado!',
+          'text' => 'Fondo creado exitosamente.',
+          'icon' => 'success'
+      ];
+
+      return redirect('fund')->with('message', $msg);
     }
 
     /**
