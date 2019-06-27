@@ -28,7 +28,7 @@ class FundController extends Controller
     public function showTableF()
     {
       $funds = DB::table('funds')
-        ->select('funds.*', 'funds.id as fund_id', 'constructions.*', 'constructions.id as construction_id')
+        ->select('funds.*', 'funds.id as fund_id', 'funds.date as fund_date', 'constructions.*', 'constructions.id as construction_id', 'constructions.date as construction_date')
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
         ->get();
         for($i=0; $i<$funds->count(); $i++)
@@ -146,8 +146,13 @@ class FundController extends Controller
     {
       //dd($request);
       $fund = fund::findOrFail($request->id);
-      $input = $request->all();
-      $fund->fill($input)->save();
+      $total_prev = $fund->total;
+      $total_new = $request->total;
+      $diference = $total_new - $total_prev;
+      $fund->date = $request->date;
+      $fund->remaining += $diference;
+      $fund->total = $request->total;
+      $fund->save();
 
       $msg = [
         'title' => 'Modificado!',
