@@ -137,8 +137,13 @@ class FundController extends Controller
     {
       //dd($request);
       $fund = fund::findOrFail($request->id);
-      $input = $request->all();
-      $fund->fill($input)->save();
+      $total_prev = $fund->total;
+      $total_new = $request->total;
+      $diference = $total_new - $total_prev;
+      $fund->date = $request->date;
+      $fund->remaining += $diference;
+      $fund->total = $request->total;
+      $fund->save();
 
       $msg = [
         'title' => 'Modificado!',

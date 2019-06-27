@@ -1,26 +1,21 @@
-@extends('admin.layout')
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <h3>Memoria</h3>
+    <h4>{{ $contruction->name }} - {{ $date }}</h4>
+    <h4>Suma de fondos del mes: ${{ $total_funds }}</h4>
+  </div>
+  <div class="col-md-6">
+    <img src="img/ablogo.jpg" alt="" width="120" style="float: right;">
+  </div>
+</div>
 
-@section('adminlte_css')
-  <meta name="csrf-token" = content="{{ csrf_token() }}">
-@stop
 
-@section('content-header')
-  <h1>
-    Memoria
-  </h1>
-@stop
 
-@section('content')
-      <h2>Memoria</h2>
-      <h3>{{ $contruction->name }} - {{ $date }}</h3>
-      <h3>Suma de fondos del mes: ${{ $total_funds }}</h3>
-
-      <div class="form-row">
-            <div class="form-group col-md-12">
-                <br>
-            </div>
-            <div class="form-group col-md-12">
-                <h4>Con honorarios (%{{ $contruction->honorary }})</h4>
+<div class="form-row">
+      <div class="form-group col-md-12">
+          <br>
+                <h5>Con honorarios ({{ $contruction->honorary }}%)</h5>
             </div>
       </div>
 
@@ -36,12 +31,31 @@
                         <th>Folio</th>
                     </tr>
                 </thead>
+                <tbody>
+                  @foreach ($table2 as $honorarios)
+                    <tr>
+                      <td>{{$honorarios->capture_date}}</td>
+                      <td>{{$honorarios->provider_name}}</td>
+                      <td>{{$honorarios->capture_concept}}</td>
+                      <td>{{$honorarios->voucher}}</td>
+                      <td>{{$honorarios->capture_total}}</td>
+                      <td>{{$honorarios->capture_folio}}</td>
+                    </tr>
+                    {{$totalMH += $honorarios->capture_total}}
+                  @endforeach
+                </tbody>
             </table>
+
+            <div>
+              <br>
+            </div>
+
+            <br>
 
             <div class="form-row">
                 <div class="form-group col-md-8">
                     <label for="total_with_h">Total con honorarios</label>
-                    <input type="text" class="form-control" name="total_with_h" id="total_with_h" readonly>
+                    <label for="">:&nbsp;&nbsp; ${{$totalMH}}</label>
               </div>
             </div>
 
@@ -54,7 +68,7 @@
             <div class="form-row">
                   <div class="form-group col-md-12">
                       <br>
-                      <h4>Sin honorarios:</h4>
+                      <h5>Sin honorarios:</h5>
                   </div>
             </div>
 
@@ -70,13 +84,30 @@
                         <th>Folio</th>
                     </tr>
                 </thead>
+
+                @foreach ($table1 as $simple)
+                  <tr>
+                    <td>{{$simple->capture_date}}</td>
+                    <td>{{$simple->provider_name}}</td>
+                    <td>{{$simple->capture_concept}}</td>
+                    <td>{{$simple->voucher}}</td>
+                    <td>{{$simple->capture_total}}</td>
+                    <td>{{$simple->capture_folio}}</td>
+                  </tr>
+
+                  {{$totalM += $simple->capture_total}}
+                @endforeach
             </table>
             </div>
+            <div>
+              <br>
+            </div>
 
+            <br>
             <div class="form-row">
                 <div class="form-group col-md-8">
                   <label for="total_without_h">Total sin honorarios</label>
-                  <input type="text" class="form-control" name="total_without_h" id="total_without_h" readonly>
+                  <label for="">:&nbsp;&nbsp; ${{$totalM}}</label>
               </div>
             </div>
 
@@ -89,28 +120,9 @@
           <div class="form-row">
               <div class="form-group col-md-12">
                 <label for="total_memory">Total de memoria</label>
-                <input type="text" class="form-control" name="total_memory" id="total_memory" readonly>
+                <label for="">:&nbsp;&nbsp; ${{$totalM+$totalMH}}</label>
+
               </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <form class="form-control" action="{{route ('memory.pdf')}}" method="post">
-                @csrf
-                <input type="hidden" name="name" value="{{ $contruction->name }}">
-                <input type="hidden" name="honorary" value="{{ $contruction->honorary }}">
-                <input type="hidden" name="total_funds" value="{{ $total_funds }}">
-                <input type="hidden" name="date" value="{{ $date }}">
-                <input type="hidden" name="id" value="{{ $construction_id }}">
-                <button class="bnt btn-info" type="submit" name="button">Exportar PDF</button>
-              </form>
-
-          </div>
-          </div>
-
       </div>
-@stop
-
-@section('adminlte_js')
-    @include('memory.partials.script')
-@stop

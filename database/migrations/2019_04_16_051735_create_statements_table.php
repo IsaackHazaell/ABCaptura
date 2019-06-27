@@ -18,8 +18,8 @@ class CreateStatementsTable extends Migration
             $table->integer('construction_id')->unsigned();
             $table->integer('provider_id')->unsigned();
             $table->integer('status');
-            $table->decimal('total');
-            $table->decimal('remaining');
+            $table->decimal('total',12,2);
+            $table->decimal('remaining',12,2);
             $table->timestamps();
             $table->foreign('construction_id')->references('id')->on('constructions')
               ->onDelete('cascade')

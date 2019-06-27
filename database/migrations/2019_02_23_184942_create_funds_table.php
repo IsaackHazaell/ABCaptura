@@ -17,8 +17,8 @@ class CreateFundsTable extends Migration
             $table->increments('id');
             $table->integer('construction_id')->unsigned();
             $table->date('date');
-            $table->decimal('remaining',9,2);
-            $table->decimal('total',9,2);
+            $table->decimal('remaining',12,2);
+            $table->decimal('total',12,2);
             $table->timestamps();
             $table->foreign('construction_id')->references('id')->on('constructions')
               ->onDelete('cascade')
