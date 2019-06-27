@@ -38,8 +38,9 @@ class ConstructionController extends Controller
         ->join('clients', 'clients.id', '=', 'constructions.client_id')
         ->get();
         for ($i=0; $i<$constructions->count(); $i++) {
+
           $constructions[$i]->date = Carbon::parse($constructions[$i]->date)->format('d-F-Y');
-          //$constructions[$i]->date = $constructions[$i]->date->format('d-f-Y');
+          $constructions[$i]->square_meter = number_format($constructions[$i]->square_meter,2);
           if($constructions[$i]->status=="0")
             $constructions[$i]->status="Activo";
           else if($constructions[$i]->status=="1")

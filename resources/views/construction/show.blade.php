@@ -18,11 +18,11 @@
     </div>
     <div class="form-group col-md-6">
       <label for="date">Fecha</label>
-      <input type="text" class="form-control" value="{{$construction->date}}" readonly name="date" id="date">
+      <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($construction->date)->format('d-F-Y')}}" readonly name="date" id="date">
     </div>
     <div class="form-group col-md-6">
       <label for="square_meter">Metros cuadrados</label>
-      <input type="text" class="form-control" value="{{$construction->square_meter}}" readonly name="square_meter" id="square_meter">
+      <input type="text" class="form-control" value="{{number_format($construction->square_meter)}}" readonly name="square_meter" id="square_meter">
     </div>
     <div class="form-group col-md-6">
       <label for="status">Giro</label>

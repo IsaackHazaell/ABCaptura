@@ -5,8 +5,8 @@
   data-idconstruction="{{$construction_id}}"
   data-nameconstruction="{{$construction_name}}"
   data-honoraryconstruction="{{$honorary}}"
-  data-dateconstruction="{{$date = Carbon\Carbon::parse($date)->format('d-m-Y')}}"
-  data-square_meterconstruction="{{$square_meter}}"
+  data-dateconstruction="{{ \Carbon\Carbon::parse($date)->format('Y-m-d')}}"
+  data-square_meterconstruction="{{intval(str_replace(",","",$square_meter))}}"
   data-statusconstruction="{{$status}}"
 
   data-client_id="{{$client_id}}"
