@@ -116,8 +116,13 @@ class StatementController extends Controller
     public function update(Request $request)
     {
       $statement = Statement::findOrFail($request->id);
-      $input = $request->all();
-      $statement->fill($input)->save();
+      $total_prev = $statement->total;
+      $total_new = $request->total;
+      $diference = $total_new - $total_prev;
+      $statement->remaining += $diference;
+      $statement->status = $request->status;
+      $statement->total = $request->total;
+      $statement->save();
 
       $msg = [
         'title' => 'Modificado!',

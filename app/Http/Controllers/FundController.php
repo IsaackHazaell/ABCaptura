@@ -27,7 +27,7 @@ class FundController extends Controller
     public function showTableF()
     {
       $funds = DB::table('funds')
-        ->select('funds.*', 'funds.id as fund_id', 'constructions.*', 'constructions.id as construction_id')
+        ->select('funds.*', 'funds.id as fund_id', 'funds.date as fund_date', 'constructions.*', 'constructions.id as construction_id', 'constructions.date as construction_date')
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
         ->get();
 
