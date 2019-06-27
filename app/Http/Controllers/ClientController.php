@@ -1,11 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DB;
+use App\Client;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ClientController extends Controller
 {
+  public function __construct()
+  {
+    $this->middleware('admin');
+  }
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +20,20 @@ class ClientController extends Controller
     public function index()
     {
         //
+
+        return view('client.index');
+    }
+    public function showTableCl()
+    {
+      $clients = DB::table('clients')
+        ->get();
+
+    //    dd($clients);
+
+        return Datatables::of($clients)
+        ->addColumn('btn', 'client.partials.buttons')
+        ->rawColumns(['btn'])
+      ->make(true);
     }
 
     /**
@@ -24,6 +44,7 @@ class ClientController extends Controller
     public function create()
     {
         //
+        return view('client.create');
     }
 
     /**
@@ -36,13 +57,20 @@ class ClientController extends Controller
     {
         //
         $client = New Client;
-        $client->construction_id = $construction->id;
-        $client->name = $request->client_name;
+        $client->name = $request->name;
         $client->cellphone = $request->cellphone;
         $client->email = $request->email;
         $client->phonelandline = $request->phonelandline;
         $client->address = $request->address;
         $client->save();
+
+        $msg = [
+            'title' => 'Creado!',
+            'text' => 'Clientes creado exitosamente.',
+            'icon' => 'success'
+        ];
+
+        return redirect('client')->with('message', $msg);
 
     }
 
@@ -52,9 +80,12 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Client $client)
     {
-        //
+        //  dd($client);
+
+
+        return view('client.show')->with('client', $client);
     }
 
     /**
@@ -78,6 +109,24 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         //
+      $client = Client::findOrFail($request->id);
+      $client->fill($request->all());
+      $client->email = $request->email;
+      $client->save();
+
+
+  //   dd($input);
+    /*
+      $client->fill($input)->save();
+
+*/
+      $msg = [
+        'title' => 'Modificado!',
+        'text' => 'Cliente modificado exitosamente.',
+        'icon' => 'success'
+        ];
+
+      return redirect('client')->with('message', $msg);
     }
 
     /**
@@ -86,8 +135,15 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        //
+        $client->delete();
+          $msg = [
+              'title' => 'Eliminado!',
+              'text' => 'Cliente eliminado exitosamente.',
+              'icon' => 'success'
+          ];
+
+          return response()->json($msg);
     }
 }

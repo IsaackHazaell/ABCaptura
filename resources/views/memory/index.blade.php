@@ -13,7 +13,7 @@
 @section('content')
       <h2>Memoria</h2>
       <h3>{{ $contruction->name }} - {{ $date }}</h3>
-      <h3>Suma de fondos del mes: ${{ $total_funds }}</h3>
+      <h3>Suma de fondos del mes: ${{ number_format($total_funds) }}</h3>
 
       <div class="form-row">
             <div class="form-group col-md-12">

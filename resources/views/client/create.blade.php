@@ -1,27 +1,26 @@
+@extends('admin.layout')
+@section('content')
 
-<div class="form-row">
-  <div class="form-group col-md-6">
-    <label for="client_name">Nombre</label>
-    <input type="text" class="form-control" name="client_name" id="client_name" required>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="email">Correo electrónico</label>
-      <input type="email" class="form-control" name="email" id="email" required>
-    </div>
-  <div class="form-group col-md-6">
-    <label for="cellphone">Celular</label>
-    <input type="number" class="form-control" name="cellphone" id="cellphone">
-  </div>
-</div>
+<section class="content-header">
+  <h1>
+    Proveedor
+    <small>Agregar Proveedor</small>
+  </h1>
+</section>
 
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="phonelandline">Teléfono fijo</label>
-      <input type="number" class="form-control" name="phonelandline" id="phonelandline">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="address">Domicilio</label>
-      <input type="text" class="form-control" name="address" id="address">
-    </div>
+<form action="{{url('client')}}" method="post">
+  {{csrf_field()}}
+  @include('client.form')
+  <div class="form-group col-md-12">
+    <br>
   </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+      <div class="form-group col-md-6">
+        <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('client') }}"><b>Lista de clientes</b></a><br><br>
+      </div>
+    </div>
+</form>
+@endsection

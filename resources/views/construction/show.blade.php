@@ -1,6 +1,5 @@
 @extends('admin.layout')
 @section('content')
-@include('construction.modal')
 <section class="content-header">
   <h1>
     Obras
@@ -29,9 +28,12 @@
       <label for="status">Giro</label>
       <input type="text" class="form-control" value="{{$construction->status}}" readonly name="status" id="status">
     </div>
+    <div class="form-group col-md-6">
+      <label for="status">Cliente</label>
+      <input type="text" class="form-control" value="{{$client->name}}" readonly name="name" id="name">
+    </div>
   </div>
 
-  @include('client.show')
 
   <div class="form-row">
     <div class="form-group col-md-12">
@@ -43,15 +45,12 @@
         data-square_meterconstruction="{{$construction->square_meter}}"
         data-statusconstruction="{{$construction->status}}"
 
-        data-client_name="{{$client->name}}"
-        data-cellphone="{{$client->cellphone}}"
-        data-phonelandline="{{$client->phonelandline}}"
-        data-address="{{$client->address}}"
-
+        data-client_id="{{$construction->client_id}}"
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('construction') }}"><b>Lista de obras</b></a>
     </div>
   </div>
+  @include('construction.modal')
 @endsection
 
 @section('adminlte_js')

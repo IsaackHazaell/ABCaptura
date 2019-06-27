@@ -8,6 +8,8 @@ use App\construction;
 use App\HonoraryRemaining;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
+
 
 
 class ConstructionController extends Controller
@@ -23,7 +25,8 @@ class ConstructionController extends Controller
      */
     public function index()
     {
-          return view('construction.index');
+      $clients = Client::all();
+          return view('construction.index', compact('clients'));
     }
 
     public function showTableC()
@@ -32,9 +35,11 @@ class ConstructionController extends Controller
         ->select('constructions.*', 'constructions.id as construction_id' ,
         'constructions.name as construction_name','clients.*',
         'clients.id as client_id', 'clients.name as client_name')
-        ->join('clients', 'clients.construction_id', '=', 'constructions.id')
+        ->join('clients', 'clients.id', '=', 'constructions.client_id')
         ->get();
         for ($i=0; $i<$constructions->count(); $i++) {
+          $constructions[$i]->date = Carbon::parse($constructions[$i]->date)->format('d-F-Y');
+          //$constructions[$i]->date = $constructions[$i]->date->format('d-f-Y');
           if($constructions[$i]->status=="0")
             $constructions[$i]->status="Activo";
           else if($constructions[$i]->status=="1")
@@ -126,9 +131,10 @@ class ConstructionController extends Controller
           $status="Espera";
 
       $construction->status = $status;
-      $client = Client::select('*')->where('construction_id', $construction->id)->first();
-      // dd($client->name);
-      return view('construction.show')->with('construction',$construction)->with('client', $client);
+      $client = Client::select('*')->where('id', $construction->client_id)->first();
+      //dd($client);
+      $clients = Client::all();
+      return view('construction.show')->with('construction',$construction)->with('client', $client)->with('clients', $clients);
     }
 
     /**
@@ -166,14 +172,8 @@ class ConstructionController extends Controller
       $construction->date = $request->date;
       $construction->square_meter = $request->square_meter;
       $construction->status = $status;
+      $construction->client_id = $request->client_id;
       $construction->save();
-
-      $client = Client::where('construction_id', $request->id)->firstOrFail();
-      $client->name = $request->client_name;
-      $client->phonelandline = $request->phonelandline;
-      $client->cellphone = $request->cellphone;
-      $client->address = $request->address;
-      $client->save();
 
       $msg = [
         'title' => 'Modificado!',

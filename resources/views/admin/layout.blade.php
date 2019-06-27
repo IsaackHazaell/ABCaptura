@@ -5,6 +5,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
+  <style>
+  .require:after{
+          content:'*';
+          color:red;
+          padding-left:5px;
+      }
+</style>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AB | Captura</title>
@@ -110,6 +117,18 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="{{ url('user') }}">Lista de Usuarios</a></li>
             <li><a href="{{ url('user/create') }}">Agregar usuario</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span> Clientes</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('client') }}">Lista de Clientes</a></li>
+            <li><a href="{{ url('client/create') }}">Agregar cliente</a></li>
           </ul>
         </li>
 
