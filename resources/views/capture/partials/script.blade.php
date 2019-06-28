@@ -12,8 +12,21 @@ if({{$data->iva}} == 1)
 
 $("#saveCapture").click(function (e) {
     getIva();
+    //honorary_remaining
+
   if(valida())
   {
+      var total = $('#total').val();
+      total = parseFloat(total);
+      var provider_name = @json($provider->name);//{//{json_encode($provider->name)}};
+      console.log(provider_name);
+      var flagForHonorary = false;
+      if(provider_name == "Arq. Missael Quintero")
+      {
+          var honorary_remaining = @json($honorary_remaining);
+          if(total > honorary_remaining)
+              flagForHonorary = true;
+      }
     var text = $('#fund_id').val();
     var fund_id="";
     for (var i = 0; i < text.length; i++) {
@@ -25,8 +38,6 @@ $("#saveCapture").click(function (e) {
     }
     var remaining = getRemaining(text);
     remaining = parseInt(remaining);
-    var total = $('#total').val();
-    total = parseFloat(total);
     if(remaining < total)
     {
       swal({
@@ -36,6 +47,16 @@ $("#saveCapture").click(function (e) {
         button: "Continue",
         timer: 3000
       });
+    }
+    else if(flagForHonorary)
+    {
+        swal({
+          title: "Cantidad de cobro excedida",
+          text: "Puede cobrar hasta $" + honorary_remaining,
+          icon: "error",
+          button: "Continue",
+          timer: 3000
+        });
     }
     else {
       $.ajax({
@@ -67,6 +88,7 @@ $("#saveCapture").click(function (e) {
                button: "Continue",
                timer: 3000
              });
+             window.location.href = '{{ route('capture.index') }}';
             }
        });
     }

@@ -41,6 +41,10 @@
 
     <div class="form-row">
         <div class="form-group col-md-6">
+          <label for="total">Total</label>
+          <input type="text" class="form-control" name="total" id="total" value="{{ $capture->total }}" readonly>
+        </div>
+        <div class="form-group col-md-6">
             @if($capture->voucher != null)
                 <div class="form-group col-md-6">
                   <label for="voucher">Comprobante:</label>

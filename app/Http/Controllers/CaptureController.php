@@ -47,7 +47,7 @@ class CaptureController extends Controller
     {
         $constructions = construction::select('id','name')->get();
         $providers = DB::table('statements')
-          ->select('providers.*')
+          ->select('providers.*', 'providers.id as provider_id', 'statements.*', 'statements.id as statement_id')
           ->join('providers', 'providers.id', '=', 'statements.provider_id')
           ->get();
 
@@ -60,7 +60,16 @@ class CaptureController extends Controller
               else if($providers[$i]->category == 2)
                 $providers[$i]->category = "Logística";
           }
-        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers);
+
+          $missa = Provider::where('name', 'Arq. Missael Quintero')->first();
+          if($missa->category == 0)
+            $missa->category = "Mano de obra";
+          else if($missa->category == 1)
+            $missa->category = "Material";
+            else if($missa->category == 2)
+              $missa->category = "Logística";
+
+        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers)->with('missa',$missa);
     }
 
     public function create2(Request $request)
@@ -75,7 +84,11 @@ class CaptureController extends Controller
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
         ->get();
 
-        $provider_id = "";
+        $provider = Provider::where('id',$request->provider_id)->first();
+        $category = $provider->category;
+        //$provider_name = $provider
+
+        /*$provider_id = "";
         $flag=False;
         $category="";
         for($i=0;$i<strlen($request->provider_id);$i++){
@@ -107,7 +120,7 @@ class CaptureController extends Controller
             break;
         }
         $request["construction_id"] = $construction_id;
-        $request["provider_id"] = $provider_id;
+        $request["provider_id"] = $provider_id;*/
 
         if($category == "Material")
         {
@@ -131,7 +144,7 @@ class CaptureController extends Controller
             ->select(
             'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
             'prices.*')
-            ->where('providers.id', '=', $provider_id)
+            ->where('providers.id', '=', $request->provider_id)
             ->join('providers', 'providers.id', '=', 'products.provider_id')
             ->join('prices', 'prices.product_id', '=', 'products.id')
             ->get();
@@ -147,7 +160,9 @@ class CaptureController extends Controller
         else
         {
             //dd($request->iva);
-            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category);
+            $honorary_remaining = HonoraryRemaining::where('construction_id',$request->construction_id)->first();
+            $honorary_remaining = $honorary_remaining->remaining;
+            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider', $provider);
 
         }
 
