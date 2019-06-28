@@ -24,8 +24,8 @@ class MemoryController extends Controller
 
     public function viewClient(Request $request)
     {
-        $name = construction::select('name','honorary')->where('id',$request->construction_id)->firstOrFail();
-        $client = Client::select('name')->where('construction_id',$request->construction_id)->firstOrFail();
+        $name = construction::select('name','honorary', 'client_id')->where('id',$request->construction_id)->firstOrFail();
+        $client = Client::select('name')->where('id',$name->client_id)->firstOrFail();
         $totalFunds = MemoryController::getTotalfunds($request->construction_id);
         $totalCaptures = MemoryController::getTotalCaptures($request->construction_id);
         return view('memory.viewClient')
@@ -231,6 +231,10 @@ class MemoryController extends Controller
         $table2 = $this->getMH($request);
         $totalM = 0;
         $totalMH = 0;
+
+      //  $variable = number_format(20000897,2);
+
+      //  dd($variable);
 
     //    dd($table2);
 

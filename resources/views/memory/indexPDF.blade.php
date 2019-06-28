@@ -3,7 +3,7 @@
   <div class="form-group col-md-6">
     <h3>Memoria</h3>
     <h4>{{ $contruction->name }} - {{ $date }}</h4>
-    <h4>Suma de fondos del mes: ${{ $total_funds }}</h4>
+    <h4>Suma de fondos del mes: ${{ number_format($total_funds) }}</h4>
   </div>
   <div class="col-md-6">
     <img src="img/ablogo.jpg" alt="" width="120" style="float: right;">
@@ -38,10 +38,10 @@
                       <td>{{$honorarios->provider_name}}</td>
                       <td>{{$honorarios->capture_concept}}</td>
                       <td>{{$honorarios->voucher}}</td>
-                      <td>{{$honorarios->capture_total}}</td>
+                      <td>{{number_format($honorarios->capture_total)}}</td>
                       <td>{{$honorarios->capture_folio}}</td>
                     </tr>
-                    {{$totalMH += $honorarios->capture_total}}
+                    {{number_format($totalMH += $honorarios->capture_total)}}
                   @endforeach
                 </tbody>
             </table>
@@ -55,7 +55,7 @@
             <div class="form-row">
                 <div class="form-group col-md-8">
                     <label for="total_with_h">Total con honorarios</label>
-                    <label for="">:&nbsp;&nbsp; ${{$totalMH}}</label>
+                    <label for="">:&nbsp;&nbsp; ${{number_format($totalMH)}}</label>
               </div>
             </div>
 
@@ -91,7 +91,7 @@
                     <td>{{$simple->provider_name}}</td>
                     <td>{{$simple->capture_concept}}</td>
                     <td>{{$simple->voucher}}</td>
-                    <td>{{$simple->capture_total}}</td>
+                    <td>{{number_format($simple->capture_total)}}</td>
                     <td>{{$simple->capture_folio}}</td>
                   </tr>
 
@@ -107,7 +107,7 @@
             <div class="form-row">
                 <div class="form-group col-md-8">
                   <label for="total_without_h">Total sin honorarios</label>
-                  <label for="">:&nbsp;&nbsp; ${{$totalM}}</label>
+                  <label for="">:&nbsp;&nbsp; ${{number_format($totalM)}}</label>
               </div>
             </div>
 
@@ -120,7 +120,7 @@
           <div class="form-row">
               <div class="form-group col-md-12">
                 <label for="total_memory">Total de memoria</label>
-                <label for="">:&nbsp;&nbsp; ${{$totalM+$totalMH}}</label>
+                <label for="">:&nbsp;&nbsp; ${{number_format($totalM+$totalMH)}}</label>
 
               </div>
           </div>

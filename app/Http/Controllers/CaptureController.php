@@ -20,7 +20,7 @@ use DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-
+use CArbon\Carbon;
 class CaptureController extends Controller
 {
   public function __construct()
@@ -316,6 +316,8 @@ class CaptureController extends Controller
 
               for($i=0; $i<$toTable->count(); $i++)
               {
+                $toTable[$i]->capture_total = number_format($toTable[$i]->capture_total,2);
+                $toTable[$i]->capture_date = Carbon::parse($toTable[$i]->capture_date)->format('d-F-Y');
                 if($toTable[$i]->voucher == null)
                   $toTable[$i]->voucher = "NO";
                 else if($toTable[$i]->voucher != null)
@@ -324,7 +326,8 @@ class CaptureController extends Controller
 
           return Datatables::of($toTable)
           ->addColumn('btn', 'capture.partials.buttons')
-          ->rawColumns(['btn'])
+          ->addColumn('voucher', 'capture.partials.icon')
+          ->rawColumns(['voucher','btn'])
         ->make(true);
     }
 

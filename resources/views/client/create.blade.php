@@ -1,27 +1,26 @@
-<div class="form-row">
+@extends('admin.layout')
+@section('content')
+
+<section class="content-header">
+  <h1>
+    Proveedor
+    <small>Agregar Proveedor</small>
+  </h1>
+</section>
+
+<form action="{{url('client')}}" method="post">
+  {{csrf_field()}}
+  @include('client.form')
   <div class="form-group col-md-12">
-<h4>Cliente</h4>
-</div>
-</div>
-
-<div class="form-row">
-  <div class="form-group col-md-6">
-    <label for="client_name">Nombre</label>
-    <input type="text" class="form-control" name="client_name" id="client_name" required>
+    <br>
   </div>
-  <div class="form-group col-md-6">
-    <label for="cellphone">Celular</label>
-    <input type="number" class="form-control" name="cellphone" id="cellphone">
-  </div>
-</div>
-
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="phonelandline">Teléfono fijo</label>
-      <input type="number" class="form-control" name="phonelandline" id="phonelandline">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+      <div class="form-group col-md-6">
+        <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('client') }}"><b>Lista de clientes</b></a><br><br>
+      </div>
     </div>
-    <div class="form-group col-md-6">
-      <label for="address">Domicilio</label>
-      <input type="text" class="form-control" name="address" id="address">
-    </div>
-  </div>
+</form>
+@endsection

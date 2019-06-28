@@ -5,14 +5,11 @@
   data-idconstruction="{{$construction_id}}"
   data-nameconstruction="{{$construction_name}}"
   data-honoraryconstruction="{{$honorary}}"
-  data-dateconstruction="{{$date}}"
-  data-square_meterconstruction="{{$square_meter}}"
+  data-dateconstruction="{{ \Carbon\Carbon::parse($date)->format('Y-m-d')}}"
+  data-square_meterconstruction="{{intval(str_replace(",","",$square_meter))}}"
   data-statusconstruction="{{$status}}"
 
-  data-client_name="{{$client_name}}"
-  data-cellphone="{{$cellphone}}"
-  data-phonelandline="{{$phonelandline}}"
-  data-address="{{$address}}"
+  data-client_id="{{$client_id}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
   <a id_construction="{{ $construction_id }}" class="btn btn-danger btn-sm status-construction" construction_name="{{ $construction_name }}">

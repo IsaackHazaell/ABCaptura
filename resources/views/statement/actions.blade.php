@@ -6,8 +6,8 @@
   data-nameconstruction="{{$construction_name}}"
   data-nameprovider="{{$provider_name}}"
   data-statusstatement="{{$status}}"
-  data-remainingstatement="{{$remaining}}"
-  data-totalstatement="{{$total}}"
+  data-remainingstatement="{{intval(str_replace(",","",$remaining))}}"
+  data-totalstatement="{{intval(str_replace(",","",$total))}}"
 
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 

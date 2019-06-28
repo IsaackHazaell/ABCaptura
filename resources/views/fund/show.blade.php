@@ -15,15 +15,15 @@
     </div>
     <div class="form-group col-md-6">
       <label for="date">Fecha</label>
-      <input type="text" class="form-control" value="{{$fund->date}}" readonly name="date" id="date">
+      <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($fund->date)->format('d-F-Y')}}" readonly name="date" id="date">
     </div>
     <div class="form-group col-md-6">
       <label for="remaining">Restante de fondo</label>
-      <input type="text" class="form-control" value="{{$fund->remaining}}" readonly name="remaining" id="remaining">
+      <input type="text" class="form-control" value="{{number_format($fund->remaining,2)}}" readonly name="remaining" id="remaining">
     </div>
     <div class="form-group col-md-6">
       <label for="total">Total</label>
-      <input type="text" class="form-control" value="{{$fund->total}}" readonly name="total" id="total">
+      <input type="text" class="form-control" value="{{number_format($fund->total,2)}}" readonly name="total" id="total">
     </div>
 </div>
 
