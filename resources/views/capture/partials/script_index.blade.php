@@ -11,7 +11,7 @@ table = $('#capture_table').DataTable({
         {data: 'capture_date'},
         {data: 'capture_concept'},
         {data: 'capture_total'},
-        {data: 'voucher'},
+        {data: 'voucher', "className": 'text-center'},
         {data: 'btn'}
     ],
     "language": {
@@ -34,6 +34,7 @@ table = $('#capture_table').DataTable({
   "infoFiltered": ""
 }
 });
+
 
 //DELETE
 $('body').delegate('.delete-capture','click',function(){

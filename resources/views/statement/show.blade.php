@@ -24,11 +24,11 @@
     </div>
     <div class="form-group col-md-6">
       <label for="total">Total</label>
-      <input type="text" class="form-control" value="{{$statement->total}}" readonly name="total" id="total">
+      <input type="text" class="form-control" value="{{number_format($statement->total,2)}}" readonly name="total" id="total">
     </div>
     <div class="form-group col-md-6">
       <label for="remaining">Restante</label>
-      <input type="text" class="form-control" value="{{$statement->remaining}}" readonly name="remaining" id="remaining">
+      <input type="text" class="form-control" value="{{number_format($statement->remaining,2)}}" readonly name="remaining" id="remaining">
     </div>
   </div>
 
@@ -40,8 +40,8 @@
         data-nameconstruction="{{$statement->construction_id}}"
         data-nameprovider="{{$statement->provider_id}}"
         data-statusstatement="{{$statement->status}}"
-        data-remainingstatement="{{$statement->remaining}}"
-        data-totalstatement="{{$statement->total}}"
+        data-remainingstatement="{{intval(str_replace(",","",$statement->remaining))}}"
+        data-totalstatement="{{intval(str_replace(",","",$statement->total))}}"
 
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('statement') }}"><b>Lista de estados de cuenta</b></a>

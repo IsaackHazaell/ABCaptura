@@ -34,6 +34,8 @@ class StatementController extends Controller
         ->join('providers', 'providers.id', '=', 'statements.provider_id')
         ->get();
         for ($i=0; $i<$statements->count(); $i++) {
+          $statements[$i]->total = number_format($statements[$i]->total,2);
+          $statements[$i]->remaining = number_format($statements[$i]->remaining,2);
           if($statements[$i]->status=="0")
             $statements[$i]->status="Liquidado";
           else if($statements[$i]->status=="1")
