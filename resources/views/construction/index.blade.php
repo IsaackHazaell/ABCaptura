@@ -20,7 +20,7 @@
           <table id="constructions_table" class="table table-striped table-bordered" style="width:100%">
           <thead>
               <tr>
-                  <th width="10px">Id</th>
+                  <th>Cliente</th>
                   <th>Nombre</th>
                   <th>Porcentaje de Honorario</th>
                   <th>Fecha de Arranque</th>

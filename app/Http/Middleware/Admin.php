@@ -17,9 +17,7 @@ class Admin
     {
       if(\Auth::User()->user_type != 'Admin')
      {
-       return redirect()->back()->with([
-         'mensaje' => 'Sin permisos'
-       ]);
+       return redirect()->view('welcome');
      }
      return $next($request);;
     }

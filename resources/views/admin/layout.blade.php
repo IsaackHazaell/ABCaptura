@@ -102,6 +102,30 @@ desired effect
 
       @can('create', Auth::user())
         <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span> Usuarios</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('user') }}">Lista de Usuarios</a></li>
+            <li><a href="{{ url('user/create') }}">Agregar usuario</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="far fa-address-card"></i> <span> Clientes</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('client') }}">Lista de Clientes</a></li>
+            <li><a href="{{ url('client/create') }}">Agregar cliente</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
           <a href="#"><i class="fas fa-hard-hat"></i> <span>Obra</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -110,6 +134,18 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="{{ url('construction') }}">Lista de obras</a></li>
             <li><a href="{{ url('construction/create') }}">Crear obra</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-money"></i> <span> Fondo</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('fund') }}">Lista de fondos</a></li>
+            <li><a href="{{ url('fund/create') }}">Agregar fondo</a></li>
           </ul>
         </li>
 
@@ -150,18 +186,6 @@ desired effect
         </li>
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-money"></i> <span> Fondo</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('fund') }}">Lista de fondos</a></li>
-            <li><a href="{{ url('fund/create') }}">Agregar fondo</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
           <a href="#"><i class="far fa-edit"></i> <span> Captura</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -170,18 +194,6 @@ desired effect
           <ul class="treeview-menu">
             <li><a href="{{ url('capture') }}">Lista de capturas</a></li>
             <li><a href="{{ url('capture/create') }}">Capturar</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span> Usuarios</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('user') }}">Lista de Usuarios</a></li>
-            <li><a href="{{ url('user/create') }}">Agregar usuario</a></li>
           </ul>
         </li>
 

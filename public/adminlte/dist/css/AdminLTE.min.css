@@ -1,3 +1,14 @@
+.required:before{
+    content:"*";
+    font-weight:bold;
+    color: red;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 /*!
  *   AdminLTE v2.4.5
  *   Author: Almsaeed Studio

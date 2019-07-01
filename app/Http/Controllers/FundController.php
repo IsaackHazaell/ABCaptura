@@ -7,6 +7,7 @@ use App\Fund;
 use App\Construction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use CArbon\Carbon;
 
 class FundController extends Controller
 {
@@ -27,10 +28,15 @@ class FundController extends Controller
     public function showTableF()
     {
       $funds = DB::table('funds')
-        ->select('funds.*', 'funds.id as fund_id', 'constructions.*', 'constructions.id as construction_id')
+        ->select('funds.*', 'funds.id as fund_id', 'funds.date as fund_date', 'constructions.*', 'constructions.id as construction_id', 'constructions.date as construction_date')
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
         ->get();
-
+        for($i=0; $i<$funds->count(); $i++)
+        {
+        $funds[$i]->date = Carbon::parse($funds[$i]->date)->format('d-F-Y');
+        $funds[$i]->total = number_format($funds[$i]->total,2);
+        $funds[$i]->remaining = number_format($funds[$i]->remaining,2);
+         }
         return Datatables::of($funds)
         ->addColumn('btn', 'fund.actions')
         ->rawColumns(['btn'])
@@ -52,6 +58,9 @@ class FundController extends Controller
 
               for($i=0; $i<$toTable->count(); $i++)
               {
+                $toTable[$i]->capture_date = Carbon::parse($toTable[$i]->capture_date)->format('d-F-Y');
+                $toTable[$i]->capture_total = number_format($toTable[$i]->capture_total,2);
+              //  $toTable[$i]->remaining = number_format($toTable[$i]->remaining,2);
                 if($toTable[$i]->voucher == null)
                   $toTable[$i]->voucher = "NO";
                 else if($toTable[$i]->voucher != null)
@@ -143,8 +152,13 @@ class FundController extends Controller
     {
       //dd($request);
       $fund = fund::findOrFail($request->id);
-      $input = $request->all();
-      $fund->fill($input)->save();
+      $total_prev = $fund->total;
+      $total_new = $request->total;
+      $diference = $total_new - $total_prev;
+      $fund->date = $request->date;
+      $fund->remaining += $diference;
+      $fund->total = $request->total;
+      $fund->save();
 
       $msg = [
         'title' => 'Modificado!',

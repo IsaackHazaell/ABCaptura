@@ -8,7 +8,7 @@ table = $('#funds_table').DataTable({
     "columns": [
         {data: 'fund_id'},
         {data: 'name'},
-        {data: 'date'},
+        {data: 'fund_date'},
         {data: 'remaining'},
         {data: 'total'},
         {data: 'btn'}

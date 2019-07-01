@@ -4,7 +4,7 @@
   data-conceptproduct="{{$concept}}"
   data-descriptionproduct="{{$description}}"
   data-unity="{{$unity}}"
-  data-price="{{$price}}"
+  data-price="{{intval(str_replace(",","",$price))}}"
   data-year="{{$year}}"
   data-month="{{$month}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>

@@ -13,6 +13,19 @@ table = $('#statements_table').DataTable({
             {data: 'remaining'},
             {data: 'btn'}
         ],
+        "initComplete": function(settings, json) {
+
+          table.column( 4 ).data().each( function ( value, index ) {
+                    if(value <0)
+                    {
+                    var i = 4+index*6;
+                    
+                    $('td:eq('+i+')').css('color', 'red');
+                    }
+                })
+
+         },
+
         "language": {
           "info": "_TOTAL_ registros",
           "search": "Buscar",
@@ -31,8 +44,53 @@ table = $('#statements_table').DataTable({
           "zeroRecords": "No hay coincidencias",
           "infoEmpty": "",
           "infoFiltered": ""
-        }
+        },
     });
+
+
+
+
+/*
+
+$('#statements_table tbody').on( 'click', 'td', function () {
+    if(table.cell( this ).data() < 0)
+    {
+      $(this).css('color', 'red');
+    }
+    else {
+      $(this).css('color', 'black');
+    }
+});
+/*
+$(document).ready( function() {
+  $('#statements_table').dataTable( {
+    "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+      // Bold the grade for all 'A' grade browsers
+      if ( aData[4] != "A" )
+      {
+        $('td:eq(4)', nRow).html( '<b>A</b>' );
+      }
+    }
+  } );
+} );
+var oTable = $('#statements_table').DataTable({
+      'rowCallback': function(row, data){
+      if(data[5]<0){
+          $(row).find('td:eq(5)').css('color', 'red');
+      }
+  }
+});
+
+$('#statements_table').dataTable( {
+  "rowCallback": function( row, data ) {
+    if ( data.remaining < 0 ) {
+      $('td:eq(5)', row).css('color', 'red');
+    }
+  }
+} );
+*/
+
+
 
 //EDIT
 $('#edit').on('show.bs.modal', function (event) {

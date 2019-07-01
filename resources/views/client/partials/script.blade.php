@@ -1,17 +1,16 @@
 <script>
 //DATATABLE
 var table=null;
-table = $('#capture_table').DataTable({
+table = $('#clients_table').DataTable({
     "processing": true,
     "serverSide": true,
-    "ajax": "{{route('capture.showTableCa')}}",
+    "ajax": "{{route('client.showTableCl')}}",
     "columns": [
-        {data: 'construction_name'},
-        {data: 'provider_name'},
-        {data: 'capture_date'},
-        {data: 'capture_concept'},
-        {data: 'capture_total'},
-        {data: 'voucher', "className": 'text-center'},
+        {data: 'name'},
+        {data: 'email'},
+        {data: 'cellphone'},
+        {data: 'phonelandline'},
+        {data: 'address'},
         {data: 'btn'}
     ],
     "language": {
@@ -36,24 +35,45 @@ table = $('#capture_table').DataTable({
 });
 
 
+
+
+//EDIT
+$('#edit').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var id = button.data('idclient')
+    var name = button.data('nameclient')
+    var cellphone = button.data('phoneclient')
+    var email = button.data('emailclient')
+    var phonelandline = button.data('phonelandlineclient')
+    var address = button.data('addressclient')
+    var modal = $(this)
+    modal.find('.modal-body #id').val(id);
+    modal.find('.modal-body #name').val(name);
+    modal.find('.modal-body #cellphone').val(cellphone);
+    modal.find('.modal-body #phonelandline').val(phonelandline);
+    modal.find('.modal-body #address').val(address);
+    modal.find('.modal-body #email').val(email);
+});
+
+
 //DELETE
-$('body').delegate('.delete-capture','click',function(){
-        id_capture = $(this).attr('id_capture');
+$('body').delegate('.delete','click',function(){
+        id_client = $(this).attr('id_client');
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({
             title: "Estás seguro?",
-            text: "Se eliminará la captura",
+            text: "Se eliminará el proveedor",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
             $.ajax({
-                url: "{{url('/capture')}}" + '/' + id_capture,
+                url: "{{url('/client')}}" + '/' + id_client,
                 headers: {'X-CSRF-TOKEN': csrf_token},
                 type: 'DELETE',
                 dataType: 'json',
-                data: {id: id_capture}
+                data: {id: id_client}
             }).done(function(data){
               table.ajax.reload();
               sAlert(data.title, data.text, data.icon);
@@ -61,6 +81,7 @@ $('body').delegate('.delete-capture','click',function(){
           }
         });
     });
+
 
 //SWETALERT
 @if (Session::has('message'))

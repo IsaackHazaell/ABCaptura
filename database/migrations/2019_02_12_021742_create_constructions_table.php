@@ -15,12 +15,16 @@ class CreateConstructionsTable extends Migration
     {
         Schema::create('constructions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('client_id')->unsigned();
             $table->string('name',128);
             $table->integer('honorary');
             $table->date('date');
             $table->integer('square_meter');
             $table->integer('status');
             $table->timestamps();
+            $table->foreign('client_id')->references('id')->on('clients')
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
         });
     }
 

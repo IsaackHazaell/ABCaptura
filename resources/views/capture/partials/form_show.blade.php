@@ -13,7 +13,7 @@
   <div class="form-row">
       <div class="form-group col-md-6">
         <label for="date">Fecha</label>
-        <input type="date" class="form-control" name="date" id="date" value="{{ $capture->date }}" readonly>
+        <input type="text" class="form-control" name="date" id="date" value="{{  \Carbon\Carbon::parse($capture->date)->format('d-F-Y') }}" readonly>
       </div>
   </div>
 
@@ -40,6 +40,10 @@
     </div>
 
     <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="total">Total</label>
+          <input type="text" class="form-control" name="total" id="total" value="{{ number_format($capture->total,2) }}" readonly>
+        </div>
         <div class="form-group col-md-6">
             @if($capture->voucher != null)
                 <div class="form-group col-md-6">

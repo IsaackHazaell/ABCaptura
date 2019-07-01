@@ -8,7 +8,7 @@ use App\Statement;
 use App\Construction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
+use Carbon\Carbon;
 class StatementController extends Controller
 {
   public function __construct()
@@ -34,6 +34,8 @@ class StatementController extends Controller
         ->join('providers', 'providers.id', '=', 'statements.provider_id')
         ->get();
         for ($i=0; $i<$statements->count(); $i++) {
+          $statements[$i]->total = number_format($statements[$i]->total,2);
+          $statements[$i]->remaining = number_format($statements[$i]->remaining,2);
           if($statements[$i]->status=="0")
             $statements[$i]->status="Liquidado";
           else if($statements[$i]->status=="1")
@@ -42,6 +44,39 @@ class StatementController extends Controller
         return Datatables::of($statements)
         ->addColumn('btn', 'statement.actions')
         ->rawColumns(['btn'])
+      ->make(true);
+    }
+
+    public function showTableSC(Request $request)
+    {
+      //dd($request);
+      $toTable = DB::table('captures')
+        ->select(
+            'constructions.id as construction_id', 'constructions.name as construction_name',
+              'providers.id as provider_id', 'providers.name as provider_name',
+              'captures.*', 'captures.id as capture_id', 'captures.date as capture_date', 'captures.total as capture_total', 'captures.concept as capture_concept')
+              ->where('captures.construction_id', '=', $request->construction_id)
+              ->where('captures.provider_id', '=', $request->provider_id)
+            ->join('constructions', 'captures.construction_id', '=', 'constructions.id')
+            ->join('providers', 'captures.provider_id', '=', 'providers.id')
+            ->get();
+
+
+            for($i=0; $i<$toTable->count(); $i++)
+            {
+              $toTable[$i]->capture_total = number_format($toTable[$i]->capture_total,2);
+              $toTable[$i]->capture_date = Carbon::parse($toTable[$i]->capture_date)->format('d-F-Y');
+              if($toTable[$i]->voucher == null)
+                $toTable[$i]->voucher = "NO";
+              else if($toTable[$i]->voucher != null)
+                $toTable[$i]->voucher = "SI";
+             }
+
+            // dd($toTable);
+        return Datatables::of($toTable)
+        ->addColumn('btn', 'statement.partials.buttons')
+        ->addColumn('voucher', 'statement.partials.icon')
+        ->rawColumns(['voucher','btn'])
       ->make(true);
     }
 
@@ -116,8 +151,13 @@ class StatementController extends Controller
     public function update(Request $request)
     {
       $statement = Statement::findOrFail($request->id);
-      $input = $request->all();
-      $statement->fill($input)->save();
+      $total_prev = $statement->total;
+      $total_new = $request->total;
+      $diference = $total_new - $total_prev;
+      $statement->remaining += $diference;
+      $statement->status = $request->status;
+      $statement->total = $request->total;
+      $statement->save();
 
       $msg = [
         'title' => 'Modificado!',

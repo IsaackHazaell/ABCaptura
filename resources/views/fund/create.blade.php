@@ -20,12 +20,12 @@
       </select>
     </div>
     <div class="form-group col-md-6">
-      <label for="date">Fecha</label>
+      <label for="date"class="required">Fecha</label>
       <input type="date" class="form-control" name="date" id="date">
     </div>
-    
+
     <div class="form-group col-md-6">
-      <label for="total">Total</label>
+      <label for="total" class="required">Total</label>
       <input type="number" step="any" class="form-control" name="total" id="total">
     </div>
   </div>

@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $providers = Provider::select('id','name')->get();
+      $providers = Provider::select('id','name')->where('category' , 1)->get();
       return view('product.index', compact('providers'));
     }
 
@@ -34,6 +34,7 @@ class ProductController extends Controller
       'prices.id as price_id', 'prices.price', 'prices.month', 'prices.year', 'prices.unity')
       ->join('providers', 'providers.id', '=', 'products.provider_id')
       ->join('prices', 'prices.product_id', '=', 'products.id')
+      ->where('providers.category', '=' , '1')
       ->get();
       for($i=0; $i<$products->count(); $i++)
       {
@@ -43,6 +44,8 @@ class ProductController extends Controller
           $products[$i]->category = "Material";
           else if($products[$i]->category == 2)
             $products[$i]->category = "Logística";*/
+
+          $products[$i]->price = number_format($products[$i]->price,2);
 
           $products[$i]->provider_id .= " " . $products[$i]->name;
           $month = ProductController::month($products[$i]->month);

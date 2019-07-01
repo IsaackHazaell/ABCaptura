@@ -24,6 +24,11 @@ body {
   overflow-y: auto;
 }
 /* Layout */
+.required:before{
+    content:"*";
+    font-weight:bold;
+    color: red;
+    }
 .wrapper {
   height: 100%;
   position: relative;
