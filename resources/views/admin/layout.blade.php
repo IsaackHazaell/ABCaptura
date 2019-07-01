@@ -121,7 +121,7 @@ desired effect
         </li>
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span> Clientes</span>
+          <a href="#"><i class="far fa-address-card"></i> <span> Clientes</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>

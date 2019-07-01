@@ -19,9 +19,9 @@ $("#saveCapture").click(function (e) {
       var total = $('#total').val();
       total = parseFloat(total);
       var provider_name = @json($provider->name);//{//{json_encode($provider->name)}};
-      console.log(provider_name);
+      var category = @json($category);
       var flagForHonorary = false;
-      if(provider_name == "Arq. Missael Quintero")
+      if(provider_name == "Arq. Missael Quintero" && category == 1)
       {
           var honorary_remaining = @json($honorary_remaining);
           if(total > honorary_remaining)

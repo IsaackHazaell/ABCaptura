@@ -14,7 +14,9 @@
         @foreach($providers as $provider)
         <option value="{{ $provider->provider_id }}">{{$provider->name}}: {{$provider->category}}</option>
         @endforeach
+        @if($missa != null)
         <option value="{{ $missa->id }}">{{$missa->name}}: {{$missa->category}}</option>
+        @endif
     </select>
     </div>
   </div>

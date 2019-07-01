@@ -4,8 +4,20 @@
 <section class="content-header">
     <h1>Captura</h1>
     <br>
-    <p>Obra: {{$data->construction_id}} - Proveedor: {{$data->provider_id}}</p>
+    <p>Obra: {{$data->construction_id}} - Proveedor: {{$provider->name}}</p>
 </section>
+
+<form action="{{route('capture.saveProduct')}}" method="POST">
+    {{csrf_field()}}
+@include('capture.modal', ['provider' => $provider])
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <button class="btn btn-success btn-md"
+            data-toggle="modal" data-target="#addProduct" style="float: right;"><i class="fa fa-plus"></i> Crear producto</button>
+    </div>
+</div>
+</form>
 
 <form action="">
     <meta name="csrf-token" content="{{ csrf_token() }}">

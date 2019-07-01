@@ -62,12 +62,16 @@ class CaptureController extends Controller
           }
 
           $missa = Provider::where('name', 'Arq. Missael Quintero')->first();
-          if($missa->category == 0)
-            $missa->category = "Mano de obra";
-          else if($missa->category == 1)
-            $missa->category = "Material";
-            else if($missa->category == 2)
-              $missa->category = "Logística";
+          if($missa != null)
+          {
+              if($missa->category == 0)
+                $missa->category = "Mano de obra";
+              else if($missa->category == 1)
+                $missa->category = "Material";
+                else if($missa->category == 2)
+                  $missa->category = "Logística";
+          }
+
 
         return view('capture.create')->with('constructions', $constructions)->with('providers', $providers)->with('missa',$missa);
     }
@@ -122,7 +126,7 @@ class CaptureController extends Controller
         $request["construction_id"] = $construction_id;
         $request["provider_id"] = $provider_id;*/
 
-        if($category == "Material")
+        if($category == 1)
         {
           //Borramos todos los temporales (de capturas y de productos)
           DB::table('temporary_captures')->delete();
@@ -155,7 +159,7 @@ class CaptureController extends Controller
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
           }
-          return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
+          return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category)->with('provider',$provider)->with('honorary_remaining', null);
         }
         else
         {
@@ -247,8 +251,8 @@ class CaptureController extends Controller
             'text' => 'Producto creado exitosamente.',
             'icon' => 'success'
         ];
-        return Redirect::back()->with('message', $msg);
-        //return back()->with('message', $msg);
+        //return Redirect::back()->with('message', $msg);
+        return back()->with('message', $msg)->withInput();
     }
 
     public function showTablePC(Request $request)
