@@ -35,7 +35,7 @@
   </div>
   <div class="form-group col-md-6">
     <label for="total">Total</label>
-    <input type="number" class="form-control" name="total" id="total">
+    <input type="number" step="any" class="form-control" name="total" id="total">
   </div>
   <div class="form-group col-md-12">
     <br><button type="submit" class="btn btn-success">Guardar</button>
