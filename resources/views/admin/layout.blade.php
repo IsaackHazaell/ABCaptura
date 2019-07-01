@@ -5,13 +5,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
-  <style>
-  .require:after{
-          content:'*';
-          color:red;
-          padding-left:5px;
-      }
-</style>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AB | Captura</title>

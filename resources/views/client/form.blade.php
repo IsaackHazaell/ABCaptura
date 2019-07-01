@@ -1,14 +1,15 @@
 
 <div class="form-row">
   <div class="form-group col-md-6 ">
-    <label for="name">Nombre</label>
+    <label for="name" class="required">Nombre
     <input type="text" class="form-control" name="name" id="name" required>
-
+    </label>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="email">Correo electrónico</label>
+      <label for="email"class="required">Correo electrónico
       <input type="email" class="form-control" name="email" id="email" required>
+      </label>
     </div>
   <div class="form-group col-md-6">
     <label for="cellphone">Celular</label>

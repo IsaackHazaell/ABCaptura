@@ -1,11 +1,11 @@
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="name">Nombre</label>
+      <label for="name" class="required">Nombre</label>
       <input type="text" class="form-control" required name="name" id="name">
     </div>
 
     <div class="form-group col-md-6">
-      <label for="category">Categoría</label>
+      <label for="category" class="required">Categoría</label>
       <select class="form-control" required name="category" id="category">
         <option value="0">Mano de obra</option>
          <option value="1">Material</option>
@@ -16,7 +16,7 @@
 
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="turn">Giro</label>
+      <label for="turn"class="required">Giro</label>
       <input list="turns" class="form-control" required name="turn" id="turn">
           <datalist id="turns">
             <option value="Gestoría">
@@ -33,7 +33,7 @@
 
 <div class="form-row">
   <div class="form-group col-md-6">
-    <label for="cellphone">Teléfono celular</label>
+    <label for="cellphone"class="required">Teléfono celular</label>
     <input type="number" class="form-control" required name="cellphone" id="cellphone">
   </div>
   <div class="form-group col-md-6">

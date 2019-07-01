@@ -1,6 +1,6 @@
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="provider_id">Proveedor</label>
+      <label for="provider_id"class="required">Proveedor</label>
       <select class="form-control" required name="provider_id" id="provider_id">
         @foreach($providers as $provider)
         <option>{{$provider->id}} {{$provider->name}}</option>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="form-group col-md-6">
-      <label for="concept">Concepto</label>
+      <label for="concept"class="required">Concepto</label>
       <input type="text" class="form-control" placeholder="cemento" required name="concept" id="concept">
     </select>
     </div>
