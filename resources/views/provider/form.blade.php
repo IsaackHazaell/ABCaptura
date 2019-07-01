@@ -29,7 +29,7 @@
       <input type="text" class="form-control" name="company" id="company">
     </div>
 
-      </div>
+  </div>
 
 <div class="form-row">
   <div class="form-group col-md-6">
@@ -49,4 +49,6 @@
       </div>
 </div>
 
-  @include('address.create')
+<div>
+    @include('address.create')
+</div>

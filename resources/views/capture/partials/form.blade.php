@@ -3,7 +3,7 @@
       <label for="construction_id"class="required">Obra</label>
       <select class="form-control" required name="construction_id" id="construction_id">
         @foreach($constructions as $construction)
-        <option>{{$construction->id}} {{$construction->name}}</option>
+        <option value="{{$construction->id}}">{{$construction->name}}</option>
         @endforeach
     </select>
     </div>
@@ -12,8 +12,11 @@
       <label for="provider_id"class="required">Proveedor</label>
       <select class="form-control" required name="provider_id" id="provider_id">
         @foreach($providers as $provider)
-        <option>{{$provider->id}} {{$provider->name}}: {{$provider->category}}</option>
+        <option value="{{ $provider->provider_id }}">{{$provider->name}}: {{$provider->category}}</option>
         @endforeach
+        @if($missa != null)
+        <option value="{{ $missa->id }}">{{$missa->name}}: {{$missa->category}}</option>
+        @endif
     </select>
     </div>
   </div>

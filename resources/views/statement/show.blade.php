@@ -47,8 +47,24 @@
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('statement') }}"><b>Lista de estados de cuenta</b></a>
     </div>
   </div>
+
+  <div class="box-body">
+      <table id="capture_table" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+          <tr>
+              <th>Fecha</th>
+              <th>Concepto</th>
+              <th>Total</th>
+              <th>Comprobante</th>
+              <th width="120px">Acciones</th>
+          </tr>
+      </thead>
+  </table>
+  </div>
+
 @endsection
 
 @section('adminlte_js')
 @include('statement.partials.script')
+@include('statement.partials.script_capture')
 @endsection

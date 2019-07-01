@@ -35,6 +35,8 @@ table = $('#clients_table').DataTable({
 });
 
 
+
+
 //EDIT
 $('#edit').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)

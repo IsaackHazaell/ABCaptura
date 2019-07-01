@@ -10,6 +10,7 @@
 
 <form action="{{url('provider')}}" method="post">
   {{csrf_field()}}
+  <div class="box-body">
   @include('provider.form')
     <div class="form-row">
       <div class="form-group col-md-6">
@@ -19,5 +20,6 @@
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('provider') }}"><b>Lista de proveedores</b></a><br><br>
       </div>
     </div>
+  </div>
 </form>
 @endsection
