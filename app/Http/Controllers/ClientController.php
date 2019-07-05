@@ -5,6 +5,7 @@ use DB;
 use App\Client;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use CArbon\Carbon;
 
 class ClientController extends Controller
 {
@@ -36,6 +37,31 @@ class ClientController extends Controller
         ->rawColumns(['btn'])
       ->make(true);
     }
+
+    public function showTableCC(Request $request)
+    {
+      $constructions = DB::table('constructions')
+        ->select('constructions.*', 'constructions.id as construction_id' ,
+        'constructions.name as construction_name','clients.*',
+        'clients.id as client_id', 'clients.name as client_name')
+        ->where('constructions.client_id', '=', $request->client_id)
+        ->join('clients', 'clients.id', '=', 'constructions.client_id')
+        ->get();
+        for ($i=0; $i<$constructions->count(); $i++) {
+
+          $constructions[$i]->date = Carbon::parse($constructions[$i]->date)->format('d-F-Y');
+          $constructions[$i]->square_meter = number_format($constructions[$i]->square_meter,2);
+          if($constructions[$i]->status=="0")
+            $constructions[$i]->status="Activo";
+          else if($constructions[$i]->status=="1")
+            $constructions[$i]->status="Finalizado";
+          else if($constructions[$i]->status=="2")
+              $constructions[$i]->status="Espera";
+        }
+        return Datatables::of($constructions)
+      ->make(true);
+    }
+
 
     /**
      * Show the form for creating a new resource.

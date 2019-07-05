@@ -1,18 +1,18 @@
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="name">Nombre</label>
+      <label for="name"class="required">Nombre</label>
       <input type="text" class="form-control" name="name" id="name" required>
     </div>
     <div class="form-group col-md-6">
-      <label for="honorary">Porcentaje de honorarios</label>
+      <label for="honorary"class="required">Porcentaje de honorarios</label>
       <input type="number" class="form-control" name="honorary" id="honorary" required>
     </div>
     <div class="form-group col-md-6">
-      <label for="date">Fecha de arranque</label>
+      <label for="date"class="required">Fecha de arranque</label>
       <input type="date" class="form-control" name="date" id="date" required>
     </div>
     <div class="form-group col-md-6">
-      <label for="square_meter">Metros cuadrados</label>
+      <label for="square_meter"class="required">Metros cuadrados</label>
       <input type="number" class="form-control" name="square_meter" id="square_meter" required>
     </div>
     <div class="form-group col-md-6">

@@ -127,6 +127,10 @@ class UserController extends Controller
         'text' => 'Usuario modificado exitosamente.',
         'icon' => 'success'
         ];
+        if(\Auth::user()->id == $request->id)
+        {
+          return redirect('home')->with('message', $msg);
+        }
         return redirect('user')->with('message', $msg);
     }
 

@@ -9,6 +9,7 @@
     <div class="form-group col-md-6">
       <label for="email"class="required">Correo electrónico</label>
       <input type="email" class="form-control" name="email" id="email" required>
+
     </div>
   <div class="form-group col-md-6">
     <label for="cellphone">Celular</label>
