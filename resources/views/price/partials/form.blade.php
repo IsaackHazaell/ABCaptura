@@ -1,13 +1,13 @@
 <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="unity">Unidad</label>
+      <label for="unity"class="required">Unidad</label>
       <input type="text" step="any" class="form-control" required name="unity" id="unity">
     </div>
   </div>
 
   <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="price">Precio unitario sin IVA</label>
+        <label for="price"class="required">Precio unitario sin IVA</label>
         <input type="number" step="any" class="form-control" required name="price" id="price">
       </div>
       <div class="form-group col-md-6">

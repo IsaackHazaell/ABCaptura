@@ -1,10 +1,10 @@
-<div class="form-row">
+
+
+<div class="form-row"><div class="form-row">
   <div class="form-group col-md-12">
 <h4>Domicilio</h4>
 </div>
 </div>
-
-<div class="form-row">
   <div class="form-group col-md-6">
     <label for="street">Calle y número</label>
     <input type="text" class="form-control" name="street" id="street">

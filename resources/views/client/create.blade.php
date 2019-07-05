@@ -3,8 +3,8 @@
 
 <section class="content-header">
   <h1>
-    Proveedor
-    <small>Agregar Proveedor</small>
+    Cliente
+    <small>Agregar Cliente</small>
   </h1>
 </section>
 

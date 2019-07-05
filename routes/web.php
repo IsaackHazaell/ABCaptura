@@ -26,7 +26,7 @@ Route::get('/home', function(){
 //Clients routes
 Route::resource('client','ClientController')->middleware('auth');
 Route::get('showTableCl','ClientController@showTableCl')->name('client.showTableCl')->middleware('auth');
-
+Route::get('showTableCC','ClientController@showTableCC')->name('client.showTableCC')->middleware('auth');
 //Construction Routes
 Route::resource('construction','ConstructionController')->middleware('auth');
 Route::get('showTableC','ConstructionController@showTableC')->name('construction.showTableC')->middleware('auth');
@@ -74,6 +74,7 @@ Route::get('viewClient','MemoryController@viewClient')->name('memory.viewClient'
 //Statements Routes
 Route::resource('statement','StatementController')->middleware('auth');
 Route::get('showTableSt','StatementController@showTableSt')->name('statement.showTableSt')->middleware('auth');
+Route::get('showTableSC','StatementController@showTableSC')->name('statement.showTableSC')->middleware('auth');
 
 //Users Routes
 Route::resource('user','UserController')->middleware('auth');

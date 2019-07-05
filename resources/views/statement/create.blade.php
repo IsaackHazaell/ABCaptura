@@ -20,22 +20,22 @@
   </div>
   <div class="form-group col-md-6">
     <label for="provider_id">Selecciona proveedor</label>
-    <select class="form-control" name="provider_id" id="provider_id">
+    <select class="form-control" required name="provider_id" id="provider_id">
             @foreach($providers as $provider)
             <option value={{$provider->id}}>{{$provider->name}}</option>
             @endforeach
     </select>
   </div>
   <div class="form-group col-md-6">
-    <label for="status">Seleccione el Estatus</label>
+    <label for="status" class="required">Seleccione el Estatus</label>
     <select class="form-control" name="status" id="status">
       <option value="0">Liquidado</option>
       <option value="1">Activo</option>
     </select>
   </div>
   <div class="form-group col-md-6">
-    <label for="total">Total</label>
-    <input type="number" class="form-control" name="total" id="total">
+    <label for="total" class="required">Total</label>
+    <input type="number" required class="form-control" name="total" id="total">
   </div>
   <div class="form-group col-md-12">
     <br><button type="submit" class="btn btn-success">Guardar</button>

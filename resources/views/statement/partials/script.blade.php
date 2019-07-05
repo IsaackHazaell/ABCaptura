@@ -13,6 +13,18 @@ table = $('#statements_table').DataTable({
             {data: 'remaining'},
             {data: 'btn'}
         ],
+        "initComplete": function(settings, json) {
+
+          table.column( 4 ).data().each( function ( value, index ) {
+                    if(value <0)
+                    {
+                    var i = 4+index*6;
+                    
+                    $('td:eq('+i+')').css('color', 'red');
+                    }
+                })
+
+         },
 
         "language": {
           "info": "_TOTAL_ registros",

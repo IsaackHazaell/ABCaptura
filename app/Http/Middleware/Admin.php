@@ -17,7 +17,7 @@ class Admin
     {
       if(\Auth::User()->user_type != 'Admin')
      {
-       return redirect()->view('welcome');
+         return redirect('home');
      }
      return $next($request);;
     }

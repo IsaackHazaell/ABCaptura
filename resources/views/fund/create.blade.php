@@ -20,16 +20,16 @@
       </select>
     </div>
     <div class="form-group col-md-6">
-      <label for="date">Fecha</label>
-      <input type="date" class="form-control" name="date" id="date">
+      <label for="date"class="required">Fecha</label>
+      <input type="date" class="form-control" name="date" id="date" required>
     </div>
     <!-- <div class="form-group col-md-6">
       <label for="remaining">Restante de fondo</label>
       <input type="number" class="form-control" name="remaining" id="remaining">
     </div> -->
     <div class="form-group col-md-6">
-      <label for="total">Total</label>
-      <input type="number" class="form-control" name="total" id="total">
+      <label for="total"class="required">Total</label>
+      <input type="number" class="form-control" name="total" id="total" required>
     </div>
   </div>
   <br>

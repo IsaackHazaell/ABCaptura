@@ -110,15 +110,21 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-      $user = User::findOrFail($request->id);
-      $input = $request->all();
-      $user->fill($input)->save();
+
+        $user = User::findOrFail($request->id);
+        $input = $request->all();
+        $user->fill($input)->save();
+
 
       $msg = [
         'title' => 'Modificado!',
         'text' => 'Usuario modificado exitosamente.',
         'icon' => 'success'
         ];
+        if(\Auth::user()->id == $request->id)
+        {
+          return redirect('home')->with('message', $msg);
+        }
         return redirect('user')->with('message', $msg);
     }
 
