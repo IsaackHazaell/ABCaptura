@@ -3,13 +3,12 @@
 
 <section class="content-header">
   <h1>
-    Memoria
+    Obra: {{$contruction->name}}
   </h1>
 </section>
 
 <form action="{{route('memory.index')}}" >
   {{csrf_field()}}
-  <h3>Bienvenido {{$client->name}}</h3>
   <br>
   <div class="form-row">
       <div class="form-group col-md-6">

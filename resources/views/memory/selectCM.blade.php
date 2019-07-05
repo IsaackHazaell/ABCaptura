@@ -2,9 +2,10 @@
 @section('content')
 
 <section class="content-header">
-  <h1>
-    Memoria
-  </h1>
+    @if(\Auth::user()->user_type == 'User')
+        <h1>Bienvenido {{Auth::user()->name}}</h1>
+    @endif
+    <br>
 </section>
 
 <form action="{{route('memory.viewClient')}}" >
