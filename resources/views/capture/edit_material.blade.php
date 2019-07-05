@@ -111,19 +111,19 @@
        </div>
 
        <input type="hidden" name="_token" id="_token" value="{{ csrf_token()}}">
-
+       <input type="hidden" name="total" id="total" value="{{  $capture->total }}">
 
     <div class="form-row">
       <div class="form-group col-md-6">
         <button type="submit" class="btn btn-primary">Editar</button>
       </div>
-      <div class="form-group col-md-6">
-          {{-- <button type="submit" class="btn btn-info" style="float: right;" id="edit_products" name="edit_products">Editar</button> --}}
+      {{-- <div class="form-group col-md-6">
+          {{-- <button type="submit" class="btn btn-info" style="float: right;" id="edit_products" name="edit_products">Editar</button>
         <a class="btn btn-info btn-md" style="float: right;" id="edit_products" name="edit_products"><b>Editar productos</b></a><br><br>
-      </div>
+      </div> --}}
     </div>
 <div class="form-row">
-    <div class="form-group col-md-12">
+    <div class="form-group col-md-6">
       <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('capture') }}"><b>Lista de Capturas</b></a><br><br>
     </div>
     </div>

@@ -33,6 +33,6 @@
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="year">Año</label>
-          <input type="number" class="form-control" min="1900" max="2099" step="1" value="2019" name="year" id="year"/>
+          <input type="number" class="form-control" min="1900" max="2099" step="1" value="{{now()->year}}" name="year" id="year"/>
         </div>
       </div>

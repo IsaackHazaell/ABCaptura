@@ -72,7 +72,6 @@ class CaptureController extends Controller
                   $missa->category = "Logística";
           }
 
-
         return view('capture.create')->with('constructions', $constructions)->with('providers', $providers)->with('missa',$missa);
     }
 
@@ -90,41 +89,6 @@ class CaptureController extends Controller
 
         $provider = Provider::where('id',$request->provider_id)->first();
         $category = $provider->category;
-        //$provider_name = $provider
-
-        /*$provider_id = "";
-        $flag=False;
-        $category="";
-        for($i=0;$i<strlen($request->provider_id);$i++){
-          if($request->provider_id[$i] != " " && $flag==False)
-            $provider_id .= $request->provider_id[$i];
-          if($request->provider_id[$i-2] == ":")
-          {
-            $flag=True;
-          }
-          if($flag)
-          {
-              $category .= $request->provider_id[$i];
-          }
-        }
-        $construction_id="";
-        for($i=0;$i<strlen($request->construction_id);$i++){
-          if($request->construction_id[$i] != " ")
-            $construction_id .= $request->construction_id[$i];
-          else
-            break;
-        }
-        $request->construction_id = $construction_id;
-
-        $provider_id = "";
-        for($i=0;$i<strlen($request->provider_id);$i++){
-          if($request->provider_id[$i] != " ")
-            $provider_id .= $request->provider_id[$i];
-          else
-            break;
-        }
-        $request["construction_id"] = $construction_id;
-        $request["provider_id"] = $provider_id;*/
 
         if($category == 1)
         {
@@ -167,9 +131,7 @@ class CaptureController extends Controller
             $honorary_remaining = HonoraryRemaining::where('construction_id',$request->construction_id)->first();
             $honorary_remaining = $honorary_remaining->remaining;
             return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider', $provider);
-
         }
-
     }
 
     public function saveTemporalCapture($data)
@@ -224,15 +186,7 @@ class CaptureController extends Controller
 
     public function saveProduct(Request $request)
     {
-        //dd($request->provider_id);
         $provider_id = $request->provider_id;
-        /*for($i=0;$i<strlen($request->provider_id);$i++){
-          if($request->provider_id[$i] != " ")
-            $provider_id .= $request->provider_id[$i];
-          else
-            break;
-        }*/
-
         $product = New Product;
         $product->provider_id = $provider_id;
         $product->concept = $request->concept;
@@ -252,7 +206,9 @@ class CaptureController extends Controller
             'icon' => 'success'
         ];
         //return Redirect::back()->with('message', $msg);
-        return back()->with('message', $msg)->withInput();
+        //return back()->with('message', $msg);
+        return back()->with('message', $msg);
+        //return Redirect::to(URL::previous());
     }
 
     public function showTablePC(Request $request)
@@ -345,7 +301,7 @@ class CaptureController extends Controller
     {
         //Guardar captura
         $capture = Capture::create($request->all());
-        if($request->category == "Material")
+        if($request->category == 1)
         {
             //Guardar productos_capture
             $temporal_products = DB::table('temporary_capture_products')
@@ -470,21 +426,14 @@ class CaptureController extends Controller
         else
             $capture->honorarium = "Si";
 
-        //if($isProduct)
-            return view('capture.show')->with('capture',$capture)
-                ->with('isProduct',$isProduct)
-                ->with('provider',$provider->name)
-                ->with('construction',$construction->name);
-        /*else
-            return view('capture.show')->with('capture',$capture)
-                ->with('isProduct',$isProduct)
-                ->with('provider',$provider->name)
-                ->with('construction',$construction->name);*/
+        return view('capture.show')->with('capture',$capture)
+            ->with('isProduct',$isProduct)
+            ->with('provider',$provider->name)
+            ->with('construction',$construction->name);
     }
 
     public function showTablePCshow(Request $request)
     {
-        //dd($request);
         $products = DB::table('products_captures')
           ->select('*')
           ->where('capture_id', '=', $request->capture_id)
@@ -527,7 +476,6 @@ class CaptureController extends Controller
         else
         {
             //Mano de obra o logística
-            //dd($capture->provider);
             return view('capture.edit_logistic')
                 ->with('funds', $funds)
                 ->with('constructions', $constructions)
@@ -536,140 +484,141 @@ class CaptureController extends Controller
         }
     }
 
-    public function editProducts(Request $request)
-    {
-        $capture = Capture::select('*')->where('id',$request->id)->firstOrFail();
-        //dd($request);
-        //return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
-        //return view('capture.edit_products');
-        //dd("Hey jude");
-        /*dd($request->hasFile('voucher'));
-        if (Input::hasFile('logo'))
-        {
-           dd( "file present" );
-        }
-        else{
-            dd( "file not present" );
-        }*/
-
-        $fund = Fund::select('*')->where('id',$request->fund_id)->firstOrFail();
-        if($fund->remaining < $request->total)
-        {
-            $msg = [
-                'title' => 'Error!',
-                'text' => 'Fondo insuficiente.',
-                'icon' => 'warning'
-            ];
-
-            if($request->category == 1)
-            {
-                DB::table('temporary_captures')->delete();
-                DB::table('temporary_capture_products')->delete();
-            }
-            return redirect('capture')->with('message', $msg);
-        }
-        $provider = Provider::select('*')->where('id',$request->provider_id)->first();
-        //dd($request);
-        if($provider->category == 1)
-        {
-            DB::table('temporary_captures')->delete();
-            DB::table('temporary_capture_products')->delete();
-            $temporary_capture = new TemporaryCapture;
-            $temporary_capture->date = $request->date;
-            $temporary_capture->total = $capture->total;
-            $temporary_capture->iva = $request->iva;
-            $temporary_capture->honorarium = $request->honorarium;
-            $temporary_capture->voucher = $capture->voucher;
-            $temporary_capture->folio = $request->folio;
-            $temporary_capture->concept = $request->concept;
-            $temporary_capture->fund_id = $request->fund_id;
-            $temporary_capture->construction_id = $request->construction_id;
-            $temporary_capture->provider_id = $request->provider_id;
-            $temporary_capture->save();
-
-
-
-            $products = ProductsCapture::where('capture_id', '=', $request->id)->get();
-            for($i=0; $i<$products->count(); $i++)
-            {
-                $temporary_product = New TemporaryCaptureProduct;
-                $temporary_product->price_id = $products[$i]->price_id;
-                $temporary_product->capture_id = $temporary_capture->id;
-                $temporary_product->quantity = $products[$i]->quantity;
-                $temporary_product->total = $products[$i]->total;
-                $temporary_product->extra = $products[$i]->extra;
-                $temporary_product->save();
-            }
-            $temporary_products = TemporaryCaptureProduct::where('capture_id', '=', $temporary_capture->id)->get();
-
-            $funds = DB::table('funds','constructions')
-              ->select(
-              'funds.id', 'funds.date', 'funds.remaining',
-              'constructions.name')
-              ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
-              ->get();
-
-            $prices = DB::table('products','prices')
-              ->select(
-              'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-              'prices.*')
-              ->where('providers.id', '=', $request->provider_id)
-              ->join('providers', 'providers.id', '=', 'products.provider_id')
-              ->join('prices', 'prices.product_id', '=', 'products.id')
-              ->get();
-
-            for($i=0; $i<$prices->count(); $i++)
-            {
-                $month = CaptureController::month($prices[$i]->month);
-                $prices[$i]->month = $month;
-                $prices[$i]->month .= " " . $prices[$i]->year;
-            }
-
-
-
-            $view = view('capture.edit_products')
-                ->with('data', $temporary_capture)
-                ->with('capture_id', $request->id)
-                ->with('prices', $prices)
-                ->with('funds',$funds)
-                ->with('category',$provider->category);
-
-            $data = array('data' => $temporary_capture,
-                'capture_id', $request->id,
-                'prices', $prices,
-                'funds',$funds,
-                'category',$provider->category);
-
-                //$data = array('status' => 'ok', 'url' => $view );
-
-            /*return view('capture.edit_products')
-                ->with('data', $temporary_capture)
-                ->with('capture_id', $request->id)
-                ->with('prices', $prices)
-                ->with('funds',$funds)
-                ->with('category',$provider->category);*/
-
-            //return response()->json(['data'=>$data]);
-
-            $returnHTML = view('capture.edit_products')
-                ->with('data', $temporary_capture)
-                ->with('capture_id', $request->id)
-                ->with('prices', $prices)
-                ->with('funds',$funds)
-                ->with('category',$provider->category)->render();
-
-            return response()->json(array('success' => true, 'html'=>$returnHTML));
-            //return $data;
-        }
-        else {
-            $msg = [
-                'title' => 'Alerta!',
-                'text' => 'Esta categoría de proveedor no cuenta con productos',
-                'icon' => 'warning'
-            ];
-            return redirect('capture')->with('message', $msg);
-        }
-    }
+    // public function editProducts(Request $request)
+    // {
+    //     dd($request);
+    //     $capture = Capture::select('*')->where('id',$request->id)->firstOrFail();
+    //     //dd($request);
+    //     //return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
+    //     //return view('capture.edit_products');
+    //     //dd("Hey jude");
+    //     /*dd($request->hasFile('voucher'));
+    //     if (Input::hasFile('logo'))
+    //     {
+    //        dd( "file present" );
+    //     }
+    //     else{
+    //         dd( "file not present" );
+    //     }*/
+    //
+    //     $fund = Fund::select('*')->where('id',$request->fund_id)->firstOrFail();
+    //     if($fund->remaining < $request->total)
+    //     {
+    //         $msg = [
+    //             'title' => 'Error!',
+    //             'text' => 'Fondo insuficiente.',
+    //             'icon' => 'warning'
+    //         ];
+    //
+    //         if($request->category == 1)
+    //         {
+    //             DB::table('temporary_captures')->delete();
+    //             DB::table('temporary_capture_products')->delete();
+    //         }
+    //         return redirect('capture')->with('message', $msg);
+    //     }
+    //     $provider = Provider::select('*')->where('id',$request->provider_id)->first();
+    //     //dd($request);
+    //     if($provider->category == 1)
+    //     {
+    //         DB::table('temporary_captures')->delete();
+    //         DB::table('temporary_capture_products')->delete();
+    //         $temporary_capture = new TemporaryCapture;
+    //         $temporary_capture->date = $request->date;
+    //         $temporary_capture->total = $capture->total;
+    //         $temporary_capture->iva = $request->iva;
+    //         $temporary_capture->honorarium = $request->honorarium;
+    //         $temporary_capture->voucher = $capture->voucher;
+    //         $temporary_capture->folio = $request->folio;
+    //         $temporary_capture->concept = $request->concept;
+    //         $temporary_capture->fund_id = $request->fund_id;
+    //         $temporary_capture->construction_id = $request->construction_id;
+    //         $temporary_capture->provider_id = $request->provider_id;
+    //         $temporary_capture->save();
+    //
+    //
+    //
+    //         $products = ProductsCapture::where('capture_id', '=', $request->id)->get();
+    //         for($i=0; $i<$products->count(); $i++)
+    //         {
+    //             $temporary_product = New TemporaryCaptureProduct;
+    //             $temporary_product->price_id = $products[$i]->price_id;
+    //             $temporary_product->capture_id = $temporary_capture->id;
+    //             $temporary_product->quantity = $products[$i]->quantity;
+    //             $temporary_product->total = $products[$i]->total;
+    //             $temporary_product->extra = $products[$i]->extra;
+    //             $temporary_product->save();
+    //         }
+    //         $temporary_products = TemporaryCaptureProduct::where('capture_id', '=', $temporary_capture->id)->get();
+    //
+    //         $funds = DB::table('funds','constructions')
+    //           ->select(
+    //           'funds.id', 'funds.date', 'funds.remaining',
+    //           'constructions.name')
+    //           ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
+    //           ->get();
+    //
+    //         $prices = DB::table('products','prices')
+    //           ->select(
+    //           'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
+    //           'prices.*')
+    //           ->where('providers.id', '=', $request->provider_id)
+    //           ->join('providers', 'providers.id', '=', 'products.provider_id')
+    //           ->join('prices', 'prices.product_id', '=', 'products.id')
+    //           ->get();
+    //
+    //         for($i=0; $i<$prices->count(); $i++)
+    //         {
+    //             $month = CaptureController::month($prices[$i]->month);
+    //             $prices[$i]->month = $month;
+    //             $prices[$i]->month .= " " . $prices[$i]->year;
+    //         }
+    //
+    //
+    //
+    //         $view = view('capture.edit_products')
+    //             ->with('data', $temporary_capture)
+    //             ->with('capture_id', $request->id)
+    //             ->with('prices', $prices)
+    //             ->with('funds',$funds)
+    //             ->with('category',$provider->category);
+    //
+    //         $data = array('data' => $temporary_capture,
+    //             'capture_id', $request->id,
+    //             'prices', $prices,
+    //             'funds',$funds,
+    //             'category',$provider->category);
+    //
+    //             //$data = array('status' => 'ok', 'url' => $view );
+    //
+    //         /*return view('capture.edit_products')
+    //             ->with('data', $temporary_capture)
+    //             ->with('capture_id', $request->id)
+    //             ->with('prices', $prices)
+    //             ->with('funds',$funds)
+    //             ->with('category',$provider->category);*/
+    //
+    //         //return response()->json(['data'=>$data]);
+    //
+    //         $returnHTML = view('capture.edit_products')
+    //             ->with('data', $temporary_capture)
+    //             ->with('capture_id', $request->id)
+    //             ->with('prices', $prices)
+    //             ->with('funds',$funds)
+    //             ->with('category',$provider->category)->render();
+    //
+    //         return response()->json(array('success' => true, 'html'=>$returnHTML));
+    //         //return $data;
+    //     }
+    //     else {
+    //         $msg = [
+    //             'title' => 'Alerta!',
+    //             'text' => 'Esta categoría de proveedor no cuenta con productos',
+    //             'icon' => 'warning'
+    //         ];
+    //         return redirect('capture')->with('message', $msg);
+    //     }
+    // }
 
 
     public function update_data(Request $request)
@@ -693,6 +642,7 @@ class CaptureController extends Controller
                     $honorary->capture_id = $request->id;
                     $honorary->provider_id = $request->provider_id;
                     $total = (float)$request->total;
+                    $honorary_construction = floatval($honorary_construction->honorary);
                     $total = $total * $honorary_construction;
                     $total = $total/100;
                     $honorary->status = 0;
@@ -795,8 +745,8 @@ class CaptureController extends Controller
      */
     public function update(Request $request)
     {
-        //dd($request);
         $fund = Fund::select('*')->where('id',$request->fund_id)->firstOrFail();
+        //dd($request->total);
         if($fund->remaining < $request->total)
         {
             $msg = [

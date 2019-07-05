@@ -21,11 +21,12 @@ Auth::routes();
 
 Route::get('/home', function(){
   return view('admin.dashboard');
-});
+})->middleware('auth');
 
 //Clients routes
 Route::resource('client','ClientController')->middleware('auth');
 Route::get('showTableCl','ClientController@showTableCl')->name('client.showTableCl')->middleware('auth');
+
 //Construction Routes
 Route::resource('construction','ConstructionController')->middleware('auth');
 Route::get('showTableC','ConstructionController@showTableC')->name('construction.showTableC')->middleware('auth');

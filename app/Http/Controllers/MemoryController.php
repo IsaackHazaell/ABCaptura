@@ -10,6 +10,8 @@ use App\Capture;
 use App\Client;
 use Yajra\DataTables\DataTables;
 use PDF;
+use Auth;
+
 class MemoryController extends Controller
 {
     public function __construct()
@@ -18,22 +20,36 @@ class MemoryController extends Controller
     }
     public function selectCM()
     {
-        $constructions = construction::select('id','name')->get();
+        $constructions = "";
+        if(Auth::user()->user_type == "Admin")
+        {
+            $constructions = construction::select('id','name')->get();
+        }
+        else
+        {
+            $email = Auth::user()->email;
+
+            $client = Client::select('id')
+            ->where('email',$email)->firstOrFail();
+            //dd($client);
+            $constructions = construction::select('id','name')
+            ->where('client_id',$client->id)->get();
+        }
         return view('memory.selectCM')->with('constructions', $constructions);
     }
 
     public function viewClient(Request $request)
     {
-        $name = construction::select('name','honorary', 'client_id')->where('id',$request->construction_id)->firstOrFail();
-        $client = Client::select('name')->where('id',$name->client_id)->firstOrFail();
-        $totalFunds = MemoryController::getTotalfunds($request->construction_id);
-        $totalCaptures = MemoryController::getTotalCaptures($request->construction_id);
-        return view('memory.viewClient')
-            ->with('construction_id', $request->construction_id)
-            ->with('contruction', $name)
-            ->with('client',$client)
-            ->with('total_funds',$totalFunds)
-            ->with('total_captures',$totalCaptures);
+            $name = construction::select('name','honorary', 'client_id')->where('id',$request->construction_id)->firstOrFail();
+            $client = Client::select('name')->where('id',$name->client_id)->firstOrFail();
+            $totalFunds = MemoryController::getTotalfunds($request->construction_id);
+            $totalCaptures = MemoryController::getTotalCaptures($request->construction_id);
+            return view('memory.viewClient')
+                ->with('construction_id', $request->construction_id)
+                ->with('contruction', $name)
+                ->with('client',$client)
+                ->with('total_funds',$totalFunds)
+                ->with('total_captures',$totalCaptures);
     }
 
     public function getTotalCaptures($construction_id)
