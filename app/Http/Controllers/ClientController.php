@@ -26,6 +26,7 @@ class ClientController extends Controller
     public function showTableCl()
     {
       $clients = DB::table('clients')
+      ->where('status', 1)
         ->get();
 
     //    dd($clients);

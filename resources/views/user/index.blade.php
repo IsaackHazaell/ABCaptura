@@ -21,7 +21,7 @@
               <tr>
                   <th>Nombre</th>
                   <th>Email</th>
-                  <th>Contraseña</th>
+                  {{-- <th>Contraseña</th> --}}
                   <th>Tipo de Usuario</th>
                   <th width="120px">Acciones</th>
               </tr>

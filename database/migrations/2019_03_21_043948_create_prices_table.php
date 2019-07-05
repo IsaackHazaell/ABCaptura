@@ -19,6 +19,7 @@ class CreatePricesTable extends Migration
             $table->decimal('price',10,2);
             $table->integer('month')->unsigned()->nullable();
             $table->integer('product_id')->unsigned();
+            $table->boolean('status')->default(1);
             $table->string('unity',128);
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products')
