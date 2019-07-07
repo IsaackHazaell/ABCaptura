@@ -29,8 +29,8 @@
   <div class="form-group col-md-6">
     <label for="status" class="required">Seleccione el Estatus</label>
     <select class="form-control" name="status" id="status">
-      <option value="0">Liquidado</option>
       <option value="1">Activo</option>
+      <option value="0">Liquidado</option>
     </select>
   </div>
   <div class="form-group col-md-6">
@@ -50,3 +50,7 @@
       this.form.submit();
   };
 </script>
+
+@section('adminlte_js')
+@include('statement.partials.script')
+@stop
