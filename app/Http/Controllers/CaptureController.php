@@ -89,7 +89,6 @@ class CaptureController extends Controller
 
         $provider = Provider::where('id',$request->provider_id)->first();
         $category = $provider->category;
-
         if($category == 1)
         {
           //Borramos todos los temporales (de capturas y de productos)
@@ -127,7 +126,6 @@ class CaptureController extends Controller
         }
         else
         {
-            //dd($request->iva);
             $honorary_remaining = HonoraryRemaining::where('construction_id',$request->construction_id)->first();
             $honorary_remaining = $honorary_remaining->remaining;
             return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider', $provider);

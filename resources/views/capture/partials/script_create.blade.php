@@ -15,9 +15,10 @@ function changeProviders()
     providers.forEach(function(provider) {
       if (provider.construction_id == construction) {
           counter++;
+          console.log(provider.name + " " + provider.provider_id);
           var option = document.createElement("option");
           option.text = provider.name;
-          option.value = provider.id;
+          option.value = provider.provider_id;
           x.add(option, x[counter]);
       }
   });
@@ -26,6 +27,7 @@ function changeProviders()
       var option = document.createElement("option");
       option.text = missa.name;
       option.value = missa.id;
+      counter++;
       x.add(option, x[counter]);
   @endif
 }

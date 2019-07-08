@@ -7,7 +7,7 @@
     <p>Obra: {{$data->construction_id}} - Proveedor: {{$provider->name}}</p>
 </section>
 
-<form action="{{route('capture.saveProduct')}}" method="POST">
+{{-- <form action="{{route('capture.saveProduct')}}" method="POST">
     {{csrf_field()}}
 @include('capture.modal', ['provider' => $provider])
 
@@ -17,19 +17,10 @@
             data-toggle="modal" data-target="#addProduct" style="float: right;"><i class="fa fa-plus"></i> Crear producto</button>
     </div>
 </div>
-{{-- </form> --}}
+</form> --}}
 
 <form action="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{-- {{csrf_field()}}
-    @include('capture.modal', ['provider' => $provider])
-
-    <div class="form-row">
-        <div class="form-group col-md-12">
-            <button class="btn btn-success btn-md"
-                data-toggle="modal" data-target="#addProduct" style="float: right;"><i class="fa fa-plus"></i> Crear producto</button>
-        </div>
-    </div> --}}
 
     @include('capture.partials.form_material')
         <div class="form-row">
@@ -77,11 +68,8 @@
         </div>
         @include('capture.partials.form2')
     </div>
-
-</form>
 </form>
 <button id="saveCapture" name="saveCapture" class="btn btn-success">Capturar</button>
-
 @endsection
 
 @section('adminlte_js')
