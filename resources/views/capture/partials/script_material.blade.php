@@ -84,7 +84,18 @@ function chargeTable()
               quantity: $('#quantity').val(),
               extra: $('#extra').val(),
               total: $('#total_product').val()
-          }
+          },
+          success: function(result)
+            {
+                if (result['result'] == 'ok')
+                {
+                    
+                }
+                else
+                {
+
+                }
+            }
         },
 "columns": [
     {data: 'unity'},

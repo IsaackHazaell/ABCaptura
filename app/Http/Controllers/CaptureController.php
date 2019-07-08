@@ -205,10 +205,11 @@ class CaptureController extends Controller
             'text' => 'Producto creado exitosamente.',
             'icon' => 'success'
         ];
-        //return Redirect::back()->with('message', $msg);
+        return Redirect::back()->with('message', $msg);
         //return back()->with('message', $msg);
-        return back()->with('message', $msg);
+        //return back()->with('message', $msg);
         //return Redirect::to(URL::previous());
+
     }
 
     public function showTablePC(Request $request)

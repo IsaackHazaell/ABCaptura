@@ -1,7 +1,7 @@
 <div class="form-row">
     <div class="form-group col-md-6">
       <label for="construction_id"class="required">Obra</label>
-      <select class="form-control" required name="construction_id" id="construction_id">
+      <select class="form-control" onchange="changeProviders()" required name="construction_id" id="construction_id">
         @foreach($constructions as $construction)
         <option value="{{$construction->id}}">{{$construction->name}}</option>
         @endforeach
@@ -10,14 +10,7 @@
 
     <div class="form-group col-md-6">
       <label for="provider_id"class="required">Proveedor</label>
-      <select class="form-control" required name="provider_id" id="provider_id">
-        @foreach($providers as $provider)
-        <option value="{{ $provider->provider_id }}">{{$provider->name}}: {{$provider->category}}</option>
-        @endforeach
-        @if($missa != null)
-        <option value="{{ $missa->id }}">{{$missa->name}}: {{$missa->category}}</option>
-        @endif
-    </select>
+      <select class="form-control" required name="provider_id" id="provider_id"></select>
     </div>
   </div>
 
