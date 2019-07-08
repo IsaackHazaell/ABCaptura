@@ -9,6 +9,8 @@ use App\Construction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
+
 class StatementController extends Controller
 {
   public function __construct()
@@ -101,16 +103,31 @@ class StatementController extends Controller
      */
     public function store(Request $request)
     {
-      $statement = (new Statement)->fill($request->all());
-      $statement->remaining = $request->total;
-      $statement->save();
+        $exists = Statement::where('construction_id',$request->construction_id)->where('provider_id',$request->provider_id)->first();
+        if($exists == null)
+        {
+            $statement = (new Statement)->fill($request->all());
+            $statement->remaining = $request->total;
+            $statement->save();
 
-      $msg = [
-        'title' => 'Guardado!',
-        'text' => 'Estado de cuenta guardado exitosamente.',
-        'icon' => 'success'
-        ];
-        return redirect('statement')->with('message', $msg);
+            $msg = [
+              'title' => 'Guardado!',
+              'text' => 'Estado de cuenta guardado exitosamente.',
+              'icon' => 'success'
+              ];
+
+              return redirect('statement')->with('message', $msg);
+        }
+        else
+        {
+            $msg = [
+              'title' => 'Error!',
+              'text' => 'Estado de cuenta existente.',
+              'icon' => 'error'
+              ];
+
+              return Redirect::back()->with('message', $msg);
+        }
     }
 
     /**
