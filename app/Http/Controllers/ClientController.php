@@ -164,8 +164,10 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
-          $msg = [
+          $client->status = 0;
+          $client->save();
+
+              $msg = [
               'title' => 'Eliminado!',
               'text' => 'Cliente eliminado exitosamente.',
               'icon' => 'success'

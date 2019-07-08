@@ -203,7 +203,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-      dd($product->price);
+      $product->price->status = 0;
+      $product->price->save();
       $msg = [
           'title' => 'Eliminado!',
           'text' => 'Proveedor eliminado exitosamente.',
