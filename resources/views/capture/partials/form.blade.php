@@ -47,13 +47,13 @@
       <div class="form-group col-md-3">
         <label for="honorarium">Honorario</label>
         <br>
-        <input type="radio" name="honorarium" id="honorarium" value="1"> Si<br>
+        <input type="radio" name="honorarium" id="honorarium" value="1" required> Si<br>
         <input type="radio" name="honorarium" id="honorarium" value="0"> No<br>
       </div>
       <div class="form-group col-md-3">
         <label for="iva">Iva</label>
         <br>
-        <input type="radio" name="iva" id="iva" value="1"> Si<br>
+        <input type="radio" name="iva" id="iva" value="1" required> Si<br>
         <input type="radio" name="iva" id="iva" value="0"> No<br>
       </div>
     </div>

@@ -27,6 +27,7 @@ class ClientController extends Controller
     public function showTableCl()
     {
       $clients = DB::table('clients')
+      ->where('status', 1)
         ->get();
 
     //    dd($clients);
@@ -163,8 +164,10 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
-          $msg = [
+          $client->status = 0;
+          $client->save();
+
+              $msg = [
               'title' => 'Eliminado!',
               'text' => 'Cliente eliminado exitosamente.',
               'icon' => 'success'

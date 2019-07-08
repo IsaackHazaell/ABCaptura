@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\User;
+use App\Client;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
@@ -57,11 +58,12 @@ class UserController extends Controller
     {
       $request->validate([
         'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'max:255', 'unique:users'],
         'password' => ['required', 'string', 'max:255'],
         'user_type' => ['required'],
       ]);
 
+    //  dd("hola");
       $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
@@ -74,6 +76,8 @@ class UserController extends Controller
           'text' => 'Usuario creado exitosamente.',
           'icon' => 'success',
       ];
+
+
 
       return redirect('user')->with('message', $msg);
 
@@ -111,7 +115,11 @@ class UserController extends Controller
     public function update(Request $request)
     {
       $user = User::findOrFail($request->id);
-      $input = $request->all();
+      $input = $request->except('password');
+      if($request->password != $user->password )
+      {
+        $user->password = Hash::make($request->password);
+      }
       $user->fill($input)->save();
 
       $msg = [
@@ -119,6 +127,10 @@ class UserController extends Controller
         'text' => 'Usuario modificado exitosamente.',
         'icon' => 'success'
         ];
+        if(\Auth::user()->id == $request->id)
+        {
+          return redirect('home')->with('message', $msg);
+        }
         return redirect('user')->with('message', $msg);
     }
 
@@ -130,6 +142,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+      if($user->user_type == 'User'){
+        $client = Client::where('email', $user->email)->first();
+              $client->status = 0;
+              $client->save();
+      }
+
       $user->delete();
       $msg = [
           'title' => 'Eliminado!',

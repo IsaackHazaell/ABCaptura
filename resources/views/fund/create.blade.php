@@ -21,7 +21,7 @@
     </div>
     <div class="form-group col-md-6">
       <label for="date"class="required">Fecha</label>
-      <input type="date" class="form-control" name="date" id="date">
+      <input type="date" class="form-control" name="date" id="date" required>
     </div>
 
     <div class="form-group col-md-6">

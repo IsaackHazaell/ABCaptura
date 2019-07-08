@@ -19,12 +19,6 @@
       <input type="email" class="form-control" required name="email" id="email" value="{{$user->email}}" readonly>
     </div>
   </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="password">Contraseña</label>
-      <input type="password" class="form-control" required name="password" id="password" value="{{$user->password}}" readonly>
-    </div>
     <div class="form-group col-md-6">
       <label for="user_type">Tipo de usuario</label>
       <input type="text" class="form-control" required name="user_type" id="user_type" value="{{$user->user_type}}" readonly>

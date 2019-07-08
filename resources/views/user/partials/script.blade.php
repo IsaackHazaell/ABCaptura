@@ -8,7 +8,6 @@ table = $('#users_table').DataTable({
     "columns": [
         {data: 'name'},
         {data: 'email'},
-        {data: 'password'},
         {data: 'user_type'},
         {data: 'btn'}
     ],
@@ -33,9 +32,17 @@ table = $('#users_table').DataTable({
 }
 });
 
+// $(document).ready(function(){
+//
+//   var id = $(this).attr('id_user');
+//   var log_id = {{Auth::user()->id}} ;
+//     console.log(id);
+//
+// });
 
 //EDIT
 $('#edit').on('show.bs.modal', function (event) {
+  var log_id = {{Auth::user()->id}} ;
     var button = $(event.relatedTarget)
     var id = button.data('iduser')
     var name = button.data('name')
@@ -47,7 +54,14 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
     modal.find('.modal-body #email').val(email);
-    modal.find('.modal-body #password').val(password);
+    if(log_id == id){
+      document.getElementById("password").readOnly = false;
+          modal.find('.modal-body #password').val(password);
+    }else {
+      document.getElementById("password").readOnly = true;
+      modal.find('.modal-body #password').val(password);
+    }
+
     modal.find('.modal-body #user_type').val(user_type);
 });
 

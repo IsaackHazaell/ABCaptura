@@ -35,6 +35,7 @@ class ProductController extends Controller
       ->join('providers', 'providers.id', '=', 'products.provider_id')
       ->join('prices', 'prices.product_id', '=', 'products.id')
       ->where('providers.category', '=' , '1')
+      ->where('prices.status', '=' , '1')
       ->get();
       for($i=0; $i<$products->count(); $i++)
       {
@@ -202,7 +203,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-      $product->delete();
+      $product->price->status = 0;
+      $product->price->save();
       $msg = [
           'title' => 'Eliminado!',
           'text' => 'Proveedor eliminado exitosamente.',

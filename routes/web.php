@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::get('/home', function(){
   return view('admin.dashboard');
-});
+})->middleware('auth');
 
 //Clients routes
 Route::resource('client','ClientController')->middleware('auth');
