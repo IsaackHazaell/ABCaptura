@@ -21,6 +21,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use CArbon\Carbon;
+
 class CaptureController extends Controller
 {
   public function __construct()
@@ -630,7 +631,8 @@ class CaptureController extends Controller
         if($request->with_products == null) { //Find from capture
 
             $capture = Capture::select('*')->where('id',$request->id)->firstOrFail();
-
+            if($request->voucher != null && $capture->voucher != $request->voucher)
+                Storage::delete($capture->voucher);
             //Honorarios:
             if($request->honorarium != $capture->honorarium)
             {
@@ -780,8 +782,6 @@ class CaptureController extends Controller
      */
     public function destroy(Capture $capture)
     {
-        //dd($capture);
-        //Ajustar estado de cuenta
         $statement = Statement::where('construction_id', '=', $capture->construction_id)
         ->where('provider_id', '=', $capture->provider_id)
         ->first();
@@ -811,6 +811,7 @@ class CaptureController extends Controller
         }
 
         //Borrar captura
+        Storage::delete($capture->voucher);
         $capture->delete();
 
         $msg = [
