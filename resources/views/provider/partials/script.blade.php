@@ -6,7 +6,7 @@ table = $('#providers_table').DataTable({
     "serverSide": true,
     "ajax": "{{route('provider.showTableP')}}",
     "columns": [
-        {data: 'id'},
+        {data: 'provider_id'},
         {data: 'name'},
         {data: 'category'},
         {data: 'turn'},

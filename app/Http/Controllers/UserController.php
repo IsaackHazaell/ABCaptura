@@ -63,7 +63,6 @@ class UserController extends Controller
         'user_type' => ['required'],
       ]);
 
-    //  dd("hola");
       $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
@@ -76,9 +75,6 @@ class UserController extends Controller
           'text' => 'Usuario creado exitosamente.',
           'icon' => 'success',
       ];
-
-
-
       return redirect('user')->with('message', $msg);
 
     }

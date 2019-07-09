@@ -40,8 +40,8 @@
         data-nameconstruction="{{$statement->construction_id}}"
         data-nameprovider="{{$statement->provider_id}}"
         data-statusstatement="{{$statement->status}}"
-        data-remainingstatement="{{intval(str_replace(",","",$statement->remaining))}}"
-        data-totalstatement="{{intval(str_replace(",","",$statement->total))}}"
+        data-remainingstatement="{{floatval(str_replace(",","",$statement->remaining))}}"
+        data-totalstatement="{{floatval(str_replace(",","",$statement->total))}}"
 
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('statement') }}"><b>Lista de estados de cuenta</b></a>

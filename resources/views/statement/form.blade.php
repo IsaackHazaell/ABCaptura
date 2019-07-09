@@ -8,6 +8,6 @@
     </div>
     <div class="form-group col-md-6">
       <label for="total" class="required">Total</label>
-      <input type="number" required class="form-control" name="total" id="total">
+      <input type="number" required class="form-control" name="total" id="total" step="any">
     </div>
 </div>

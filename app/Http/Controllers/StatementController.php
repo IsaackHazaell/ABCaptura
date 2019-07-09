@@ -90,7 +90,7 @@ class StatementController extends Controller
     public function create()
     {
         $constructions = Construction::select('id', 'name')->get();
-        $providers = Provider::select('id', 'name')->get();
+        $providers = Provider::select('id', 'name')->where('name', '!=', 'Arq. Missael Quintero')->get();
         return view('statement.create')->with('constructions', $constructions)
         ->with('providers', $providers);
     }
@@ -122,7 +122,7 @@ class StatementController extends Controller
         {
             $msg = [
               'title' => 'Error!',
-              'text' => 'Estado de cuenta existente.',
+              'text' => 'Este proveedor ya cuenta con un estado de cuenta para esa obra.',
               'icon' => 'error'
               ];
 

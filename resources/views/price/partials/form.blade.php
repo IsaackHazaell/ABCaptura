@@ -11,7 +11,7 @@
         <input type="number" step="any" class="form-control" required name="price" id="price">
       </div>
       <div class="form-group col-md-6">
-        <label for="month">Mes</label>
+        <label for="month" class="required">Mes</label>
         <select class="form-control" required name="month" id="month">
           <option value="">Seleccione el mes</option>
           <option  value="1">Enero</option>
@@ -32,7 +32,7 @@
 
     <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="year">Año</label>
-          <input type="number" class="form-control" min="1900" max="2099" step="1" value="{{now()->year}}" name="year" id="year"/>
+          <label for="year" class="required">Año</label>
+          <input type="number" class="form-control" min="1900" max="2099" step="1" required value="{{now()->year}}" name="year" id="year"/>
         </div>
       </div>

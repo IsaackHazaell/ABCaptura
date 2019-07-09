@@ -27,7 +27,7 @@ class ProviderController extends Controller
     public function showTableP()
     {
       $providers = DB::table('providers')
-        ->select('providers.*','addresses.*')
+        ->select('providers.*', 'providers.id as provider_id', 'addresses.*', 'addresses.id as address_id')
         ->join('addresses', 'addresses.provider_id', '=', 'providers.id')
         ->get();
 
