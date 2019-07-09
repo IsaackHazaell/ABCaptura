@@ -7,8 +7,7 @@
   data-honoraryconstruction="{{$honorary}}"
   data-dateconstruction="{{ \Carbon\Carbon::parse($date)->format('Y-m-d')}}"
   data-square_meterconstruction="{{intval(str_replace(",","",$square_meter))}}"
-  data-statusconstruction="{{$status}}"
-
+  data-statusconstruction="{{$construction_status}}"
   data-client_id="{{$client_id}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 

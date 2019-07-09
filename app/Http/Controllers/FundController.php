@@ -33,9 +33,9 @@ class FundController extends Controller
         ->get();
         for($i=0; $i<$funds->count(); $i++)
         {
-        $funds[$i]->date = Carbon::parse($funds[$i]->date)->format('d-F-Y');
-        $funds[$i]->total = number_format($funds[$i]->total,2);
-        $funds[$i]->remaining = number_format($funds[$i]->remaining,2);
+            $funds[$i]->fund_date = Carbon::parse($funds[$i]->fund_date)->format('d-F-Y');
+            $funds[$i]->total = number_format($funds[$i]->total,2);
+            $funds[$i]->remaining = number_format($funds[$i]->remaining,2);
          }
         return Datatables::of($funds)
         ->addColumn('btn', 'fund.actions')

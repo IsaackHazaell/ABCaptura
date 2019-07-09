@@ -18,9 +18,9 @@
     <div class="form-group col-md-6">
       <label for="status">Seleccione el Estatus</label>
       <select class="form-control" name="status" id="status">
-        <option>Activo</option>
-        <option>Espera</option>
-        <option>Finalizado</option>
+        <option value="Finalizado" {{ isset($status) && $status == "Finalizado" ? 'selected' : '' }}>Finalizado</option>
+        <option value="Activo" {{ isset($status) && $status == "Activo" ? 'selected' : '' }}>Activo</option>
+        <option value="Espera" {{ isset($status) && $status == "Espera" ? 'selected' : '' }}>Espera</option>
       </select>
     </div>
 

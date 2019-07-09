@@ -25,7 +25,7 @@
       <input type="text" class="form-control" value="{{number_format($construction->square_meter)}}" readonly name="square_meter" id="square_meter">
     </div>
     <div class="form-group col-md-6">
-      <label for="status">Giro</label>
+      <label for="status">Estaus</label>
       <input type="text" class="form-control" value="{{$construction->status}}" readonly name="status" id="status">
     </div>
     <div class="form-group col-md-6">

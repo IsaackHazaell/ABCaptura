@@ -1,5 +1,4 @@
 <script>
-
 var table=null;
 table = $('#constructions_table').DataTable({
         "processing": true,
@@ -11,7 +10,7 @@ table = $('#constructions_table').DataTable({
             {data: 'honorary'},
             {data: 'date'},
             {data: 'square_meter'},
-            {data: 'status'},
+            {data: 'construction_status'},
             {data: 'btn'}
         ],
         "language": {
@@ -44,11 +43,7 @@ $('#edit').on('show.bs.modal', function (event) {
     var date = button.data('dateconstruction')
     var square_meter = button.data('square_meterconstruction')
     var status = button.data('statusconstruction')
-
     var client_id = button.data('client_id')
-
-
-    //var data_id = button.data('iddata')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
@@ -56,11 +51,7 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #date').val(date);
     modal.find('.modal-body #square_meter').val(square_meter);
     modal.find('.modal-body #status').val(status);
-
     modal.find('.modal-body #client_id').val(client_id);
-
-
-    //modal.find('.modal-body #data_id').val(data_id);
 });
 
 //DELETE

@@ -30,8 +30,16 @@ class MemoryController extends Controller
             $email = Auth::user()->email;
 
             $client = Client::select('id')
-            ->where('email',$email)->firstOrFail();
-            //dd($client);
+                ->where('email',$email)->first();
+            if($client == null)
+            {
+                $msg = [
+                    'title' => 'Aún no se le han asignado obras.',
+                    'text' => 'Contacte al administrador',
+                    'icon' => 'alert'
+                ];
+                return view('admin.dashboard')->with('message', $msg);
+            }
             $constructions = construction::select('id','name')
             ->where('client_id',$client->id)->get();
         }

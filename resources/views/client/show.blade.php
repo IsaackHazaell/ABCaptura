@@ -58,6 +58,10 @@
     </div>
   </div>
 
+  <div class="form-group col-md-12">
+      <h3>Obras del cliente:</h3>
+</div>
+
   <div class="box-body">
       <table id="constructions_table" class="table table-striped table-bordered" style="width:100%">
       <thead>

@@ -144,8 +144,11 @@ class UserController extends Controller
     {
       if($user->user_type == 'User'){
         $client = Client::where('email', $user->email)->first();
-              $client->status = 0;
-              $client->save();
+        if($client != null)
+        {
+            $client->status = 0;
+            $client->save();
+        }
       }
 
       $user->delete();

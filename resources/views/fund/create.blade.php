@@ -26,7 +26,7 @@
 
     <div class="form-group col-md-6">
       <label for="total" class="required">Total</label>
-      <input type="number" step="any" class="form-control" name="total" id="total">
+      <input type="number" step="any" class="form-control" name="total" id="total" required>
     </div>
   </div>
   <br>

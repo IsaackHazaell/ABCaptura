@@ -58,6 +58,7 @@
       data-idprovider="{{$provider->id}}"
       data-nameprovider="{{$provider->name}}"
       data-turnprovider="{{$provider->turn}}"
+      data-categoryprovider="{{$provider->category}}"
       data-companyprovider="{{$provider->company}}"
       data-phoneprovider="{{$provider->cellphone}}"
       data-phonlandlineprovider="{{$provider->phonlandline}}"

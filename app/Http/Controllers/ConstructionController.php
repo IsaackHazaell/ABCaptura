@@ -33,20 +33,20 @@ class ConstructionController extends Controller
     {
       $constructions = DB::table('constructions')
         ->select('constructions.*', 'constructions.id as construction_id' ,
-        'constructions.name as construction_name','clients.*',
-        'clients.id as client_id', 'clients.name as client_name')
+        'constructions.name as construction_name', 'constructions.status as construction_status',
+        'clients.*', 'clients.id as client_id', 'clients.name as client_name', 'clients.status as client_status')
         ->join('clients', 'clients.id', '=', 'constructions.client_id')
         ->get();
-        for ($i=0; $i<$constructions->count(); $i++) {
-
+        for ($i=0; $i<$constructions->count(); $i++)
+        {
           $constructions[$i]->date = Carbon::parse($constructions[$i]->date)->format('d-F-Y');
           $constructions[$i]->square_meter = number_format($constructions[$i]->square_meter,2);
-          if($constructions[$i]->status=="0")
-            $constructions[$i]->status="Activo";
-          else if($constructions[$i]->status=="1")
-            $constructions[$i]->status="Finalizado";
-          else if($constructions[$i]->status=="2")
-              $constructions[$i]->status="Espera";
+          if($constructions[$i]->construction_status == 0)
+            $constructions[$i]->construction_status = "Activo";
+          else if($constructions[$i]->construction_status == 1)
+            $constructions[$i]->construction_status = "Finalizado";
+          else if($constructions[$i]->construction_status == 2)
+              $constructions[$i]->construction_status = "Espera";
         }
         return Datatables::of($constructions)
         ->addColumn('btn', 'construction.actions')
@@ -74,31 +74,19 @@ class ConstructionController extends Controller
      */
     public function store(Request $request)
     {
-        $status = null;
-        if($request->status=="Activo")
-          $status=0;
-        else if($request->status=="Finalizado")
-          $status=1;
-        else if($request->status=="Espera")
-            $status=2;
-
-        $request->status = $status;
         $construction = New Construction;
         $construction->name = $request->name;
         $construction->honorary = $request->honorary;
         $construction->date = $request->date;
         $construction->square_meter = $request->square_meter;
-        $construction->status = $status;
+        if($request->status=="Activo")
+          $construction->status="0";
+        else if($request->status=="Finalizado")
+          $construction->status="1";
+        else if($request->status=="Espera")
+            $construction->status="2";
         $construction->client_id = $request->client_id;
         $construction->save();
-/*
-        $client = New Client;
-        $client->construction_id = $construction->id;
-        $client->name = $request->client_name;
-        $client->cellphone = $request->cellphone;
-        $client->phonelandline = $request->phonelandline;
-        $client->address = $request->address;
-        $client->save(); */
 
         $msg = [
             'title' => 'Creado!',
@@ -122,7 +110,6 @@ class ConstructionController extends Controller
      */
     public function show(construction $construction)
     {
-      // $client = DB::table('clients')->where('construction_id', $construction->id)->first();
       $status = null;
       if($construction->status==0)
         $status="Activo";
@@ -133,7 +120,6 @@ class ConstructionController extends Controller
 
       $construction->status = $status;
       $client = Client::select('*')->where('id', $construction->client_id)->first();
-      //dd($client);
       $clients = Client::all();
       return view('construction.show')->with('construction',$construction)->with('client', $client)->with('clients', $clients);
     }
@@ -158,21 +144,17 @@ class ConstructionController extends Controller
      */
     public function update(Request $request)
     {
-      $status = null;
-      if($request->status=="Activo")
-        $status=0;
-      else if($request->status=="Finalizado")
-        $status=1;
-      else if($request->status=="Espera")
-          $status=2;
-
       $construction = Construction::findOrFail($request->id);
-
       $construction->name = $request->name;
       $construction->honorary = $request->honorary;
       $construction->date = $request->date;
       $construction->square_meter = $request->square_meter;
-      $construction->status = $status;
+      if($request->status=="Activo")
+        $construction->status="0";
+      else if($request->status=="Finalizado")
+        $construction->status="1";
+      else if($request->status=="Espera")
+          $construction->status="2";
       $construction->client_id = $request->client_id;
       $construction->save();
 
