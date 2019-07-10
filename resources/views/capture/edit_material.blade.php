@@ -12,7 +12,7 @@
     {{method_field('patch')}}
     {{csrf_field()}}
 
-  <div class="form-row">
+  {{-- <div class="form-row">
       <div class="form-group col-md-6">
         <label for="construction_id">Obra</label>
         <select class="form-control" required name="construction_id" id="construction_id">
@@ -36,7 +36,7 @@
             @endforeach
         </select>
       </div>
-    </div>
+    </div> --}}
 
     <div class="form-row">
         <div class="form-group col-md-6">

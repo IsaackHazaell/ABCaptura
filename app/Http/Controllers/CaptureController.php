@@ -87,6 +87,7 @@ class CaptureController extends Controller
         'funds.id', 'funds.date', 'funds.remaining',
         'constructions.name')
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
+        ->where('funds.status', '=', 1)
         ->get();
 
         $provider = Provider::where('id',$request->provider_id)->first();
@@ -116,6 +117,7 @@ class CaptureController extends Controller
             ->where('providers.id', '=', $request->provider_id)
             ->join('providers', 'providers.id', '=', 'products.provider_id')
             ->join('prices', 'prices.product_id', '=', 'products.id')
+            ->where('prices.status', '=' , '1')
             ->get();
 
           for($i=0; $i<$prices->count(); $i++)
@@ -453,12 +455,13 @@ class CaptureController extends Controller
      */
     public function edit(Capture $capture)
     {
-        $funds = Fund::select('*')->get();
+        $funds = Fund::select('*')->where('status', '1')->get();
         $constructions = construction::select('id','name')->get();
         $providers = DB::table('statements')
           ->select('providers.*', 'providers.id as provider_id', 'statements.*', 'statements.id as statement_id')
           ->join('providers', 'providers.id', '=', 'statements.provider_id')
           ->where('providers.status', '=', 1)
+          ->where('providers.category', '=', $capture->provider->category)
           ->get();
         for($i=0; $i<$providers->count(); $i++)
         {
@@ -628,8 +631,12 @@ class CaptureController extends Controller
 
     public function update_data(Request $request)
     {
-        $honorary_construction = construction::select('honorary')->where('id',$request->construction_id)->firstOrFail();
-        $provider_name = Provider::findOrFail($request->provider_id);
+        $construction_id = Capture::select('construction_id')->where('id',$request->id)->firstOrFail();
+        $construction_id = $construction_id->construction_id;
+        $provider_id = Capture::select('provider_id')->where('id',$request->id)->firstOrFail();
+        $provider_id = $provider_id->provider_id;
+        $honorary_construction = construction::select('honorary')->where('id',$construction_id)->firstOrFail();
+        $provider_name = Provider::findOrFail($provider_id);
         $provider_name = $provider_name->name;
 
         //Originales
@@ -641,12 +648,12 @@ class CaptureController extends Controller
             //Honorarios:
             if($request->honorarium != $capture->honorarium)
             {
-                $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $request->construction_id)->firstOrFail();
+                $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $construction_id)->firstOrFail();
                 if($request->honorarium == 1 && $provider_name != "Arq. Missael Quintero")
                 {
                     $honorary = New Honorary;
                     $honorary->capture_id = $request->id;
-                    $honorary->provider_id = $request->provider_id;
+                    $honorary->provider_id = $provider_id;
                     $total = (float)$request->total;
                     $honorary_construction = floatval($honorary_construction->honorary);
                     $total = $total * $honorary_construction;
@@ -667,7 +674,7 @@ class CaptureController extends Controller
                     $honorary->delete();
                 }
             }
-
+            /*
             //Provider:
             if($request->provider_id != $capture->provider_id)
             {
@@ -717,7 +724,7 @@ class CaptureController extends Controller
                     }
 
                 }
-            }
+            }*/
 
             //Fund:
             if($request->fund_id != $capture->fund_id)
@@ -752,7 +759,6 @@ class CaptureController extends Controller
     public function update(Request $request)
     {
         $fund = Fund::select('*')->where('id',$request->fund_id)->firstOrFail();
-        //dd($request->total);
         if($fund->remaining < $request->total)
         {
             $msg = [
@@ -831,7 +837,6 @@ class CaptureController extends Controller
   public function download($id)
   {
     $capture = Capture::find($id);
-  //  dd($capture);
     return Storage::download($capture->voucher);
   }
 

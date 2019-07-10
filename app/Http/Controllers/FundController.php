@@ -30,6 +30,7 @@ class FundController extends Controller
       $funds = DB::table('funds')
         ->select('funds.*', 'funds.id as fund_id', 'funds.date as fund_date', 'constructions.*', 'constructions.id as construction_id', 'constructions.date as construction_date')
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
+        ->where('funds.status', '=' , '1')
         ->get();
         for($i=0; $i<$funds->count(); $i++)
         {
@@ -150,7 +151,6 @@ class FundController extends Controller
      */
     public function update(Request $request)
     {
-      //dd($request);
       $fund = fund::findOrFail($request->id);
       $total_prev = $fund->total;
       $total_new = $request->total;
@@ -176,7 +176,14 @@ class FundController extends Controller
      */
     public function destroy(Fund $fund)
     {
-      $fund->delete();
+        // 0 = muerto, 1 = vivo
+        $captures = Capture::where('provider_id', $fund->id)->first();
+        if($captures == null)
+            $fund->delete();
+        else {
+            $fund->status = 0;
+            $fund->save();
+        }
       $msg = [
           'title' => 'Eliminado!',
           'text' => 'Proveedor eliminado exitosamente.',

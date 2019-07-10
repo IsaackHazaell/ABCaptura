@@ -11,8 +11,6 @@
     {{method_field('patch')}}
     {{csrf_field()}}
   @include('capture.partials.form_edit')
-
-
       @if($capture->iva == 1)
       <div class="form-row">
           <div class="form-group col-md-6">
