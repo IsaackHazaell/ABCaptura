@@ -50,6 +50,7 @@ class CaptureController extends Controller
         $providers = DB::table('statements')
           ->select('providers.*', 'providers.id as provider_id', 'statements.*', 'statements.id as statement_id')
           ->join('providers', 'providers.id', '=', 'statements.provider_id')
+          ->where('providers.status', '=', 1)
           ->get();
 
           for($i=0; $i<$providers->count(); $i++)
@@ -454,7 +455,11 @@ class CaptureController extends Controller
     {
         $funds = Fund::select('*')->get();
         $constructions = construction::select('id','name')->get();
-        $providers = Provider::select('id','name','category')->get();
+        $providers = DB::table('statements')
+          ->select('providers.*', 'providers.id as provider_id', 'statements.*', 'statements.id as statement_id')
+          ->join('providers', 'providers.id', '=', 'statements.provider_id')
+          ->where('providers.status', '=', 1)
+          ->get();
         for($i=0; $i<$providers->count(); $i++)
         {
           if($providers[$i]->category == 0)

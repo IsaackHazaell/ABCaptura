@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $providers = Provider::select('id','name')->where('category' , 1)->get();
+      $providers = Provider::select('id','name')->where('category' , 1)->where('status' , 1)->get();
       return view('product.index', compact('providers'));
     }
 
@@ -36,16 +36,10 @@ class ProductController extends Controller
       ->join('prices', 'prices.product_id', '=', 'products.id')
       ->where('providers.category', '=' , '1')
       ->where('prices.status', '=' , '1')
+      ->where('providers.status', '=', '1')
       ->get();
       for($i=0; $i<$products->count(); $i++)
       {
-        /*if($products[$i]->category == 0)
-          $products[$i]->category = "Mano de obra";
-        else if($products[$i]->category == 1)
-          $products[$i]->category = "Material";
-          else if($products[$i]->category == 2)
-            $products[$i]->category = "Logística";*/
-
           $products[$i]->price = number_format($products[$i]->price,2);
 
           $products[$i]->provider_id .= " " . $products[$i]->name;
@@ -95,7 +89,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-      $providers = Provider::select('id','name')->where('category',1)->get();
+      $providers = Provider::select('id','name')->where('category',1)->where('status',1)->get();
       return view('product.create', compact('providers'));
     }
 
