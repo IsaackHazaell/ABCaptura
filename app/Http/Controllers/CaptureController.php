@@ -654,7 +654,7 @@ class CaptureController extends Controller
                     $honorary = New Honorary;
                     $honorary->capture_id = $request->id;
                     $honorary->provider_id = $provider_id;
-                    $total = (float)$request->total;
+                    $total = (float)$capture->total;
                     $honorary_construction = floatval($honorary_construction->honorary);
                     $total = $total * $honorary_construction;
                     $total = $total/100;
@@ -724,7 +724,7 @@ class CaptureController extends Controller
                     }
 
                 }
-            }*/
+            }
 
             //Fund:
             if($request->fund_id != $capture->fund_id)
@@ -734,7 +734,7 @@ class CaptureController extends Controller
                 $fund_prev->save();
                 $fund->remaining -= $request->total;
                 $fund->save();
-            }
+            }*/
 
             //Guardamos todo
 
@@ -758,7 +758,7 @@ class CaptureController extends Controller
      */
     public function update(Request $request)
     {
-        $fund = Fund::select('*')->where('id',$request->fund_id)->firstOrFail();
+        /*$fund = Fund::select('*')->where('id',$request->fund_id)->firstOrFail();
         if($fund->remaining < $request->total)
         {
             $msg = [
@@ -767,8 +767,8 @@ class CaptureController extends Controller
                 'icon' => 'warning'
             ];
             return redirect('capture')->with('message', $msg);
-        }
-        else {
+        }*/
+        //else {
             //dd($request);
             $save = CaptureController::update_data($request);
             if($save)
@@ -781,7 +781,7 @@ class CaptureController extends Controller
 
                 return redirect('capture')->with('message', $msg);
             }
-    }
+    //}
 //}
 }
 

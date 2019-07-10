@@ -76,7 +76,7 @@
           </div>
     </div>
 
-    <div class="form-row">
+    {{-- <div class="form-row">
         <div class="form-group col-md-6">
             <label for="fund_id">Seleccione el fondo</label>
             <select class="form-control" required name="fund_id" id="fund_id">
@@ -89,4 +89,4 @@
                 @endforeach
             </select>
         </div>
-    </div>
+    </div> --}}
