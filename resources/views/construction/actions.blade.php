@@ -9,6 +9,7 @@
   data-square_meterconstruction="{{intval(str_replace(",","",$square_meter))}}"
   data-statusconstruction="{{$construction_status}}"
   data-client_id="{{$client_id}}"
+  data-client_name="{{$client_name}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
   <a id_construction="{{ $construction_id }}" class="btn btn-danger btn-sm status-construction" construction_name="{{ $construction_name }}">

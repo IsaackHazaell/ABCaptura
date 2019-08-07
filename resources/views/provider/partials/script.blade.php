@@ -45,6 +45,10 @@ $('#edit').on('show.bs.modal', function (event) {
     var company = button.data('companyprovider')
     var category = button.data('categoryprovider')
     category = toCategory(category);
+    if(category == "1")
+      document.getElementById('rfc_div').style.display='block';
+    else
+      document.getElementById('rfc_div').style.display='none';
     var phone = button.data('phoneprovider')
     var phone2 = button.data('phonlandlineprovider')
     var mail = button.data('mailprovider')

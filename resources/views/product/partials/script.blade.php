@@ -46,6 +46,7 @@ $('#edit').on('show.bs.modal', function (event) {
     var description = button.data('descriptionproduct')
     var unity = button.data('unity')
     var price = button.data('price')
+    console.log(price);
     var year = button.data('year')
     var month = button.data('month')
     month = monthAt(month);

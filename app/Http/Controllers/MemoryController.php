@@ -23,7 +23,7 @@ class MemoryController extends Controller
         $constructions = "";
         if(Auth::user()->user_type == "Admin")
         {
-            $constructions = construction::select('id','name')->get();
+            $constructions = construction::select('id','name')->orderBy('name', 'asc')->get();
         }
         else
         {
@@ -41,7 +41,7 @@ class MemoryController extends Controller
                 return view('admin.dashboard')->with('message', $msg);
             }
             $constructions = construction::select('id','name')
-            ->where('client_id',$client->id)->get();
+            ->where('client_id',$client->id)->orderBy('name', 'asc')->get();
         }
         return view('memory.selectCM')->with('constructions', $constructions);
     }

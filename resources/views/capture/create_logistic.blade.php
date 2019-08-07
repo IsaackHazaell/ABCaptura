@@ -27,6 +27,9 @@
   @endsection
 
 @section('adminlte_js')
+  <script>
+    $("#fund_id").select2();
+  </script>
     @include('capture.partials.script')
     @include('capture.partials.script_iva')
 @stop

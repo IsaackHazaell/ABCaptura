@@ -6,7 +6,7 @@
 
     <div class="form-group col-md-6">
       <label for="category" class="required">Categoría</label>
-      <select class="form-control" required name="category" id="category">
+      <select class="form-control" required name="category" id="category" onchange="check_rfc()">
         <option value="0">Mano de obra</option>
          <option value="1">Material</option>
          <option value="2">Logística</option>
@@ -47,6 +47,13 @@
         <label for="mail">Correo</label>
         <input type="email" class="form-control" name="mail" id="mail">
       </div>
+</div>
+
+<div class="form-row" id="rfc_div">
+  <div class="form-group col-md-6">
+    <label for="rfc">RFC</label>
+    <input type="text" class="form-control" name="rfc" id="rfc">
+  </div>
 </div>
 
 <div>

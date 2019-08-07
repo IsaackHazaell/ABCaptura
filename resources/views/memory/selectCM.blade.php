@@ -9,7 +9,6 @@
 </section>
 
 <form action="{{route('memory.viewClient')}}" >
-  {{csrf_field()}}
   <br>
   <div class="form-row">
       <div class="form-group col-md-6">
@@ -30,5 +29,7 @@
 @endsection
 
 @section('adminlte_js')
-
+    <script>
+          $("#construction_id").select2();
+    </script>
 @stop

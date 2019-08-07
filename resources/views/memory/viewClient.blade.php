@@ -8,7 +8,6 @@
 </section>
 
 <form action="{{route('memory.index')}}" >
-  {{csrf_field()}}
   <br>
   <div class="form-row">
       <div class="form-group col-md-6">
@@ -47,7 +46,3 @@
     <input type="hidden" name="construction_id" id="construction_id" value="{{$construction_id}}">
 </form>
 @endsection
-
-@section('adminlte_js')
-
-@stop

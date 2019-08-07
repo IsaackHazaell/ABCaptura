@@ -20,5 +20,7 @@
 @endsection
 
 @section('adminlte_js')
-
+<script>
+      $("#construction_id").select2();
+</script>
 @stop

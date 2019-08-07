@@ -20,7 +20,7 @@ class CreateCapturesTable extends Migration
             $table->integer('iva');
             $table->integer('honorarium');
             $table->string('voucher')->nullable();
-            $table->integer('folio')->nullable();
+            $table->string('folio',128)->nullable();
             $table->string('concept',128);
             $table->integer('fund_id')->unsigned();
             $table->integer('construction_id')->unsigned();

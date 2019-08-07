@@ -19,3 +19,9 @@
   </div>
 </form>
 @endsection
+
+@section('adminlte_js')
+    <script>
+          $("#provider_id").select2();
+    </script>
+@stop

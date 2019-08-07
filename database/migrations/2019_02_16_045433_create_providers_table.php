@@ -22,6 +22,7 @@ class CreateProvidersTable extends Migration
             $table->bigInteger('cellphone');
             $table->bigInteger('phonlandline')->nullable();
             $table->string('mail',228)->nullable();
+            $table->string('rfc',228)->nullable();
             $table->string('company',228)->nullable();
             $table->timestamps();
         });

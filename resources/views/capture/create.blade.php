@@ -19,5 +19,9 @@
 @endsection
 
 @section('adminlte_js')
+  <script>
+      $("#construction_id").select2();
+      $("#provider_id").select2();
+  </script>
   @include('capture.partials.script_create')
 @stop

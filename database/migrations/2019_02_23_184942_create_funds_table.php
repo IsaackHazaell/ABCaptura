@@ -19,6 +19,7 @@ class CreateFundsTable extends Migration
             $table->date('date');
             $table->decimal('remaining',12,2);
             $table->decimal('total',12,2);
+            $table->string('pay',128)->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
             $table->foreign('construction_id')->references('id')->on('constructions')

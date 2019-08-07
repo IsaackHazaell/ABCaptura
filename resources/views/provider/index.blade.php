@@ -34,5 +34,6 @@
 @stop
 
 @section('adminlte_js')
-@include('provider.partials.script')
+  @include('provider.partials.script')
+  @include('provider.partials.script_rfc')
 @stop

@@ -18,9 +18,8 @@
 </form>
 @endsection
 
-<script>
-var select = document.getElementById('status');
-select.onchange = function(){
-    this.form.submit();
-};
-</script>
+@section('adminlte_js')
+    <script>
+          $("#client_id").select2();
+    </script>
+@stop

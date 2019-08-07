@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 
-
-
 class ConstructionController extends Controller
 {
   public function __construct()
@@ -25,8 +23,8 @@ class ConstructionController extends Controller
      */
     public function index()
     {
-      $clients = Client::all();
-          return view('construction.index', compact('clients'));
+      $clients = Client::orderBy('name', 'asc')->get();
+      return view('construction.index', compact('clients'));
     }
 
     public function showTableC()
@@ -62,7 +60,7 @@ class ConstructionController extends Controller
      */
     public function create()
     {
-      $clients = Client::all();
+        $clients = Client::orderBy('name', 'asc')->get();
         return view('construction.create', compact('clients'));
     }
 

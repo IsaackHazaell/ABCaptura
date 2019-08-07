@@ -17,7 +17,7 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="quantity">Cantidad</label>
-        <input type="number" class="form-control" required value=0 name="quantity" id="quantity">
+        <input type="number" class="form-control" required value=1 name="quantity" id="quantity">
       </div>
       <div class="form-group col-md-6">
         <label for="extra">Cargo adicional</label>

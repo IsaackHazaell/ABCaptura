@@ -82,7 +82,7 @@ class FundController extends Controller
      */
     public function create()
     {
-        $constructions = Construction::select('id','name')->get();
+        $constructions = Construction::orderBy('name', 'asc')->get();
         return view('fund.create', compact('constructions'));
     }
 

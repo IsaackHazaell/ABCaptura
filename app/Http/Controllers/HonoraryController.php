@@ -66,7 +66,7 @@ class HonoraryController extends Controller
 
     public function selectC()
     {
-        $constructions = construction::select('id','name')->get();
+        $constructions = construction::select('id','name')->orderBy('name', 'asc')->get();
         return view('honorary.selectC')->with('constructions', $constructions);
     }
 

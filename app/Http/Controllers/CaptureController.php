@@ -46,11 +46,12 @@ class CaptureController extends Controller
      */
     public function create()
     {
-        $constructions = construction::select('id','name')->get();
+        $constructions = construction::select('id','name')->orderBy('name', 'asc')->get();
         $providers = DB::table('statements')
           ->select('providers.*', 'providers.id as provider_id', 'statements.*', 'statements.id as statement_id')
           ->join('providers', 'providers.id', '=', 'statements.provider_id')
           ->where('providers.status', '=', 1)
+          ->orderBy('providers.name', 'asc')
           ->get();
 
           for($i=0; $i<$providers->count(); $i++)
@@ -88,9 +89,10 @@ class CaptureController extends Controller
         'constructions.name')
         ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
         ->where('funds.status', '=', 1)
+        ->orderBy('constructions.name')
         ->get();
 
-        $provider = Provider::where('id',$request->provider_id)->first();
+        $provider = Provider::where('id',$request->provider_id)->orderBy('name', 'asc')->first();
         $category = $provider->category;
         if($category == 1)
         {
@@ -118,6 +120,7 @@ class CaptureController extends Controller
             ->join('providers', 'providers.id', '=', 'products.provider_id')
             ->join('prices', 'prices.product_id', '=', 'products.id')
             ->where('prices.status', '=' , '1')
+            ->orderBy('products.concept')
             ->get();
 
           for($i=0; $i<$prices->count(); $i++)

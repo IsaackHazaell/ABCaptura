@@ -28,7 +28,7 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="folio">Folio</label>
-          <input type="number" class="form-control" name="folio" id="folio">
+          <input type="text" class="form-control" name="folio" id="folio">
       </div>
       <div class="form-group col-md-6">
         <label for="concept"class="required">Concepto</label>

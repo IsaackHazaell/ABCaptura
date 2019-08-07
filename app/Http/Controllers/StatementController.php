@@ -89,8 +89,8 @@ class StatementController extends Controller
      */
     public function create()
     {
-        $constructions = Construction::select('id', 'name')->get();
-        $providers = Provider::select('id', 'name')->where('name', '!=', 'Arq. Missael Quintero')->where('status',1)->get();
+        $constructions = Construction::select('id', 'name')->orderBy('name', 'asc')->get();
+        $providers = Provider::select('id', 'name')->where('name', '!=', 'Arq. Missael Quintero')->where('status',1)->orderBy('name', 'asc')->get();
         return view('statement.create')->with('constructions', $constructions)
         ->with('providers', $providers);
     }

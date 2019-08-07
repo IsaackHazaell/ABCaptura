@@ -23,3 +23,7 @@
   </div>
 </form>
 @endsection
+
+@section('adminlte_js')
+  @include('provider.partials.script_rfc')
+@stop

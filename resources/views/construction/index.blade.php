@@ -35,5 +35,5 @@
 @stop
 
 @section('adminlte_js')
-@include('construction.partials.script')
+    @include('construction.partials.script')
 @stop

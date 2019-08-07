@@ -52,5 +52,9 @@
 </script>
 
 @section('adminlte_js')
+  <script>
+    $("#construction_id").select2();
+    $("#provider_id").select2();
+  </script>
 @include('statement.partials.script')
 @stop

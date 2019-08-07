@@ -73,6 +73,10 @@
 @endsection
 
 @section('adminlte_js')
+    <script>
+        $("#product").select2();
+        $("#fund_id").select2();
+    </script>
     @include('capture.partials.script')
     @include('capture.partials.script_material')
     @include('capture.partials.script_iva')

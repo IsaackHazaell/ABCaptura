@@ -149,7 +149,7 @@ cleanInputs();
 
 function cleanInputs()
 {
-  $('#quantity').val(0);
+  $('#quantity').val(1);
   $('#extra').val(0);
   $('#total_product').val(0);
   castearInputProduct();

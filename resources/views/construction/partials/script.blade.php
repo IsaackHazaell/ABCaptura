@@ -44,6 +44,7 @@ $('#edit').on('show.bs.modal', function (event) {
     var square_meter = button.data('square_meterconstruction')
     var status = button.data('statusconstruction')
     var client_id = button.data('client_id')
+    var client_name = button.data('client_name')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
@@ -52,6 +53,12 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #square_meter').val(square_meter);
     modal.find('.modal-body #status').val(status);
     modal.find('.modal-body #client_id').val(client_id);
+    // $('#client_id').select2({
+    //   placeholder: {
+    //     id: client_id, // the value of the option
+    //     text: client_name
+    // },
+    // });
 });
 
 //DELETE
