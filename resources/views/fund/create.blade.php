@@ -15,7 +15,7 @@
       <label for="total">Selecciona obra</label>
       <select class="form-control" name="construction" id="construction">
               @foreach($constructions as $construction)
-              <option>{{$construction->id}} {{$construction->name}}</option>
+              <option value="{{ $construction->id }}">{{$construction->name}}</option>
               @endforeach
       </select>
     </div>

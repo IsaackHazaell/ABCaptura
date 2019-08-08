@@ -3,7 +3,7 @@
       <label for="provider_id"class="required">Proveedor</label>
       <select class="form-control" required name="provider_id" id="provider_id">
         @foreach($providers as $provider)
-        <option>{{$provider->id}} {{$provider->name}}</option>
+        <option value="{{ $provider->id }}">{{$provider->name}}</option>
         @endforeach
     </select>
     </div>

@@ -19,7 +19,7 @@ class CreateConstructionsTable extends Migration
             $table->string('name',128);
             $table->integer('honorary');
             $table->date('date');
-            $table->integer('square_meter');
+            $table->integer('square_meter')->nullable();
             $table->integer('status');
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clients')

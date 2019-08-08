@@ -8,7 +8,8 @@
     <br>
 </section>
 
-<form action="{{route('memory.viewClient')}}" >
+<form action="{{route('memory.viewClient')}}" method="POST">
+  @csrf
   <br>
   <div class="form-row">
       <div class="form-group col-md-6">

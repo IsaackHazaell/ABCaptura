@@ -70,7 +70,7 @@ Route::resource('memory', 'MemoryController', ['only' => [
 Route::get('showTableM','MemoryController@showTableM')->name('memory.showTableM')->middleware('auth');
 Route::get('showTableMH','MemoryController@showTableMH')->name('memory.showTableMH')->middleware('auth');
 Route::get('selectCM','MemoryController@selectCM')->name('memory.selectCM')->middleware('auth');
-Route::get('viewClient','MemoryController@viewClient')->name('memory.viewClient')->middleware('auth');
+Route::post('viewClient','MemoryController@viewClient')->name('memory.viewClient')->middleware('auth');
 
 //Statements Routes
 Route::resource('statement','StatementController')->middleware('auth');

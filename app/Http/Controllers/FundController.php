@@ -22,7 +22,8 @@ class FundController extends Controller
      */
     public function index()
     {
-        return view('fund.index');
+        $constructions = Construction::all()->sortBy('name');
+        return view('fund.index', compact('constructions'));
     }
 
     public function showTableF()
@@ -94,19 +95,12 @@ class FundController extends Controller
      */
     public function store(Request $request)
     {
-      $construction_id = "";
-      for($i=0;$i<strlen($request->construction);$i++)
-      {
-        if($request->construction[$i] != " ")
-          $construction_id .= $request->construction[$i];
-        else
-          break;
-      }
       $fund = New Fund;
       $fund->total = $request->total;
       $fund->date = $request->date;
       $fund->remaining = $request->total;
-      $fund->construction_id = $construction_id;
+      $fund->construction_id = $request->construction;
+      $fund->pay = $request->pay;
       $fund->save();
       $msg = [
           'title' => 'Creado!',
@@ -158,6 +152,7 @@ class FundController extends Controller
       $fund->date = $request->date;
       $fund->remaining += $diference;
       $fund->total = $request->total;
+      $fund->pay = $request->pay;
       $fund->save();
 
       $msg = [

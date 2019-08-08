@@ -21,6 +21,10 @@ function countProducts()
                 
         });
         document.getElementById('count').value = counter;
+        if(provider_id == "")
+        {
+            document.getElementById('count').value = products.length;
+        }
     }   
     
 </script>

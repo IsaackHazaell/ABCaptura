@@ -6,12 +6,12 @@ table = $('#providers_table').DataTable({
     "serverSide": true,
     "ajax": "{{route('provider.showTableP')}}",
     "columns": [
-        {data: 'provider_id'},
         {data: 'name'},
         {data: 'category'},
         {data: 'turn'},
         {data: 'company'},
         {data: 'cellphone'},
+        {data: 'rfc'},
         {data: 'btn'}
     ],
     "language": {
@@ -44,9 +44,12 @@ $('#edit').on('show.bs.modal', function (event) {
     var turn = button.data('turnprovider')
     var company = button.data('companyprovider')
     var category = button.data('categoryprovider')
+    var rfc = button.data('rfcprovider')
     category = toCategory(category);
     if(category == "1")
+    {
       document.getElementById('rfc_div').style.display='block';
+    }
     else
       document.getElementById('rfc_div').style.display='none';
     var phone = button.data('phoneprovider')
@@ -69,6 +72,7 @@ $('#edit').on('show.bs.modal', function (event) {
     modal.find('.modal-body #colony').val(colony);
     modal.find('.modal-body #town').val(town);
     modal.find('.modal-body #state').val(state);
+    modal.find('.modal-body #rfc').val(rfc);
 });
 
 

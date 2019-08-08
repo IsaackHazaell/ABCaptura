@@ -10,7 +10,7 @@
   data-phoneprovider="{{$cellphone}}"
   data-phonlandlineprovider="{{$phonlandline}}"
   data-mailprovider="{{$mail}}"
-
+  data-rfcprovider="{{$rfc}}"
   data-streetprovider="{{$street}}"
   data-colonyprovider="{{$colony}}"
   data-townprovider="{{$town}}"

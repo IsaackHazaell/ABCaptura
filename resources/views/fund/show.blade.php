@@ -25,6 +25,10 @@
       <label for="total">Total</label>
       <input type="text" class="form-control" value="{{number_format($fund->total,2)}}" readonly name="total" id="total">
     </div>
+    <div class="form-group col-md-6">
+      <label for="pay">Metodo de pago</label>
+      <input type="text" class="form-control" value="{{ $fund->pay }}" readonly name="pay" id="pay">
+    </div>
 </div>
 
 
@@ -36,6 +40,7 @@
         data-date="{{$fund->date}}"
         data-remaining="{{$fund->remaining}}"
         data-total="{{$fund->total}}"
+        data-pay="{{$fund->pay}}"
         data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i>Editar</button>
         <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('fund') }}"><b>Lista de fondos</b></a>
     </div>

@@ -19,12 +19,12 @@
           <table id="providers_table" class="table table-striped table-bordered" style="width:100%">
           <thead>
               <tr>
-                  <th width="10px">Id</th>
                   <th>Nombre</th>
                   <th>Categoría</th>
                   <th>Giro</th>
                   <th>Empresa</th>
                   <th>Teléfono celular</th>
+                  <th>RFC</th>
                   <th width="120px">Acciones</th>
               </tr>
           </thead>

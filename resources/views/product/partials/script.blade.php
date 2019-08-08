@@ -6,42 +6,42 @@ table = $('#products_table').DataTable({
     "serverSide": true,
     "ajax": "{{route('product.showTableProduct')}}",
     "columns": [
-        {data: 'id'},
         {data: 'concept'},
         {data: 'unity'},
         {data: 'price'},
         {data: 'month'},
-        {data: 'provider_id'},
+        {data: 'name'},
         {data: 'description'},
         {data: 'btn'}
     ],
-    initComplete: function () {
-            this.api().columns(5).every(function () {
-                var column = this;
+    "initComplete": function(settings, json) {
+        var column = table.column( 4 );
                 $('#providers').on('change', function () {
-                    column.search($(this).val()+$(this).text()).draw();
+                    column.search($('#providers option:selected').text()).draw();
+                    if($('#providers option:selected').text() == "Todos")
+                    {
+                      column.search($('#providers option:selected').val()).draw();
+                    }
                 });
-            });
-        },
+             },
+    "lengthMenu": [[-1, 10, 30, 60, 100], ["Todos", 10, 30, 60, 100]],
     "language": {
-  "info": "_TOTAL_ registros",
-  "search": "Buscar",
-  "paginate": {
-    "next": "Siguiente",
-    "previous": "Anterior",
-  },
-  "lengthMenu": 'Mostrar <select>'+
-      '<option value="-1" selected>Todos</option>'+
-      '<option value="10">10</option>'+
-      '<option value="30">30</option>'+
-      '</select> registros',
-  "loadingRecords": "Cargando...",
-  "processing": "Procesando...",
-  "emptyTable": "No hay datos",
-  "zeroRecords": "No hay coincidencias",
-  "infoEmpty": "",
-  "infoFiltered": ""
-}
+      "info": "_TOTAL_ registros",
+      "search": "Buscar",
+      "paginate": {
+        "next": "Siguiente",
+        "previous": "Anterior",
+      },
+      "lengthChange": false,
+      "lengthMenu": 'Mostrar _MENU_ registros',
+
+      "loadingRecords": "Cargando...",
+      "processing": "Procesando...",
+      "emptyTable": "No hay datos",
+      "zeroRecords": "No hay coincidencias",
+      "infoEmpty": "",
+      "infoFiltered": ""
+    }
 });
 
 

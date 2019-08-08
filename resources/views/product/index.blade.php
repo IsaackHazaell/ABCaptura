@@ -16,6 +16,7 @@
         <div class="col-md-4">
           <label for="providers">Proveedor</label>
             <select class="form-control" name="providers" id="providers" onchange="countProducts()">
+              <option value="">Todos</option>
                 @foreach ($providers as $provider)
                 <option value="{{ $provider->id }}">{{ $provider->name }}</option>
                 
@@ -38,7 +39,6 @@
           <table id="products_table" class="table table-striped table-bordered" style="width:100%">
           <thead>
               <tr>
-                  <th width="10px">Id</th>
                   <th>Concepto</th>
                   <th>Unidad</th>
                   <th>Precio unitario sin IVA</th>
