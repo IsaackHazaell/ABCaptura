@@ -11,7 +11,7 @@
 <form action="{{url('statement')}}" method="post">
   {{csrf_field()}}
   <div class="form-group col-md-6">
-    <label for="construction_id">Selecciona obra</label>
+    <label class="required" for="construction_id">Selecciona obra</label>
     <select class="form-control" name="construction_id" id="construction_id">
             @foreach($constructions as $construction)
             <option value={{$construction->id}}>{{$construction->name}}</option>
@@ -36,7 +36,7 @@
     </div>
 
   <div class="form-group col-md-6" id="lbl_provider_id">
-      <label for="provider_id">Selecciona proveedor</label>
+      <label class="required" for="provider_id">Selecciona proveedor</label>
       <select class="form-control" required name="provider_id" id="provider_id">
               @foreach($providers as $provider)
               <option value={{$provider->id}}>{{$provider->name}}</option>
@@ -46,13 +46,13 @@
 
     <div id="div_material">
       <div class="form-group col-md-6">
-        <label for="name" class="required">Nombre del estado de cuenta</label>
-        <input type="text" required class="form-control" name="name" id="name">
+        <label class="required" for="name" class="required">Nombre del estado de cuenta</label>
+        <input type="text" class="form-control" name="name" id="name">
       </div>
       
       <div class="form-group col-md-6">
-        <label for="provider_id">Selecciona los proveedores</label>
-        <select class="form-control" multiple="multiple" name="provider_material[]" required id="provider_material">
+        <label class="required" for="provider_material">Selecciona los proveedores</label>
+        <select class="form-control" multiple="multiple" name="provider_material[]" id="provider_material">
           @foreach($category as $cat)
             <option value={{$cat->id}}>{{$cat->name}}</option>
           @endforeach
@@ -62,7 +62,7 @@
 
   <div class="form-group col-md-6">
     <label for="total" class="required">Total</label>
-    <input type="number" step="any" class="form-control" name="total" id="total">
+    <input type="number" step="any" class="form-control" name="total" id="total" required>
   </div>
 
   <div class="form-group col-md-12">

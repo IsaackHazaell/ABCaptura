@@ -90,7 +90,6 @@ class CaptureController extends Controller
 
     public function create2(Request $request)
     {
-      dd($request);
         if($request->hasFile('voucher'))
             $request->voucher = $request->file('voucher')->store('public');
 
@@ -123,7 +122,7 @@ class CaptureController extends Controller
               return redirect('fund')->with('message', $msg);
           }
 
-          $prices = DB::table('products','prices')
+          /* $prices = DB::table('products','prices')
             ->select(
             'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
             'prices.*')
@@ -132,7 +131,23 @@ class CaptureController extends Controller
             ->join('prices', 'prices.product_id', '=', 'products.id')
             ->where('prices.status', '=' , '1')
             ->orderBy('products.concept')
+            ->get(); */
+              //dd($request);
+            $prices = DB::table('products','prices','statement_materials')
+            ->select(
+            'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
+            'prices.*', 'prices.id as price_id')
+            ->where('prices.status', '=' , '1')
+            ->join('prices', 'prices.product_id', '=', 'products.id')
+            ->join('products', 'products.provider_id', '=', 'providers.id')
+            ->join('providers', 'providers.id', '=', 'statement_provider_materials.provider_id')
+            ->join('statement_provider_materials', 'statement_provider_materials.statement_material_id', '=', 'statement_materials.id')
+            ->where('statement_materials.id',$request->statemnt_material_id)
+            ->orderBy('products.concept')
+            ->groupBy('products')
             ->get();
+
+          dd($prices);
 
           for($i=0; $i<$prices->count(); $i++)
           {
@@ -146,7 +161,7 @@ class CaptureController extends Controller
         {
             $honorary_remaining = HonoraryRemaining::where('construction_id',$request->construction_id)->first();
             $honorary_remaining = $honorary_remaining->remaining;
-            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider', $provider);
+            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider',$request->provider_id);
         }
     }
 
@@ -163,6 +178,7 @@ class CaptureController extends Controller
         {
             $temporary_capture->fund_id = $fund->id;
             $temporary_capture->total = 0;
+            $temporary_capture->statement_material_id = $data->statemnt_material_id;
             $temporary_capture->save();
 
             return $temporary_capture;

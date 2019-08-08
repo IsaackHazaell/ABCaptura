@@ -14,7 +14,7 @@ class CreateTemporaryCaptureProductsTable extends Migration
     public function up()
     {
         Schema::create('temporary_capture_products', function (Blueprint $table) {
-          $table->increments('id');
+            $table->increments('id');
           $table->integer('quantity');
           $table->decimal('extra',10,2)->nullable();
           $table->decimal('total',10,2);
@@ -27,7 +27,6 @@ class CreateTemporaryCaptureProductsTable extends Migration
           $table->foreign('price_id')->references('id')->on('prices')
             ->onDelete('cascade')
             ->onUpdate('cascade');
-
         });
     }
 

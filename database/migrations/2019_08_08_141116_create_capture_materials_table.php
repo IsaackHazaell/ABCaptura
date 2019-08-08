@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTemporaryCapturesTable extends Migration
+class CreateCaptureMaterialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateTemporaryCapturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('temporary_captures', function (Blueprint $table) {
-          $table->increments('id');
+        Schema::create('capture_materials', function (Blueprint $table) {
+            $table->increments('id');
           $table->date('date');
           $table->decimal('total',10,2);
           $table->integer('iva');
           $table->integer('honorarium');
           $table->string('voucher')->nullable();
-          $table->integer('folio')->nullable();
+          $table->string('folio',128)->nullable();
           $table->string('concept',128);
           $table->integer('fund_id')->unsigned();
           $table->integer('construction_id')->unsigned();
-          $table->integer('provider_id')->unsigned();
+          $table->integer('statement_material_id')->unsigned();
           $table->timestamps();
           $table->foreign('fund_id')->references('id')->on('funds')
             ->onDelete('cascade')
@@ -32,7 +32,7 @@ class CreateTemporaryCapturesTable extends Migration
           $table->foreign('construction_id')->references('id')->on('constructions')
             ->onDelete('cascade')
             ->onUpdate('cascade');
-          $table->foreign('provider_id')->references('id')->on('providers')
+          $table->foreign('statement_material_id')->references('id')->on('statement_materials')
             ->onDelete('cascade')
             ->onUpdate('cascade');
         });
@@ -45,6 +45,6 @@ class CreateTemporaryCapturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('temporary_captures');
+        Schema::dropIfExists('capture_materials');
     }
 }
