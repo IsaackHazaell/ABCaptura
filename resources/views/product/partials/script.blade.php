@@ -15,6 +15,14 @@ table = $('#products_table').DataTable({
         {data: 'description'},
         {data: 'btn'}
     ],
+    initComplete: function () {
+            this.api().columns(5).every(function () {
+                var column = this;
+                $('#providers').on('change', function () {
+                    column.search($(this).val()+$(this).text()).draw();
+                });
+            });
+        },
     "language": {
   "info": "_TOTAL_ registros",
   "search": "Buscar",
@@ -23,9 +31,9 @@ table = $('#products_table').DataTable({
     "previous": "Anterior",
   },
   "lengthMenu": 'Mostrar <select>'+
+      '<option value="-1" selected>Todos</option>'+
       '<option value="10">10</option>'+
       '<option value="30">30</option>'+
-      '<option value="-1">Todos</option>'+
       '</select> registros',
   "loadingRecords": "Cargando...",
   "processing": "Procesando...",

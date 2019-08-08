@@ -23,8 +23,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $providers = Provider::select('id','name')->where('category' , 1)->where('status' , 1)->get();
-      return view('product.index', compact('providers'));
+      $providers = Provider::where('category' , 1)->where('status' , 1)->orderBy('name', 'asc')->get();
+      $products = Product::all();
+      return view('product.index', compact('providers', 'products'));
     }
 
   public function showTableProduct()

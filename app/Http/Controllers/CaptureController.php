@@ -842,5 +842,11 @@ class CaptureController extends Controller
     $capture = Capture::find($id);
     return Storage::download($capture->voucher);
   }
+  public function show_storage($id)
+    {
+      $capture = Capture::find($id);
+      return Storage::response($capture->voucher);
+        
+    }
 
 }

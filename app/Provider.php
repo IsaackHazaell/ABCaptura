@@ -8,4 +8,10 @@ class Provider extends Model
 {
     protected $fillable = ['name', 'category', 'turn', 'cellphone', 'phonlandline', 'mail', 'company'];
 
+
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
+
 }
