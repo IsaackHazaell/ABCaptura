@@ -18,14 +18,7 @@
             @endforeach
     </select>
   </div>
-  <div class="form-group col-md-6">
-    <label for="provider_id">Selecciona proveedor</label>
-    <select class="form-control" required name="provider_id" id="provider_id">
-            @foreach($providers as $provider)
-            <option value={{$provider->id}}>{{$provider->name}}</option>
-            @endforeach
-    </select>
-  </div>
+  
   <div class="form-group col-md-6">
     <label for="status" class="required">Seleccione el Estatus</label>
     <select class="form-control" name="status" id="status">
@@ -33,10 +26,45 @@
       <option value="0">Liquidado</option>
     </select>
   </div>
+
+  <div class="form-group col-md-6">
+      <label for="status" class="required">Seleccione la categoría del proveedor</label>
+      <select class="form-control" required name="category" id="category" onchange="clearInputs()">
+          <option value="0">Mano de obra o logística</option>
+           <option value="1">Material</option>
+      </select>
+    </div>
+
+  <div class="form-group col-md-6" id="lbl_provider_id">
+      <label for="provider_id">Selecciona proveedor</label>
+      <select class="form-control" required name="provider_id" id="provider_id">
+              @foreach($providers as $provider)
+              <option value={{$provider->id}}>{{$provider->name}}</option>
+              @endforeach
+      </select>
+    </div>
+
+    <div id="div_material">
+      <div class="form-group col-md-6">
+        <label for="name" class="required">Nombre del estado de cuenta</label>
+        <input type="text" required class="form-control" name="name" id="name">
+      </div>
+      
+      <div class="form-group col-md-6">
+        <label for="provider_id">Selecciona los proveedores</label>
+        <select class="form-control" multiple="multiple" name="provider_material[]" required id="provider_material">
+          @foreach($category as $cat)
+            <option value={{$cat->id}}>{{$cat->name}}</option>
+          @endforeach
+        </select>
+      </div>
+    </div>
+
   <div class="form-group col-md-6">
     <label for="total" class="required">Total</label>
     <input type="number" step="any" class="form-control" name="total" id="total">
   </div>
+
   <div class="form-group col-md-12">
     <br><button type="submit" class="btn btn-success">Guardar</button>
     <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('statement') }}"><b>Lista de estados de cuenta</b></a>
@@ -44,17 +72,18 @@
 </form>
 @endsection
 
-<script>
+{{-- <script>
   var select = document.getElementById('status');
   select.onchange = function(){
       this.form.submit();
   };
-</script>
+</script> --}}
 
 @section('adminlte_js')
   <script>
     $("#construction_id").select2();
     $("#provider_id").select2();
   </script>
-@include('statement.partials.script')
+  @include('statement.partials.script')
+  @include('statement.partials.script_create')
 @stop

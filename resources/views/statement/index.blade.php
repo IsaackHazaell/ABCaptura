@@ -15,6 +15,8 @@
 
       <a class="btn btn-success btn-md addNew" style="float: right;" href="{{ url('statement/create') }}"><b>Agregar Nuevo</b></a><br><br>
 
+      <h3>Proveedores mano de obra o logística:</h3>
+      
       <div class="box-body">
           <table id="statements_table" class="table table-striped table-bordered" style="width:100%">
           <thead>
@@ -22,6 +24,22 @@
                   <!-- <th width="10px">Id</th> -->
                   <th>Obra</th>
                   <th>Proveedor</th>
+                  <th>Estatus</th>
+                  <th>Total</th>
+                  <th>Restante</th>
+                  <th width="120px">Acciones</th>
+              </tr>
+          </thead>
+      </table>
+
+
+      <h3>Proveedores material:</h3>
+      <table id="statement_materials_table" class="table table-striped table-bordered" style="width:100%">
+          <thead>
+              <tr>
+                  <!-- <th width="10px">Id</th> -->
+                  <th>Obra</th>
+                  <th>Nombre</th>
                   <th>Estatus</th>
                   <th>Total</th>
                   <th>Restante</th>

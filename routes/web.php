@@ -75,6 +75,9 @@ Route::get('viewClient','MemoryController@viewClient')->name('memory.viewClient'
 Route::resource('statement','StatementController')->middleware('auth');
 Route::get('showTableSt','StatementController@showTableSt')->name('statement.showTableSt')->middleware('auth');
 Route::get('showTableSC','StatementController@showTableSC')->name('statement.showTableSC')->middleware('auth');
+Route::get('showTableProvMat','StatementController@showTableProvMat')->name('statement.showTableProvMat')->middleware('auth');
+//Statements Materials Routes
+Route::resource('statementMaterial','StatementMaterialController')->middleware('auth');
 
 //Users Routes
 Route::resource('user','UserController')->middleware('auth');

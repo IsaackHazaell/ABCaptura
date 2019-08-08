@@ -9,10 +9,25 @@
     </div>
 
     <div class="form-group col-md-6">
+        <label for="status" class="required">Seleccione la categoría del proveedor</label>
+        <select class="form-control" required name="category" id="category" onchange="clearInputs()">
+            <option value="0">Mano de obra o logística</option>
+             <option value="1">Material</option>
+        </select>
+      </div>
+
+    <div class="form-group col-md-6" id="div_logistic">
       <label for="provider_id"class="required">Proveedor</label>
       <select class="form-control" required name="provider_id" id="provider_id"></select>
     </div>
   </div>
+
+  <div id="div_material">
+      <div class="form-group col-md-6">
+        <label for="statemnt_material_id">Estado de cuenta</label>
+        <select class="form-control" required name="statemnt_material_id" id="statemnt_material_id"></select>
+      </div>
+    </div>
 
   <div class="form-row">
       <div class="form-group col-md-6">

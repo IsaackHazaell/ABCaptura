@@ -6,6 +6,8 @@ use DB;
 use App\Provider;
 use App\Statement;
 use App\Construction;
+use App\StatementMaterial;
+use App\StatementProviderMaterial;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -45,6 +47,27 @@ class StatementController extends Controller
         }
         return Datatables::of($statements)
         ->addColumn('btn', 'statement.actions')
+        ->rawColumns(['btn'])
+      ->make(true);
+    }
+
+    public function showTableProvMat(Request $request)
+    {
+      $statements_materials = DB::table('statement_materials')
+        ->select('statement_materials.*', 'statement_materials.id as statement_id', 'statement_materials.name as statement_name',
+        'constructions.name as construction_name')
+        ->join('constructions', 'constructions.id', '=', 'statement_materials.construction_id')
+        ->get();
+        for ($i=0; $i<$statements_materials->count(); $i++) {
+          $statements_materials[$i]->total = number_format($statements_materials[$i]->total,2);
+          $statements_materials[$i]->remaining = number_format($statements_materials[$i]->remaining,2);
+          if($statements_materials[$i]->status=="0")
+            $statements_materials[$i]->status="Liquidado";
+          else if($statements_materials[$i]->status=="1")
+            $statements_materials[$i]->status="Activo";
+        }
+        return Datatables::of($statements_materials)
+        ->addColumn('btn', 'statement.partials.actions_materials')
         ->rawColumns(['btn'])
       ->make(true);
     }
@@ -91,8 +114,10 @@ class StatementController extends Controller
     {
         $constructions = Construction::select('id', 'name')->orderBy('name', 'asc')->get();
         $providers = Provider::select('id', 'name')->where('name', '!=', 'Arq. Missael Quintero')->where('status',1)->orderBy('name', 'asc')->get();
+        $category = Provider::select('id', 'name')->where('category',1)->get();
         return view('statement.create')->with('constructions', $constructions)
-        ->with('providers', $providers);
+        ->with('providers', $providers)
+        ->with('category', $category);
     }
 
     /**
@@ -103,6 +128,9 @@ class StatementController extends Controller
      */
     public function store(Request $request)
     {
+      //dd($request);
+      if($request->category == 0)
+      {
         $exists = Statement::where('construction_id',$request->construction_id)->where('provider_id',$request->provider_id)->first();
         if($exists == null)
         {
@@ -128,6 +156,33 @@ class StatementController extends Controller
 
               return Redirect::back()->with('message', $msg);
         }
+      }
+       else {
+         $statement_material = StatementMaterial::create([
+            'name' => $request->name,
+            'construction_id' => $request->construction_id,
+            'status' => $request->status,
+            'total' => $request->total,
+            'remaining' => $request->total,
+          ]);
+
+          foreach($request->provider_material as $provider)
+          {
+            StatementProviderMaterial::create([
+              'statement_material_id' => $statement_material->id,
+              'provider_id' => $provider,
+            ]);
+          }
+
+        $msg = [
+          'title' => 'Guardado!',
+          'text' => 'Estado de cuenta guardado exitosamente.',
+          'icon' => 'success'
+          ];
+
+          return redirect('statement')->with('message', $msg);
+       }
+        
     }
 
     /**

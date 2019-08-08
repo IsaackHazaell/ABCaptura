@@ -51,7 +51,14 @@ class CaptureController extends Controller
           ->select('providers.*', 'providers.id as provider_id', 'statements.*', 'statements.id as statement_id')
           ->join('providers', 'providers.id', '=', 'statements.provider_id')
           ->where('providers.status', '=', 1)
+          ->where('providers.category', '!=', 1)
           ->orderBy('providers.name', 'asc')
+          ->get();
+
+        $providers_material = DB::table('statement_materials')
+          ->select('statement_materials.*', 'statement_materials.id as statement_id', 'statement_materials.name as statement_name',
+          'constructions.name as construction_name')
+          ->join('constructions', 'constructions.id', '=', 'statement_materials.construction_id')
           ->get();
 
           for($i=0; $i<$providers->count(); $i++)
@@ -75,11 +82,15 @@ class CaptureController extends Controller
                   $missa->category = "Logística";
           }
 
-        return view('capture.create')->with('constructions', $constructions)->with('providers', $providers)->with('missa',$missa);
+        return view('capture.create')->with('constructions', $constructions)
+                  ->with('providers', $providers)
+                  ->with('missa',$missa)
+                  ->with('providers_material',$providers_material);
     }
 
     public function create2(Request $request)
     {
+      dd($request);
         if($request->hasFile('voucher'))
             $request->voucher = $request->file('voucher')->store('public');
 
@@ -92,8 +103,8 @@ class CaptureController extends Controller
         ->orderBy('constructions.name')
         ->get();
 
-        $provider = Provider::where('id',$request->provider_id)->orderBy('name', 'asc')->first();
-        $category = $provider->category;
+        /* $provider = Provider::where('id',$request->provider_id)->orderBy('name', 'asc')->first(); */
+        $category = $request->category;
         if($category == 1)
         {
           //Borramos todos los temporales (de capturas y de productos)

@@ -1,5 +1,4 @@
 <script>
-
 var table=null;
 table = $('#statements_table').DataTable({
         "processing": true,
@@ -47,49 +46,52 @@ table = $('#statements_table').DataTable({
         },
     });
 
+    var table2=null;
+table2 = $('#statement_materials_table').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": "{{route('statement.showTableProvMat')}}",
+        "columns": [
+            {data: 'construction_name'},
+            {data: 'statement_name'},
+            {data: 'status'},
+            {data: 'total'},
+            {data: 'remaining'},
+            {data: 'btn'}
+        ],
+        "initComplete": function(settings, json) {
 
+          table.column( 4 ).data().each( function ( value, index ) {
+                    if(value <0)
+                    {
+                    var i = 4+index*6;
+                    
+                    $('td:eq('+i+')').css('color', 'red');
+                    }
+                })
 
+         },
 
-/*
-
-$('#statements_table tbody').on( 'click', 'td', function () {
-    if(table.cell( this ).data() < 0)
-    {
-      $(this).css('color', 'red');
-    }
-    else {
-      $(this).css('color', 'black');
-    }
-});
-/*
-$(document).ready( function() {
-  $('#statements_table').dataTable( {
-    "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-      // Bold the grade for all 'A' grade browsers
-      if ( aData[4] != "A" )
-      {
-        $('td:eq(4)', nRow).html( '<b>A</b>' );
-      }
-    }
-  } );
-} );
-var oTable = $('#statements_table').DataTable({
-      'rowCallback': function(row, data){
-      if(data[5]<0){
-          $(row).find('td:eq(5)').css('color', 'red');
-      }
-  }
-});
-
-$('#statements_table').dataTable( {
-  "rowCallback": function( row, data ) {
-    if ( data.remaining < 0 ) {
-      $('td:eq(5)', row).css('color', 'red');
-    }
-  }
-} );
-*/
-
+        "language": {
+          "info": "_TOTAL_ registros",
+          "search": "Buscar",
+          "paginate": {
+            "next": "Siguiente",
+            "previous": "Anterior",
+          },
+          "lengthMenu": 'Mostrar <select>'+
+              '<option value="10">10</option>'+
+              '<option value="30">30</option>'+
+              '<option value="-1">Todos</option>'+
+              '</select> registros',
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "emptyTable": "No hay datos",
+          "zeroRecords": "No hay coincidencias",
+          "infoEmpty": "",
+          "infoFiltered": ""
+        },
+    });
 
 
 //EDIT
@@ -142,6 +144,32 @@ $('body').delegate('.status-statement','click',function(){
                 data: {id: id_statement}
             }).done(function(data){
               table.ajax.reload();
+              sAlert(data.title, data.text, data.icon);
+            });
+          }
+        });
+    });
+
+    //DELETE material
+$('body').delegate('.status-statement','click',function(){
+        id_statement = $(this).attr('id_statement');
+        var csrf_token=$('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: "Estás seguro?",
+            text: "Se eliminará el estado de cuenta",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+                url: "{{('/statementMaterial')}}" + '/' + id_statement,
+                headers: {'X-CSRF-TOKEN': csrf_token},
+                type: 'DELETE',
+                dataType: 'json',
+                data: {id: id_statement}
+            }).done(function(data){
+              table2.ajax.reload();
               sAlert(data.title, data.text, data.icon);
             });
           }
