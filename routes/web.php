@@ -46,6 +46,7 @@ Route::get('showTableProduct','ProductController@showTableProduct')->name('produ
 
 //Capture Routes
 Route::get('download/{id}', 'CaptureController@download' )->name('capture.download')->middleware('auth');
+Route::get('show_storage/{id}', 'CaptureController@show_storage' )->name('capture.show_storage')->middleware('auth');
 Route::resource('capture','CaptureController')->middleware('auth');
 Route::get('showTablePCshow','CaptureController@showTablePCshow')->name('capture.showTablePCshow')->middleware('auth');
 Route::get('showTablePC','CaptureController@showTablePC')->name('capture.showTablePC')->middleware('auth');
@@ -69,7 +70,7 @@ Route::resource('memory', 'MemoryController', ['only' => [
 Route::get('showTableM','MemoryController@showTableM')->name('memory.showTableM')->middleware('auth');
 Route::get('showTableMH','MemoryController@showTableMH')->name('memory.showTableMH')->middleware('auth');
 Route::get('selectCM','MemoryController@selectCM')->name('memory.selectCM')->middleware('auth');
-Route::get('viewClient','MemoryController@viewClient')->name('memory.viewClient')->middleware('auth');
+Route::post('viewClient','MemoryController@viewClient')->name('memory.viewClient')->middleware('auth');
 
 //Statements Routes
 Route::resource('statement','StatementController')->middleware('auth');

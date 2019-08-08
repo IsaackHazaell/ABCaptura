@@ -6,13 +6,24 @@ table = $('#funds_table').DataTable({
     "serverSide": true,
     "ajax": "{{route('fund.showTableF')}}",
     "columns": [
-        {data: 'fund_id'},
         {data: 'name'},
         {data: 'fund_date'},
         {data: 'remaining'},
         {data: 'total'},
+        {data: 'pay'},
         {data: 'btn'}
     ],
+    "initComplete": function(settings, json) {
+        var column = table.column( 0 );
+                $('#construction').on('change', function () {
+                    column.search($('#construction').val()).draw();
+                });
+        var column2 = table.column( 1 );
+                $('#month').on('change', function () {
+                    column2.search($('#month').val()).draw();
+                });
+             },
+    "lengthMenu": [[-1, 10, 30, 60, 100], ["Todos", 10, 30, 60, 100]],
     "language": {
       "info": "_TOTAL_ registros",
       "search": "Buscar",
@@ -20,11 +31,7 @@ table = $('#funds_table').DataTable({
         "next": "Siguinte",
         "previous": "Anterior",
       },
-      "lengthMenu": 'Mostrar <select>'+
-          '<option value="10">10</option>'+
-          '<option value="30">30</option>'+
-          '<option value="-1">Todos</option>'+
-          '</select> registros',
+      "lengthMenu": 'Mostrar _MENU_ registros',
       "loadingRecords": "Cargando...",
       "processing": "Procesando...",
       "emptyTable": "No hay datos",
@@ -43,12 +50,14 @@ $('#edit').on('show.bs.modal', function (event) {
     var date = button.data('date')
     var remaining = button.data('remaining')
     var total = button.data('total')
+    var pay = button.data('pay')
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #name').val(name);
     modal.find('.modal-body #date').val(date);
     modal.find('.modal-body #remaining').val(remaining);
     modal.find('.modal-body #total').val(total);
+    modal.find('.modal-body #pay').val(pay);
 });
 
 //DELETE

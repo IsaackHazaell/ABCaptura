@@ -16,7 +16,7 @@
 
     <div class="form-group col-md-6">
       <label for="category">Categoría</label>
-      <input type="text" class="form-control" required name="category" id="category" value="{{$provider->category}}" readonly>
+      <input type="text" class="form-control" required name="category" id="category2" value="{{$provider->category}}" readonly>
     </div>
   </div>
 
@@ -49,6 +49,12 @@
         <input type="text" class="form-control" name="mail" id="mail" value="{{$provider->mail}}" readonly>
       </div>
 </div>
+<div id="rfc_div2" class="form-row">
+  <div class="form-group col-md-6">
+    <label for="rfc">RFC</label>
+    <input type="text" class="form-control" name="rfc" id="rfc" value="{{$provider->rfc}}" readonly>
+  </div>
+</div>
 
   @include('address.show')
 
@@ -63,7 +69,7 @@
       data-phoneprovider="{{$provider->cellphone}}"
       data-phonlandlineprovider="{{$provider->phonlandline}}"
       data-mailprovider="{{$provider->mail}}"
-
+      data-rfcprovider="{{$provider->rfc}}"
       data-streetprovider="{{$address->street}}"
       data-colonyprovider="{{$address->colony}}"
       data-townprovider="{{$address->town}}"
@@ -79,4 +85,5 @@
 
 @section('adminlte_js')
   @include('provider.partials.script')
+  @include('provider.partials.script_rfc')
 @stop

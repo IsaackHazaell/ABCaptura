@@ -23,8 +23,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $providers = Provider::select('id','name')->where('category' , 1)->where('status' , 1)->get();
-      return view('product.index', compact('providers'));
+      $providers = Provider::where('category' , 1)->where('status' , 1)->orderBy('name', 'asc')->get();
+      $products = Product::all();
+      return view('product.index', compact('providers', 'products'));
     }
 
   public function showTableProduct()
@@ -42,7 +43,7 @@ class ProductController extends Controller
       {
           $products[$i]->price = number_format($products[$i]->price,2);
 
-          $products[$i]->provider_id .= " " . $products[$i]->name;
+          //$products[$i]->provider_id .= " " . $products[$i]->name;
           $month = ProductController::month($products[$i]->month);
           $products[$i]->month = $month;
           $products[$i]->month .= " " . $products[$i]->year;
@@ -50,7 +51,7 @@ class ProductController extends Controller
       return Datatables::of($products)
       ->addColumn('btn', 'product.partials.buttons')
       ->rawColumns(['btn'])
-    ->make(true);
+      ->make(true);
   }
 
   public function month($month)
@@ -102,15 +103,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-      $provider_id = "";
-      for($i=0;$i<strlen($request->provider_id);$i++){
-        if($request->provider_id[$i] != " ")
-          $provider_id .= $request->provider_id[$i];
-        else
-          break;
-      }
       $product = New Product;
-      $product->provider_id = $provider_id;
+      $product->provider_id = $request->provider_id;
       $product->concept = $request->concept;
       $product->description = $request->description;
       $product->save();

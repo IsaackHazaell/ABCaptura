@@ -12,8 +12,8 @@
       <input type="date" class="form-control" name="date" id="date" required>
     </div>
     <div class="form-group col-md-6">
-      <label for="square_meter"class="required">Metros cuadrados</label>
-      <input type="number" class="form-control" name="square_meter" id="square_meter" required>
+      <label for="square_meter">Metros cuadrados</label>
+      <input type="number" class="form-control" name="square_meter" id="square_meter">
     </div>
     <div class="form-group col-md-6">
       <label for="status">Seleccione el Estatus</label>

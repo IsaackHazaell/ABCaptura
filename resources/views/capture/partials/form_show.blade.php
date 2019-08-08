@@ -54,8 +54,11 @@
             <br>
                   <a href="{{ route('capture.download', ['id' => $capture->id ]) }}">
                     <i class="fas fa-file" style="width:15; height:15;"></i>
-                    Descargar </a>
+                    Descargar</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('capture.show_storage', ['id' => $capture->id ]) }}" target="_blank"> 
+                      <i class="fas fa-external-link-alt" style="width:15; height:15;"></i> Abrir</a>
                 </div>
+                
             @endif
         </div>
     </div>

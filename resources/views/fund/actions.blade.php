@@ -5,8 +5,9 @@
   data-idfund="{{$fund_id}}"
   data-construction_id="{{$construction_id}}"
   data-date="{{\Carbon\Carbon::parse($fund_date)->format('Y-m-d')}}"
-  data-remaining="{{ intval(str_replace(",","",$remaining))}}"
-  data-total="{{intval(str_replace(",","",$total))}}"
+  data-remaining="{{ floatval(str_replace(",","",$remaining))}}"
+  data-total="{{ floatval(str_replace(",","",$total))}}"
+  data-pay="{{$pay}}"
   data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
 
 
