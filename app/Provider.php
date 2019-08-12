@@ -13,5 +13,9 @@ class Provider extends Model
     {
         return $this->hasMany('App\Product');
     }
+    public function statement_material()
+    {
+        return $this->hasMany('App\StatementMaterial');
+    }
 
 }

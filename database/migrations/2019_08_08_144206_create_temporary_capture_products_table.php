@@ -15,7 +15,7 @@ class CreateTemporaryCaptureProductsTable extends Migration
     {
         Schema::create('temporary_capture_products', function (Blueprint $table) {
             $table->increments('id');
-          $table->integer('quantity');
+          $table->decimal('quantity',8,2);
           $table->decimal('extra',10,2)->nullable();
           $table->decimal('total',10,2);
           $table->integer('capture_id')->unsigned();

@@ -24,8 +24,8 @@
 
   <div id="div_material">
       <div class="form-group col-md-6">
-        <label for="statemnt_material_id">Estado de cuenta</label>
-        <select class="form-control" required name="statemnt_material_id" id="statemnt_material_id"></select>
+        <label class="required" for="statemnt_material_id">Estado de cuenta</label>
+        <select class="form-control" name="statemnt_material_id" id="statemnt_material_id"></select>
       </div>
     </div>
 

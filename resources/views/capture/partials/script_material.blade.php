@@ -3,7 +3,7 @@ $(document).ready(function () {
   castearInputProduct();
   var table=null;
   table = $('#products_capture_table');
-  chargeTable();
+  //chargeTable();
 });
 
 function castearInputProduct()
@@ -84,11 +84,16 @@ function chargeTable()
               quantity: $('#quantity').val(),
               extra: $('#extra').val(),
               total: $('#total_product').val()
-          }
+          },
+          "dataSrc": function ( json ) {
+                //Make your callback here.
+                sAlert('Agregado!', 'Agregado exitosamente', 'success');
+                return json.data;
+            }       
         },
 "columns": [
-    {data: 'unity'},
     {data: 'concept'},
+    {data: 'unity'},
     {data: 'quantity'},
     {data: 'price'},
     {data: 'extra'},
@@ -145,6 +150,7 @@ function chargeTable()
 }
 });
 cleanInputs();
+
 }
 
 function cleanInputs()
@@ -176,8 +182,8 @@ $('body').delegate('.delete-product','click',function(){
                 dataType: 'json',
                 data: {id: id_temporal_capture_prod}
             }).done(function(data){
-                chargeTable();
               sAlert(data.title, data.text, data.icon);
+                chargeTable();
             });
           }
         });

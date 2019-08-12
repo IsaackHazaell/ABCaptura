@@ -19,6 +19,7 @@ class CreateTemporaryCapturesTable extends Migration
           $table->decimal('total',10,2);
           $table->integer('iva');
           $table->integer('honorarium');
+          $table->integer('category');
           $table->string('voucher')->nullable();
           $table->string('folio',128)->nullable();
           $table->string('concept',128);

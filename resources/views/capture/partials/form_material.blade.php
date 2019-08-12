@@ -2,9 +2,13 @@
       <div class="form-group col-md-6">
         <label for="product">Producto</label>
         <select class="form-control" required name="product" id="product">
-          @foreach($prices as $price)
-          <option value={{$price->price}}/{{$price->id}}> {{$price->unity}} {{$price->product_concept}} - {{$price->month}} </option>
-          @endforeach
+         
+            @foreach($statement_material->providers as $provider)
+              @foreach($provider->products as $product)
+                <option value={{$product->price->price}}/{{$product->price->id}}> {{$product->price->unity}} {{$product->concept}} - {{$product->price->month}} </option>
+              @endforeach
+            @endforeach
+          
       </select>
       </div>
 

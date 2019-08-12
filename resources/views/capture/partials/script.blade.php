@@ -18,7 +18,7 @@ $("#saveCapture").click(function (e) {
   {
       var total = $('#total').val();
       total = parseFloat(total);
-      var provider_name = @json($provider->name);//{//{json_encode($provider->name)}};
+      provider_name = @json($provider_name);
       var category = @json($category);
       var flagForHonorary = false;
       if(provider_name == "Arq. Missael Quintero" && category == 2)
@@ -80,7 +80,7 @@ $("#saveCapture").click(function (e) {
                iva: $('#iva').val(),
                temporary_capture: $('#capture_id').val()
            },
-           success: function() {
+           /* success: function() {
              swal({
                title: "Capturado",
                text: "Se ha capturado correctamente",
@@ -89,7 +89,7 @@ $("#saveCapture").click(function (e) {
                timer: 3000
              });
              window.location.href = '{{ route('capture.index') }}';
-            }
+            } */
        });
     }
   }

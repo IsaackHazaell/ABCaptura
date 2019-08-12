@@ -4,7 +4,7 @@
 <section class="content-header">
     <h1>Captura</h1>
     <br>
-    <p>Obra: {{$data->construction_id}} - Proveedor: {{$provider->name}}</p>
+    <p>Obra: {{$data->construction_id}} - Por: {{$statement_material->name}}</p>
 </section>
 
 {{-- <form action="{{route('capture.saveProduct')}}" method="POST">
@@ -33,8 +33,8 @@
         <table id="products_capture_table" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th width="10px">Unidad</th>
                     <th>Producto</th>
+                    <th>Unidad</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Cargo extra</th>

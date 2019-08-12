@@ -151,7 +151,7 @@ $('body').delegate('.status-statement','click',function(){
     });
 
     //DELETE material
-$('body').delegate('.status-statement','click',function(){
+$('body').delegate('.status-statement_material','click',function(){
         id_statement = $(this).attr('id_statement');
         var csrf_token=$('meta[name="csrf-token"]').attr('content');
         swal({

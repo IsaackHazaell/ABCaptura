@@ -11,6 +11,7 @@ use App\Fund;
 use App\Logistic;
 use App\Honorary;
 use App\ProductsCapture;
+use App\StatementMaterial;
 use App\HonoraryRemaining;
 use App\TemporaryCapture;
 use App\Statement;
@@ -122,6 +123,10 @@ class CaptureController extends Controller
               return redirect('fund')->with('message', $msg);
           }
 
+          
+          $statement_material = StatementMaterial::where('id',$request->statemnt_material_id)->first();
+          //dd($statement_material->providers[0]->products[0]->price);
+
           /* $prices = DB::table('products','prices')
             ->select(
             'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
@@ -133,10 +138,12 @@ class CaptureController extends Controller
             ->orderBy('products.concept')
             ->get(); */
               //dd($request);
-            $prices = DB::table('products','prices','statement_materials')
+
+            
+            /* $prices = DB::table('products','prices','statement_materials')
             ->select(
-            'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-            'prices.*', 'prices.id as price_id')
+              'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
+              'prices.*', 'prices.id as price_id')
             ->where('prices.status', '=' , '1')
             ->join('prices', 'prices.product_id', '=', 'products.id')
             ->join('products', 'products.provider_id', '=', 'providers.id')
@@ -145,23 +152,22 @@ class CaptureController extends Controller
             ->where('statement_materials.id',$request->statemnt_material_id)
             ->orderBy('products.concept')
             ->groupBy('products')
-            ->get();
+            ->get(); */
 
-          dd($prices);
-
-          for($i=0; $i<$prices->count(); $i++)
+          /* for($i=0; $i<$prices->count(); $i++)
           {
               $month = CaptureController::month($prices[$i]->month);
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
-          }
-          return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category)->with('provider',$provider)->with('honorary_remaining', null);
+          } */
+          return view('capture.create_material')->with('data', $temporary_capture)->with('statement_material', $statement_material)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', null)->with('provider_name',null);
         }
         else
         {
+          $provider = Provider::where('id',$request->provider_id)->orderBy('name', 'asc')->first();
             $honorary_remaining = HonoraryRemaining::where('construction_id',$request->construction_id)->first();
             $honorary_remaining = $honorary_remaining->remaining;
-            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider',$request->provider_id);
+            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider',$provider)->with('provider_name',$provider->name);
         }
     }
 
@@ -332,8 +338,10 @@ class CaptureController extends Controller
      */
     public function store(Request $request)
     {
+      dd($request);
         //Guardar captura
         $capture = Capture::create($request->all());
+        $provider_name = "";
         if($request->category == 1)
         {
             //Guardar productos_capture
@@ -355,6 +363,22 @@ class CaptureController extends Controller
             //Borramos temporales
             DB::table('temporary_captures')->delete();
             DB::table('temporary_capture_products')->delete();
+
+            //estado de cuenta...
+            
+        }
+        else {
+          $provider_name = Provider::findOrFail($request->provider_id);
+          $provider_name = $provider_name->name;
+          //estado de cuenta...
+          $statement = Statement::where('construction_id', '=', $request->construction_id)
+            ->where('provider_id', '=', $request->provider_id)
+            ->first();
+          if($statement != null)
+          {
+              $statement->remaining -= $request->total;
+              $statement->save();
+          }
         }
 
         //descntar fondo
@@ -365,16 +389,12 @@ class CaptureController extends Controller
         //Honorario...
         $generado=false;
         //Checar nombre del proveedor, si no es missa:generado=0
-        $provider_name = Provider::findOrFail($request->provider_id);
-        $provider_name = $provider_name->name;
-
         if($request->honorarium == 1 || $provider_name == "Arq. Missael Quintero")
         {
           $construction_honorary = construction::findOrFail($request->construction_id);
           $honorary = New Honorary;
           $total = (float)$request->total;
           $honorary->capture_id = $capture->id;
-          $honorary->provider_id = $request->provider_id;
           if($provider_name != "Arq. Missael Quintero" && $request->honorarium == 1)
           {
             $total = $total * $construction_honorary->honorary;
@@ -397,16 +417,6 @@ class CaptureController extends Controller
           else
             $honorary_remaining->remaining -= $total;
           $honorary_remaining->save();
-        }
-
-        //estado de cuenta...
-        $statement = Statement::where('construction_id', '=', $request->construction_id)
-        ->where('provider_id', '=', $request->provider_id)
-        ->first();
-        if($statement != null)
-        {
-            $statement->remaining -= $request->total;
-            $statement->save();
         }
 
         $constructions = construction::select('id','name')->get();
