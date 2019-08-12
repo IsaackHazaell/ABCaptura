@@ -18,5 +18,5 @@ class Capture extends Model
     {
         return $this->belongsTo(construction::class);
     }
-    protected $fillable = ['date', 'total', 'iva', 'honorarium', 'voucher', 'folio', 'fund_id', 'construction_id', 'provider_id', 'concept'];
+    protected $fillable = ['date', 'total', 'iva', 'category', 'honorarium', 'voucher', 'folio', 'fund_id', 'construction_id', 'concept'];
 }

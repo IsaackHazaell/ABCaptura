@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Capture;
+use App\CaptureLogistic;
+use App\CaptureMaterial;
 use App\construction;
 use App\Provider;
 use App\Product;
@@ -160,14 +162,14 @@ class CaptureController extends Controller
               $prices[$i]->month = $month;
               $prices[$i]->month .= " " . $prices[$i]->year;
           } */
-          return view('capture.create_material')->with('data', $temporary_capture)->with('statement_material', $statement_material)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', null)->with('provider_name',null);
+          return view('capture.create_material')->with('data', $temporary_capture)->with('statement_material_id', $statement_material->id)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', null)->with('provider_name',null)->with('statement_material', $statement_material);
         }
         else
         {
           $provider = Provider::where('id',$request->provider_id)->orderBy('name', 'asc')->first();
             $honorary_remaining = HonoraryRemaining::where('construction_id',$request->construction_id)->first();
             $honorary_remaining = $honorary_remaining->remaining;
-            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider',$provider)->with('provider_name',$provider->name);
+            return view('capture.create_logistic')->with('data', $request)->with('funds',$funds)->with('category',$category)->with('honorary_remaining', $honorary_remaining)->with('provider',$provider)->with('provider_name',$provider->name)->with('statement_material_id', null);
         }
     }
 
@@ -177,6 +179,8 @@ class CaptureController extends Controller
 
         if($data->hasFile('voucher'))
             $temporary_capture->voucher = $data->file('voucher')->store('public');
+          
+        $temporary_capture->category = 1;
 
         $fund = Fund::first();
 
@@ -307,10 +311,10 @@ class CaptureController extends Controller
         $toTable = DB::table('captures')
           ->select(
               'constructions.id as construction_id', 'constructions.name as construction_name',
-                'providers.id as provider_id', 'providers.name as provider_name',
+                //'providers.id as provider_id', 'providers.name as provider_name',
                 'captures.*', 'captures.id as capture_id', 'captures.date as capture_date', 'captures.total as capture_total', 'captures.concept as capture_concept')
               ->join('constructions', 'captures.construction_id', '=', 'constructions.id')
-              ->join('providers', 'captures.provider_id', '=', 'providers.id')
+              //->join('providers', 'captures.provider_id', '=', 'providers.id')
               ->get();
 
               for($i=0; $i<$toTable->count(); $i++)
@@ -338,12 +342,20 @@ class CaptureController extends Controller
      */
     public function store(Request $request)
     {
-      dd($request);
         //Guardar captura
         $capture = Capture::create($request->all());
         $provider_name = "";
         if($request->category == 1)
         {
+          $temporary_capture = TemporaryCapture::where('id', '=', $request->temporary_capture)->first();
+          $statement_material = StatementMaterial::where('id', '=', $temporary_capture->statement_material_id)
+            ->first();
+
+          $capture_material = CaptureMaterial::create([
+            'capture_id' => $capture->id,
+            'statement_material_id' =>$temporary_capture->statement_material_id,
+          ]);
+
             //Guardar productos_capture
             $temporal_products = DB::table('temporary_capture_products')
               ->select('temporary_capture_products.*')
@@ -365,20 +377,33 @@ class CaptureController extends Controller
             DB::table('temporary_capture_products')->delete();
 
             //estado de cuenta...
-            
+          if($statement_material != null)
+          {
+              $statement_material->remaining -= $request->total;
+              $statement_material->save();
+          }
         }
         else {
-          $provider_name = Provider::findOrFail($request->provider_id);
-          $provider_name = $provider_name->name;
+          $provider = Provider::findOrFail($request->provider_id);
+          $provider_name = $provider->name;
+          $capture_logistic = CaptureLogistic::create([
+            'capture_id' => $capture->id,
+            'provider_id' => $provider->id,
+          ]);
           //estado de cuenta...
-          $statement = Statement::where('construction_id', '=', $request->construction_id)
+          if($provider_name != "Arq. Missael Quintero")
+          {
+            $statement = Statement::where('construction_id', '=', $request->construction_id)
             ->where('provider_id', '=', $request->provider_id)
             ->first();
-          if($statement != null)
-          {
-              $statement->remaining -= $request->total;
-              $statement->save();
+            if($statement != null)
+            {
+                $statement->remaining -= $request->total;
+                $statement->save();
+            }
           }
+          
+          
         }
 
         //descntar fondo

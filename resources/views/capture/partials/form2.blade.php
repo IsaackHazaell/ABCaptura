@@ -8,4 +8,4 @@
 <input type="hidden" name="honorary" id="honorary" value="{{$data->honorarium}}">
 <input type="hidden" name="iva" id="iva" value="{{$data->iva}}">
 <input type="hidden" name="conceptt" id="conceptt" value="{{$data->concept}}">
-<input type="hidden" name="statement_material_id" id="statement_material_id" value="{{$statement_material->id}}">
+<input type="hidden" name="statement_material_id" id="statement_material_id" value="{{$statement_material_id}}">
