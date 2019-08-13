@@ -3,13 +3,11 @@
     <section class="content-header">
       <h1>
         Captura
-        <small>{{$capture->id}}</small>
       </h1>
     </section>
-
-    @include('capture.partials.form_show')
     <div class="form-row">
         <div class="box-body">
+            @include('capture.partials.form_show')
             <div class="form-group col-md-12">
                 <h3>Productos:</h3>
                 <table id="products_capture_show_table" class="table table-striped table-bordered" style="width:100%">

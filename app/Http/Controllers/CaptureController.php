@@ -481,6 +481,7 @@ class CaptureController extends Controller
      */
     public function show(Capture $capture)
     {
+      //dd($capture);
         $construction = construction::select('name')->where('id',$capture->construction_id)->firstOrFail();
         if($capture->iva == 0)
             $capture->iva = "No";
@@ -499,7 +500,8 @@ class CaptureController extends Controller
             ->with('construction',$construction->name);
         }
         else {
-          $provider = Provider::select('name')->where('id',$capture->provider_id)->firstOrFail();
+          $catpure_logisic =  CaptureLogistic::where('capture_id',$capture->id)->firstOrFail();
+          $provider = Provider::select('name')->where('id',$catpure_logisic->provider_id)->firstOrFail();
           return view('capture.show_logistic')->with('capture',$capture)
             ->with('provider',$provider->name)
             ->with('construction',$construction->name);
@@ -526,41 +528,39 @@ class CaptureController extends Controller
      */
     public function edit(Capture $capture)
     {
-        $funds = Fund::select('*')->where('status', '1')->get();
+      $funds = Fund::select('*')->where('status', '1')->get();
         $constructions = construction::select('id','name')->get();
+      if($capture->category == 1)
+      {
+        return view('capture.edit_material')
+                ->with('funds', $funds)
+                ->with('constructions', $constructions)
+                ->with('providers', $providers)
+                ->with('capture', $capture);
+      }
+      else {
         $providers = DB::table('statements')
           ->select('providers.*', 'providers.id as provider_id', 'statements.*', 'statements.id as statement_id')
           ->join('providers', 'providers.id', '=', 'statements.provider_id')
           ->where('providers.status', '=', 1)
-          ->where('providers.category', '=', $capture->provider->category)
+          ->where('providers.category', '=', $capture->category)
           ->get();
-        for($i=0; $i<$providers->count(); $i++)
-        {
-          if($providers[$i]->category == 0)
-            $providers[$i]->category = "Mano de obra";
-          else if($providers[$i]->category == 1)
-            $providers[$i]->category = "Material";
-            else if($providers[$i]->category == 2)
-              $providers[$i]->category = "Logística";
-        }
-        //Category: 0=Mano de obra, 1=Material, 2=Logística
-        if($capture->provider->category == 1)
-        {
-            return view('capture.edit_material')
+          for($i=0; $i<$providers->count(); $i++)
+          {
+            if($providers[$i]->category == 0)
+              $providers[$i]->category = "Mano de obra";
+            else if($providers[$i]->category == 1)
+              $providers[$i]->category = "Material";
+              else if($providers[$i]->category == 2)
+                $providers[$i]->category = "Logística";
+          }
+
+          return view('capture.edit_logistic')
                 ->with('funds', $funds)
                 ->with('constructions', $constructions)
                 ->with('providers', $providers)
                 ->with('capture', $capture);
-        }
-        else
-        {
-            //Mano de obra o logística
-            return view('capture.edit_logistic')
-                ->with('funds', $funds)
-                ->with('constructions', $constructions)
-                ->with('providers', $providers)
-                ->with('capture', $capture);
-        }
+      }
     }
 
     // public function editProducts(Request $request)

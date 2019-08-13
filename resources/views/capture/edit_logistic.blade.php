@@ -30,7 +30,7 @@
       @endif --}}
       <div class="form-group col-md-12">
           <input type="hidden" name="id" id="id" value="{{ $capture->id }}">
-          <input type="hidden" name="category" id="category" value="{{ $capture->provider->category }}">
+          <input type="hidden" name="category" id="category" value="{{ $capture->category }}">
           <input type="hidden" name="voucher_prev" id="voucher_prev" value="{{ $capture->voucher }}">
       </div>
 

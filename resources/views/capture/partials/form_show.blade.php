@@ -3,15 +3,10 @@
       <label for="construction_id">Obra</label>
       <input type="text" class="form-control" readonly name="construction_id" id="construction_id" value="{{ $construction }}">
     </div>
-
-    
-  </div>
-
-  <div class="form-row">
-      <div class="form-group col-md-6">
+    <div class="form-group col-md-6">
         <label for="date">Fecha</label>
         <input type="text" class="form-control" name="date" id="date" value="{{  \Carbon\Carbon::parse($capture->date)->format('d-F-Y') }}" readonly>
-      </div>
+    </div>
   </div>
 
     <div class="form-row">
@@ -41,21 +36,17 @@
           <label for="total">Total</label>
           <input type="text" class="form-control" name="total" id="total" value="{{ number_format($capture->total,2) }}" readonly>
         </div>
-        <div class="form-group col-md-6">
+        
             @if($capture->voucher != null)
                 <div class="form-group col-md-6">
-                  <label for="voucher">Comprobante:</label>
-              <!--    <img class="img-responsive" src="{{ Storage::url("../storage/{$capture->voucher}") }}" width="300" height="300"/>
-            -->
-
-            <br>
+                <label for="voucher">Comprobante:</label>
+                <br>
                   <a href="{{ route('capture.download', ['id' => $capture->id ]) }}">
                     <i class="fas fa-file" style="width:15; height:15;"></i>
                     Descargar</a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="{{ route('capture.show_storage', ['id' => $capture->id ]) }}" target="_blank"> 
                       <i class="fas fa-external-link-alt" style="width:15; height:15;"></i> Abrir</a>
                 </div>
-                
             @endif
-        </div>
+       
     </div>

@@ -3,7 +3,6 @@
     <section class="content-header">
       <h1>
         Captura
-        <small>{{$capture->id}}</small>
       </h1>
     </section>
 
