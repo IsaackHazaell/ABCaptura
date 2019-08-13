@@ -45,11 +45,9 @@ class HonoraryController extends Controller
       $toTable = DB::table('captures')
         ->select(
           'honoraries.*', 'honoraries.id as honorary_id', 'honoraries.total as honorary_total',
-          'providers.id as provider_id', 'providers.name as provider_name',
           'captures.*', 'captures.id as capture_id', 'captures.date as capture_date', 'captures.total as capture_total', 'captures.concept as capture_concept')
         ->where('captures.construction_id', '=', $request->construction_id)
         ->join('honoraries', 'captures.id', '=', 'honoraries.capture_id')
-        ->join('providers', 'captures.provider_id', '=', 'providers.id')
         ->get();
 
         for($i=0; $i<$toTable->count(); $i++)

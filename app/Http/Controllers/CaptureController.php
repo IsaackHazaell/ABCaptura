@@ -319,6 +319,13 @@ class CaptureController extends Controller
 
               for($i=0; $i<$toTable->count(); $i++)
               {
+                if($toTable[$i]->category == 0)
+                  $toTable[$i]->category = "Mano de obra";
+                else if($toTable[$i]->category == 1)
+                  $toTable[$i]->category = "Material";
+                else
+                $toTable[$i]->category = "Logística";
+                
                 $toTable[$i]->capture_total = number_format($toTable[$i]->capture_total,2);
                 $toTable[$i]->capture_date = Carbon::parse($toTable[$i]->capture_date)->format('d-F-Y');
                 if($toTable[$i]->voucher == null)
@@ -474,16 +481,7 @@ class CaptureController extends Controller
      */
     public function show(Capture $capture)
     {
-        //Seleccionar los productos de esa captura (products_capture)
-        //Si no hay, es logistca
-        $isProduct=false;
-        $products = ProductsCapture::where('capture_id', '=', $capture->id)->get();
-        $provider = Provider::select('name')->where('id',$capture->provider_id)->firstOrFail();
         $construction = construction::select('name')->where('id',$capture->construction_id)->firstOrFail();
-        //dd($provider->name);
-        if($products->count() > 0)
-            $isProduct=true;
-
         if($capture->iva == 0)
             $capture->iva = "No";
         else
@@ -493,11 +491,19 @@ class CaptureController extends Controller
             $capture->honorarium = "No";
         else
             $capture->honorarium = "Si";
-
-        return view('capture.show')->with('capture',$capture)
-            ->with('isProduct',$isProduct)
+        if($capture->category == 1)
+        {
+          $products = ProductsCapture::where('capture_id', '=', $capture->id)->get();
+          return view('capture.show_material')->with('capture',$capture)
+            //->with('providers',$providers)
+            ->with('construction',$construction->name);
+        }
+        else {
+          $provider = Provider::select('name')->where('id',$capture->provider_id)->firstOrFail();
+          return view('capture.show_logistic')->with('capture',$capture)
             ->with('provider',$provider->name)
             ->with('construction',$construction->name);
+        }
     }
 
     public function showTablePCshow(Request $request)

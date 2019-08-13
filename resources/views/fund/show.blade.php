@@ -47,12 +47,14 @@
   </div>
 
   <div class="box-body">
-      <h3>Capturas relacionadas al fondo:</h3>
+      <div class="form-group col-md-12">
+        <h3>Capturas relacionadas al fondo:</h3>
+      </div>
       <table id="capture_table" class="table table-striped table-bordered" style="width:100%">
       <thead>
           <tr>
               <th>Obra</th>
-              <th>Proveedor</th>
+              <th>Categoría</th>
               <th>Fecha de captura</th>
               <th>Concepto de captura</th>
               <th>Total</th>

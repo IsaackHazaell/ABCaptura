@@ -17,7 +17,7 @@ class CreatePricesTable extends Migration
             $table->increments('id');
             $table->integer('year')->nullable();
             $table->decimal('price',10,2);
-            $table->integer('month')->unsigned()->nullable();
+            $table->string('month',128)->nullable();
             $table->integer('product_id')->unsigned();
             $table->boolean('status')->default(1);
             $table->string('unity',128);

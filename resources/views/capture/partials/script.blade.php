@@ -80,7 +80,7 @@ $("#saveCapture").click(function (e) {
                iva: $('#iva').val(),
                temporary_capture: $('#capture_id').val()
            },
-           /* success: function() {
+           success: function() {
              swal({
                title: "Capturado",
                text: "Se ha capturado correctamente",
@@ -89,7 +89,7 @@ $("#saveCapture").click(function (e) {
                timer: 3000
              });
              window.location.href = '{{ route('capture.index') }}';
-            } */
+            }
        });
     }
   }

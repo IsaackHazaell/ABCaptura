@@ -4,10 +4,7 @@
       <input type="text" class="form-control" readonly name="construction_id" id="construction_id" value="{{ $construction }}">
     </div>
 
-    <div class="form-group col-md-6">
-      <label for="provider_id">Proveedor</label>
-      <input type="text" class="form-control" readonly name="provider_id" id="provider_id" value="{{ $provider }}">
-    </div>
+    
   </div>
 
   <div class="form-row">
@@ -62,25 +59,3 @@
             @endif
         </div>
     </div>
-
-    @if($isProduct)
-        <div class="form-row">
-            <div class="box-body">
-                <div class="form-group col-md-12">
-                    <h3>Productos:</h3>
-                    <table id="products_capture_show_table" class="table table-striped table-bordered" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Unidad</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                                <th>Costo adicional</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    @endif

@@ -29,8 +29,8 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Proveedor</th>
                         <th>Concepto</th>
+                        <th>Categoría</th>
                         <th>Factura</th>
                         <th>Total</th>
                         <th>Folio</th>
@@ -63,8 +63,8 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Proveedor</th>
                         <th>Concepto</th>
+                        <th>Categoría</th>
                         <th>Factura</th>
                         <th>Total</th>
                         <th>Folio</th>

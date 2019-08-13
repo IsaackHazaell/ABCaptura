@@ -10,6 +10,7 @@ table = $('#products_table').DataTable({
         {data: 'unity'},
         {data: 'price'},
         {data: 'month'},
+        {data: 'year'},
         {data: 'name'},
         {data: 'description'},
         {data: 'btn'}
@@ -54,10 +55,8 @@ $('#edit').on('show.bs.modal', function (event) {
     var description = button.data('descriptionproduct')
     var unity = button.data('unity')
     var price = button.data('price')
-    console.log(price);
     var year = button.data('year')
     var month = button.data('month')
-    month = monthAt(month);
     var modal = $(this)
     modal.find('.modal-body #id').val(id);
     modal.find('.modal-body #provider_id').val(provider_id);

@@ -19,8 +19,8 @@
           <table id="honoraries_table" class="table table-striped table-bordered" style="width:100%">
           <thead>
               <tr>
-                  <th width="10px">Proveedor</th>
                   <th>Fecha de captura</th>
+                  <th>Categoría</th>
                   <th>Concepto de captura</th>
                   <th>Total de captura</th>
                   <th>Honorario</th>

@@ -11,7 +11,6 @@ table = $('#providers_table').DataTable({
         {data: 'turn'},
         {data: 'company'},
         {data: 'cellphone'},
-        {data: 'rfc'},
         {data: 'btn'}
     ],
     "language": {

@@ -8,7 +8,7 @@ tableC = $('#capture_table').DataTable({
     "ajax": "{{route('fund.showTableFC', ['fund_id'=> $fund->id])}}",
     "columns": [
         {data: 'construction_name'},
-        {data: 'provider_name'},
+        {data: 'category'},
         {data: 'capture_date'},
         {data: 'capture_concept'},
         {data: 'capture_total'},

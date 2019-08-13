@@ -42,7 +42,8 @@
                   <th>Concepto</th>
                   <th>Unidad</th>
                   <th>Precio unitario sin IVA</th>
-                  <th>Mes y año</th>
+                  <th>Mes</th>
+                  <th>Año</th>
                   <th>Proveedor</th>
                   <th>Descripción</th>
                   <th width="120px">Acciones</th>

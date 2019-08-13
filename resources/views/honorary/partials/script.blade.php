@@ -8,8 +8,8 @@ table = $('#honoraries_table').DataTable({
     "serverSide": true,
     "ajax": "{{route('honorary.showTableHo', ['construction_id'=> $construction_id])}}",
     "columns": [
-        {data: 'provider_name'},
         {data: 'capture_date'},
+        {data: 'category'},
         {data: 'capture_concept'},
         {data: 'capture_total'},
         {data: 'honorary_total'},

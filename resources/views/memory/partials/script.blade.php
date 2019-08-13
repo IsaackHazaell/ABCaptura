@@ -20,8 +20,8 @@ table = $('#memory_table').DataTable({
     },
     "columns": [
         {data: 'capture_date'},
-        {data: 'provider_name'},
         {data: 'capture_concept'},
+        {data: 'category'},
         {data: 'voucher'},
         {data: 'capture_total'},
         {data: 'capture_folio'}
@@ -83,8 +83,8 @@ table2 = $('#memory_table_honorary').DataTable({
     },
     "columns": [
         {data: 'capture_date'},
-        {data: 'provider_name'},
         {data: 'capture_concept'},
+        {data: 'category'},
         {data: 'voucher'},
         {data: 'capture_total'},
         {data: 'capture_folio'}

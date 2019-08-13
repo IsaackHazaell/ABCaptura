@@ -20,7 +20,7 @@
           <thead>
               <tr>
                   <th>Obra</th>
-                  <th>Proveedor</th>
+                  <th>Categoría</th>
                   <th>Fecha</th>
                   <th>Concepto</th>
                   <th>Total</th>

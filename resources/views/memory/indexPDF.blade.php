@@ -24,8 +24,8 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Proveedor</th>
                         <th>Concepto</th>
+                        <th>Categoría</th>
                         <th>Factura</th>
                         <th>Total</th>
                         <th>Folio</th>
@@ -35,8 +35,8 @@
                   @foreach ($table2 as $honorarios)
                     <tr>
                       <td>{{$honorarios->capture_date}}</td>
-                      <td>{{$honorarios->provider_name}}</td>
                       <td>{{$honorarios->capture_concept}}</td>
+                      <td>{{$honorarios->category}}</td>
                       <td>{{$honorarios->voucher}}</td>
                       <td>{{number_format($honorarios->capture_total)}}</td>
                       <td>{{$honorarios->capture_folio}}</td>
@@ -77,8 +77,8 @@
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Proveedor</th>
                         <th>Concepto</th>
+                        <th>Categoría</th>
                         <th>Factura</th>
                         <th>Total</th>
                         <th>Folio</th>
@@ -88,8 +88,8 @@
                 @foreach ($table1 as $simple)
                   <tr>
                     <td>{{$simple->capture_date}}</td>
-                    <td>{{$simple->provider_name}}</td>
                     <td>{{$simple->capture_concept}}</td>
+                    <td>{{$simple->category}}</td>
                     <td>{{$simple->voucher}}</td>
                     <td>{{number_format($simple->capture_total)}}</td>
                     <td>{{$simple->capture_folio}}</td>

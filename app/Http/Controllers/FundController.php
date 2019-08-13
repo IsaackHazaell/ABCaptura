@@ -51,11 +51,9 @@ class FundController extends Controller
         $toTable = DB::table('captures')
           ->select(
               'constructions.id as construction_id', 'constructions.name as construction_name',
-                'providers.id as provider_id', 'providers.name as provider_name',
                 'captures.*', 'captures.id as capture_id', 'captures.date as capture_date', 'captures.total as capture_total', 'captures.concept as capture_concept')
                 ->where('captures.fund_id', '=', $request->fund_id)
               ->join('constructions', 'captures.construction_id', '=', 'constructions.id')
-              ->join('providers', 'captures.provider_id', '=', 'providers.id')
               ->get();
 
               for($i=0; $i<$toTable->count(); $i++)

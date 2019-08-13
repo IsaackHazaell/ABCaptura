@@ -18,7 +18,7 @@ class CreateCaptureLogisticsTable extends Migration
             $table->integer('capture_id')->unsigned();
             $table->integer('provider_id')->unsigned();
             $table->timestamps();
-            $table->foreign('capture_id')->references('id')->on('temporary_captures')
+            $table->foreign('capture_id')->references('id')->on('captures')
             ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->foreign('provider_id')->references('id')->on('providers')

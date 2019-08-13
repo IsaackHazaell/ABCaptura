@@ -42,45 +42,11 @@ class ProductController extends Controller
       for($i=0; $i<$products->count(); $i++)
       {
           $products[$i]->price = number_format($products[$i]->price,2);
-
-          //$products[$i]->provider_id .= " " . $products[$i]->name;
-          $month = ProductController::month($products[$i]->month);
-          $products[$i]->month = $month;
-          $products[$i]->month .= " " . $products[$i]->year;
       }
       return Datatables::of($products)
       ->addColumn('btn', 'product.partials.buttons')
       ->rawColumns(['btn'])
       ->make(true);
-  }
-
-  public function month($month)
-  {
-        if($month == 1)
-          $month = "Enero";
-        else if($month == 2)
-          $month = "Febrero";
-          else if($month == 3)
-            $month = "Marzo";
-            else if($month == 4)
-              $month = "Abril";
-              else if($month == 5)
-                $month = "Mayo";
-                else if($month == 6)
-                  $month = "Junio";
-                  else if($month == 7)
-                    $month = "Julio";
-                    else if($month == 8)
-                      $month = "Agosto";
-                      else if($month == 9)
-                        $month = "Septiembre";
-                        else if($month == 10)
-                          $month = "Octubre";
-                          else if($month == 11)
-                            $month = "Noviembre";
-                            else if($month == 12)
-                              $month = "Diciembre";
-      return $month;
   }
 
     /**
