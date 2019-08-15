@@ -495,8 +495,10 @@ class CaptureController extends Controller
         if($capture->category == 1)
         {
           $products = ProductsCapture::where('capture_id', '=', $capture->id)->get();
+          $cap_material = CaptureMaterial::where('capture_id', '=', $capture->id)->firstOrFail();
+          $statement_material = StatementMaterial::where('id', '=', $cap_material->statement_material_id)->firstOrFail();
           return view('capture.show_material')->with('capture',$capture)
-            //->with('providers',$providers)
+            ->with('statement_material',$statement_material)
             ->with('construction',$construction->name);
         }
         else {
@@ -535,7 +537,6 @@ class CaptureController extends Controller
         return view('capture.edit_material')
                 ->with('funds', $funds)
                 ->with('constructions', $constructions)
-                ->with('providers', $providers)
                 ->with('capture', $capture);
       }
       else {
@@ -702,49 +703,72 @@ class CaptureController extends Controller
 
     public function update_data(Request $request)
     {
-        $construction_id = Capture::select('construction_id')->where('id',$request->id)->firstOrFail();
+      $capture = Capture::where('id',$request->id)->firstOrFail();
+      $capture->date = $request->date;
+      $capture->folio = $request->folio;
+      $capture->concept = $request->concept;
+      $capture->iva = $request->iva;
+      if($request->hasFile('voucher'))
+      {
+        Storage::delete($capture->voucher);
+        $capture->voucher = $request->file('voucher')->store('public');
+      }
+      
+      $provider_name = "";
+      if($request->category != 1)
+      {
+        $logistic = CaptureLogistic::where('capture_id',$request->id)->firstOrFail();
+        $provider = Provider::where('id',$logistic->provider_id)->firstOrFail();
+        $provider_name = $provider->name;
+      }
+      
+      if($request->honorarium != $capture->honorarium)
+      {
+        $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $capture->construction_id)->firstOrFail();
+        if($request->honorarium == 1 && $provider_name != "Arq. Missael Quintero")
+        {
+            $honorary = New Honorary;
+            $honorary->capture_id = $request->id;
+            //$honorary->provider_id = $provider_id;
+            $total = (float)$capture->total;
+            $honorary_construction = floatval($honorary_construction->honorary);
+            $total = $total * $honorary_construction;
+            $total = $total/100;
+            $honorary->status = 0;
+            $honorary->total = $total;
+            $honorary->save();
+            $honorary_remaining->remaining += $total;
+            $honorary_remaining->save();
+        }
+        else if($provider_name != "Arq. Missael Quintero" && $request->honorarium == 0)
+        {
+            //Borramos
+            $honorary = Honorary::where('capture_id', '=', $request->id)->firstOrFail();
+            $total = $honorary->total;
+            $honorary_remaining->remaining -= $total;
+            $honorary_remaining->save();
+            $honorary->delete();
+        }
+      }
+      $capture->honorarium = $request->honorarium;
+      $capture->save();
+      
+        /* $construction_id = Capture::select('construction_id')->where('id',$request->id)->firstOrFail();
         $construction_id = $construction_id->construction_id;
         $provider_id = Capture::select('provider_id')->where('id',$request->id)->firstOrFail();
         $provider_id = $provider_id->provider_id;
         $honorary_construction = construction::select('honorary')->where('id',$construction_id)->firstOrFail();
         $provider_name = Provider::findOrFail($provider_id);
-        $provider_name = $provider_name->name;
+        $provider_name = $provider_name->name; */
 
         //Originales
-        if($request->with_products == null) { //Find from capture
+        if($request->category != 1) { //Find from capture
 
             $capture = Capture::select('*')->where('id',$request->id)->firstOrFail();
-            if($request->voucher != null && $capture->voucher != $request->voucher)
-                Storage::delete($capture->voucher);
+            //if($request->voucher != null && $capture->voucher != $request->voucher)
+                //Storage::delete($capture->voucher);
             //Honorarios:
-            if($request->honorarium != $capture->honorarium)
-            {
-                $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $construction_id)->firstOrFail();
-                if($request->honorarium == 1 && $provider_name != "Arq. Missael Quintero")
-                {
-                    $honorary = New Honorary;
-                    $honorary->capture_id = $request->id;
-                    $honorary->provider_id = $provider_id;
-                    $total = (float)$capture->total;
-                    $honorary_construction = floatval($honorary_construction->honorary);
-                    $total = $total * $honorary_construction;
-                    $total = $total/100;
-                    $honorary->status = 0;
-                    $honorary->total = $total;
-                    $honorary->save();
-                    $honorary_remaining->remaining += $total;
-                    $honorary_remaining->save();
-                }
-                else if($provider_name != "Arq. Missael Quintero" && $request->honorarium == 0)
-                {
-                    //Borramos
-                    $honorary = Honorary::where('capture_id', '=', $request->id)->firstOrFail();
-                    $total = $honorary->total;
-                    $honorary_remaining->remaining -= $total;
-                    $honorary_remaining->save();
-                    $honorary->delete();
-                }
-            }
+            
             /*
             //Provider:
             if($request->provider_id != $capture->provider_id)
@@ -809,11 +833,8 @@ class CaptureController extends Controller
 
             //Guardamos todo
 
-            $capture = $capture->fill($request->all());
-            if($request->voucher == null)
-                $capture->voucher = $request->voucher_prev;
-            else
-                $capture->voucher = $request->file('voucher')->store('public');
+            //$capture = $capture->fill($request->all());
+            
 
             $capture->save();
             return true;

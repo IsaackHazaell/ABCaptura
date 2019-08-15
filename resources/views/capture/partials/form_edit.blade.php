@@ -34,7 +34,7 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="folio">Folio</label>
-          <input type="number" class="form-control" name="folio" id="folio" value="{{ $capture->folio }}">
+          <input type="text" class="form-control" name="folio" id="folio" value="{{ $capture->folio }}">
       </div>
       <div class="form-group col-md-6">
         <label for="concept">Concepto</label>
@@ -74,6 +74,12 @@
             <label for="voucher">Agregar/reemplazar comprobante</label>
               <input type="file" class="form-control" name="voucher" id="voucher">
           </div>
+    </div>
+
+    <div class="form-group col-md-12">
+        <input type="hidden" name="id" id="id" value="{{ $capture->id }}">
+        <input type="hidden" name="category" id="category" value="{{ $capture->category }}">
+        <input type="hidden" name="voucher_prev" id="voucher_prev" value="{{ $capture->voucher }}">
     </div>
 
     {{-- <div class="form-row">

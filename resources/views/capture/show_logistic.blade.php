@@ -5,7 +5,7 @@
         Captura
       </h1>
     </section>
-
+  <div class="box-body">
     @include('capture.partials.form_show')
     <div class="form-group col-md-6">
         <label for="provider_id">Proveedor</label>
@@ -16,6 +16,7 @@
       <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('capture') }}"><b>Lista de Capturas</b></a><br><br>
     </div>
   </div>
+</div>
 @endsection
 
 @section('adminlte_js')

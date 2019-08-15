@@ -102,13 +102,13 @@
           </div>
       </div> --}}
 
-      <div class="form-row">
+    <div class="form-row">
       <div class="form-group col-md-12">
           <input type="hidden" name="id" id="id" value="{{ $capture->id }}">
-          <input type="hidden" name="category" id="category" value="{{ $capture->provider->category }}">
+          <input type="hidden" name="category" id="category" value="{{ $capture->category }}">
           <input type="hidden" name="voucher_prev" id="voucher_prev" value="{{ $capture->voucher }}">
       </div>
-       </div>
+    </div>
 
        <input type="hidden" name="_token" id="_token" value="{{ csrf_token()}}">
        <input type="hidden" name="total" id="total" value="{{  $capture->total }}">

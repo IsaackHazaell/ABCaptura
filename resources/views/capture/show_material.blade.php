@@ -5,9 +5,14 @@
         Captura
       </h1>
     </section>
+    <div class="box-body">
     <div class="form-row">
-        <div class="box-body">
+        
             @include('capture.partials.form_show')
+            <div class="form-group col-md-6">
+              <label for="statement_material_id">Estado de cuenta</label>
+              <input type="text" class="form-control" readonly name="statement_material_id" id="statement_material_id" value="{{ $statement_material->name }}">
+            </div>
             <div class="form-group col-md-12">
                 <h3>Productos:</h3>
                 <table id="products_capture_show_table" class="table table-striped table-bordered" style="width:100%">
@@ -23,13 +28,14 @@
                     </thead>
                 </table>
             </div>
-        </div>
+        
     </div>
 
     <div class="form-group col-md-12">
       <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('capture') }}"><b>Lista de Capturas</b></a><br><br>
     </div>
   </div>
+</div>
 @endsection
 
 @section('adminlte_js')
