@@ -293,9 +293,106 @@ class CaptureController extends Controller
       ->make(true);
     }
 
+    public function addProductEdit(Request $request)
+    {
+        if($request->price != null && $request->quantity != 0)
+        {
+          //Validar si el fondo alcanza, si si restar de fondo el total
+          $capture = Capture::find($request->capture_id);
+          $fund = Fund::find($capture->fund_id);
+          //$flag = false;
+          //if($fund->remaining >= $request->total)
+          //{
+            $fund->remaining -= $request->total;
+            $fund->save();
+            //$flag=true;
+
+            //sumar al total de la captura
+            $capture->total += $request->total;
+            $capture->save();
+
+            $price_id="";
+            $flag=false;
+            for($i=0;$i<strlen($request->price);$i++){
+              if($flag)
+                $price_id .= $request->price[$i];
+              if($request->price[$i] == "/")
+                $flag = true;
+            }
+
+            $products_capture = New ProductsCapture;
+            $products_capture->price_id = $price_id;
+            $products_capture->capture_id = $request->capture_id;
+            $products_capture->quantity = $request->quantity;
+            $products_capture->total = $request->total;
+            $products_capture->extra = $request->extra;
+            $products_capture->save();
+          //}
+          
+        }
+
+        $toTable = DB::table('products_captures')
+          ->select(
+            'products_captures.id as temporary_id', 'products_captures.quantity', 'products_captures.extra', 'products_captures.total',
+            'prices.id as price_id', 'prices.price', 'prices.unity',
+            'products.id as product_id', 'products.concept'
+          )
+          ->where('products_captures.capture_id', '=', $request->capture_id)
+          ->join('prices', 'prices.id', '=', 'products_captures.price_id')
+          ->join('products', 'products.id', '=', 'prices.product_id')
+          ->get();
+
+        return Datatables::of($toTable)
+        ->addColumn('btn', 'capture.partials.buttons_product')
+        ->rawColumns(['btn'])
+      ->make(true);
+    }
+
+    public function showTableEPC(Request $request)
+    {
+          $toTable = DB::table('products_captures')
+          ->select(
+            'products_captures.id as temporary_id', 'products_captures.quantity', 'products_captures.extra', 'products_captures.total',
+            'prices.id as price_id', 'prices.price', 'prices.unity',
+            'products.id as product_id', 'products.concept'
+          )
+          ->where('products_captures.capture_id', '=', $request->capture_id)
+          ->join('prices', 'prices.id', '=', 'products_captures.price_id')
+          ->join('products', 'products.id', '=', 'prices.product_id')
+          ->get();
+
+        return Datatables::of($toTable)
+        ->addColumn('btn', 'capture.partials.buttons_product')
+        ->rawColumns(['btn'])
+      ->make(true);
+    }
+
+
     public function deleteTemporalCaptureProduct(Request $request)
     {
         $product = TemporaryCaptureProduct::findOrFail($request->id);
+        $product->delete();
+        $msg = [
+            'title' => 'Eliminado!',
+            'text' => 'Se removió el producto de la captura',
+            'icon' => 'success'
+        ];
+
+        return response()->json($msg);
+    }
+
+    public function deleteCaptureProduct(Request $request)
+    {
+        $product = ProductsCapture::findOrFail($request->id);
+        //Restar del total de captura
+        $capture = Capture::find($product->capture_id);
+        $capture->total -= $product->total;
+        $capture->save();
+        //Sumar al total del fondo
+        $fund = Fund::find($capture->fund_id);
+        $fund->remaining += $product->total;
+        $fund->save();
+
         $product->delete();
         $msg = [
             'title' => 'Eliminado!',
@@ -564,142 +661,17 @@ class CaptureController extends Controller
       }
     }
 
-    // public function editProducts(Request $request)
-    // {
-    //     dd($request);
-    //     $capture = Capture::select('*')->where('id',$request->id)->firstOrFail();
-    //     //dd($request);
-    //     //return view('capture.create_material')->with('data', $temporary_capture)->with('prices', $prices)->with('funds',$funds)->with('category',$category);
-    //     //return view('capture.edit_products');
-    //     //dd("Hey jude");
-    //     /*dd($request->hasFile('voucher'));
-    //     if (Input::hasFile('logo'))
-    //     {
-    //        dd( "file present" );
-    //     }
-    //     else{
-    //         dd( "file not present" );
-    //     }*/
-    //
-    //     $fund = Fund::select('*')->where('id',$request->fund_id)->firstOrFail();
-    //     if($fund->remaining < $request->total)
-    //     {
-    //         $msg = [
-    //             'title' => 'Error!',
-    //             'text' => 'Fondo insuficiente.',
-    //             'icon' => 'warning'
-    //         ];
-    //
-    //         if($request->category == 1)
-    //         {
-    //             DB::table('temporary_captures')->delete();
-    //             DB::table('temporary_capture_products')->delete();
-    //         }
-    //         return redirect('capture')->with('message', $msg);
-    //     }
-    //     $provider = Provider::select('*')->where('id',$request->provider_id)->first();
-    //     //dd($request);
-    //     if($provider->category == 1)
-    //     {
-    //         DB::table('temporary_captures')->delete();
-    //         DB::table('temporary_capture_products')->delete();
-    //         $temporary_capture = new TemporaryCapture;
-    //         $temporary_capture->date = $request->date;
-    //         $temporary_capture->total = $capture->total;
-    //         $temporary_capture->iva = $request->iva;
-    //         $temporary_capture->honorarium = $request->honorarium;
-    //         $temporary_capture->voucher = $capture->voucher;
-    //         $temporary_capture->folio = $request->folio;
-    //         $temporary_capture->concept = $request->concept;
-    //         $temporary_capture->fund_id = $request->fund_id;
-    //         $temporary_capture->construction_id = $request->construction_id;
-    //         $temporary_capture->provider_id = $request->provider_id;
-    //         $temporary_capture->save();
-    //
-    //
-    //
-    //         $products = ProductsCapture::where('capture_id', '=', $request->id)->get();
-    //         for($i=0; $i<$products->count(); $i++)
-    //         {
-    //             $temporary_product = New TemporaryCaptureProduct;
-    //             $temporary_product->price_id = $products[$i]->price_id;
-    //             $temporary_product->capture_id = $temporary_capture->id;
-    //             $temporary_product->quantity = $products[$i]->quantity;
-    //             $temporary_product->total = $products[$i]->total;
-    //             $temporary_product->extra = $products[$i]->extra;
-    //             $temporary_product->save();
-    //         }
-    //         $temporary_products = TemporaryCaptureProduct::where('capture_id', '=', $temporary_capture->id)->get();
-    //
-    //         $funds = DB::table('funds','constructions')
-    //           ->select(
-    //           'funds.id', 'funds.date', 'funds.remaining',
-    //           'constructions.name')
-    //           ->join('constructions', 'constructions.id', '=', 'funds.construction_id')
-    //           ->get();
-    //
-    //         $prices = DB::table('products','prices')
-    //           ->select(
-    //           'products.id as product_id', 'products.concept as product_concept', 'products.provider_id',
-    //           'prices.*')
-    //           ->where('providers.id', '=', $request->provider_id)
-    //           ->join('providers', 'providers.id', '=', 'products.provider_id')
-    //           ->join('prices', 'prices.product_id', '=', 'products.id')
-    //           ->get();
-    //
-    //         for($i=0; $i<$prices->count(); $i++)
-    //         {
-    //             $month = CaptureController::month($prices[$i]->month);
-    //             $prices[$i]->month = $month;
-    //             $prices[$i]->month .= " " . $prices[$i]->year;
-    //         }
-    //
-    //
-    //
-    //         $view = view('capture.edit_products')
-    //             ->with('data', $temporary_capture)
-    //             ->with('capture_id', $request->id)
-    //             ->with('prices', $prices)
-    //             ->with('funds',$funds)
-    //             ->with('category',$provider->category);
-    //
-    //         $data = array('data' => $temporary_capture,
-    //             'capture_id', $request->id,
-    //             'prices', $prices,
-    //             'funds',$funds,
-    //             'category',$provider->category);
-    //
-    //             //$data = array('status' => 'ok', 'url' => $view );
-    //
-    //         /*return view('capture.edit_products')
-    //             ->with('data', $temporary_capture)
-    //             ->with('capture_id', $request->id)
-    //             ->with('prices', $prices)
-    //             ->with('funds',$funds)
-    //             ->with('category',$provider->category);*/
-    //
-    //         //return response()->json(['data'=>$data]);
-    //
-    //         $returnHTML = view('capture.edit_products')
-    //             ->with('data', $temporary_capture)
-    //             ->with('capture_id', $request->id)
-    //             ->with('prices', $prices)
-    //             ->with('funds',$funds)
-    //             ->with('category',$provider->category)->render();
-    //
-    //         return response()->json(array('success' => true, 'html'=>$returnHTML));
-    //         //return $data;
-    //     }
-    //     else {
-    //         $msg = [
-    //             'title' => 'Alerta!',
-    //             'text' => 'Esta categoría de proveedor no cuenta con productos',
-    //             'icon' => 'warning'
-    //         ];
-    //         return redirect('capture')->with('message', $msg);
-    //     }
-    // }
-
+    public function editProducts($id)
+    {
+      $capture = Capture::find($id);
+      $products = ProductsCapture::where('capture_id', $id)->get();
+      $fund = Fund::find($capture->fund_id);
+      $capture_materials = CaptureMaterial::where('capture_id', $id)->first();
+      //$statement_material = StatementMaterial::where();
+      //dd($producs);
+        //$statement_material = StatementMaterial::where('id',$request->statemnt_material_id)->first();
+      return view('capture.edit_products')->with('data', $capture)->with('fund',$fund)->with('products',$products)->with('statement_material', $capture_materials->statement_material);
+    }
 
     public function update_data(Request $request)
     {

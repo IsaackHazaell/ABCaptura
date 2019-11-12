@@ -7,10 +7,18 @@
   </h1>
 </section>
 
+<div class="form-group col-md-12">
+    <div class="form-group col-md-6"></div>
+    <div class="form-group col-md-6">
+        <a class="btn btn-info btn-md" style="float: right;" href="{{ route('capture.editProducts', ['id' => $capture->id ]) }}"><b>Editar productos</b></a><br>
+    </div>
+</div>
+
 <form action="{{route('capture.update','modifycapture')}}" enctype="multipart/form-data" role="form" method="post" files="true" id="upload_form">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{method_field('patch')}}
     {{csrf_field()}}
+    
 
   {{-- <div class="form-row">
       <div class="form-group col-md-6">
@@ -126,10 +134,8 @@
     <div class="form-group col-md-6">
       <a class="btn btn-primary btn-md addNew" style="float: right;" href="{{ url('capture') }}"><b>Lista de Capturas</b></a><br><br>
     </div>
-    </div>
+</div>
 </form>
 @endsection
 
-@section('adminlte_js')
-    @include('capture.partials.script_edit_material')
-@stop
+

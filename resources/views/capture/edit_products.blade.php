@@ -9,24 +9,16 @@
 
 <form action="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @include('capture.modal', ['provider' => $data->provider_id])
-
-    <div class="form-row">
-        <div class="form-group col-md-12">
-            <button class="btn btn-success btn-md"
-                data-toggle="modal" data-target="#addProduct" style="float: right;"><i class="fa fa-plus"></i> Crear producto</button>
-        </div>
-    </div>
 
     @include('capture.partials.form_material')
         <div class="form-row">
           <div class="form-group col-md-12">
-            <button id="prod" name="prod"  class="btn btn-info">Agregar producto</button>
+            <button id="prod" name="prod"  class="btn btn-info">Añadir producto</button>
           </div>
     </div>
 
     <div class="box-body">
-        <table id="products_capture_table" class="table table-striped table-bordered" style="width:100%">
+        <table id="edit_products_capture_table" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th width="10px">Unidad</th>
@@ -53,25 +45,15 @@
             <label for="total">Total</label>
             <input type="number" readonly class="form-control" required name="total" id="total">
           </div>
-          <div class="form-group col-md-6">
-            <label for="fund_id">Seleccione el fondo</label>
-            <select class="form-control" required name="fund_id" id="fund_id">
-              @foreach($funds as $fund)
-                  <option value={{$fund->id}}/{{$fund->remaining}}>{{$fund->id}} {{$fund->name}} - {{$fund->date}}</option>
-              @endforeach
-            </select>
-          </div>
         </div>
-        @include('capture.partials.form2')
     </div>
 
 </form>
-<button id="saveCapture" name="saveCapture" class="btn btn-success">Capturar</button>
+<a class="btn btn-info btn-md" style="float: right;" href="{{ url('capture') }}"><b>Lista de Capturas</b></a><br><br>
 
 @endsection
 
 @section('adminlte_js')
-    @include('capture.partials.script')
-    @include('capture.partials.script_material')
+    @include('capture.partials.script_edit_products')
     @include('capture.partials.script_iva')
 @stop

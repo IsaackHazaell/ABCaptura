@@ -54,7 +54,10 @@ Route::get('showTableCa','CaptureController@showTableCa')->name('capture.showTab
 Route::post('saveProduct','CaptureController@saveProduct')->name('capture.saveProduct')->middleware('auth');
 Route::post('create2','CaptureController@create2')->name('capture.create2')->middleware('auth');
 Route::delete('deleteTemporalCaptureProduct','CaptureController@deleteTemporalCaptureProduct')->name('capture.deleteTemporalCaptureProduct')->middleware('auth');
-Route::post('editProducts','CaptureController@editProducts')->name('capture.editProducts')->middleware('auth');
+Route::get('editProducts/{id}','CaptureController@editProducts')->name('capture.editProducts')->middleware('auth');
+Route::get('addProductEdit','CaptureController@addProductEdit')->name('capture.addProductEdit')->middleware('auth');
+Route::get('showTableEPC','CaptureController@showTableEPC')->name('capture.showTableEPC')->middleware('auth');
+Route::delete('deleteCaptureProduct','CaptureController@deleteCaptureProduct')->name('capture.deleteCaptureProduct')->middleware('auth');
 
 
 //Honorary Routes
