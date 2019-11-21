@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\fund;
+use App\Fund;
 use App\construction;
 use App\Capture;
 use App\Client;
