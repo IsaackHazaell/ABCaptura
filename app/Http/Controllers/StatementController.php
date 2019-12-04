@@ -166,14 +166,17 @@ class StatementController extends Controller
             'total' => $request->total,
             'remaining' => $request->total,
           ]);
-
-          foreach($request->provider_material as $provider)
+          if($request->provider_material != null)
           {
-            StatementProviderMaterial::create([
-              'statement_material_id' => $statement_material->id,
-              'provider_id' => $provider,
-            ]);
+            foreach($request->provider_material as $provider)
+            {
+              StatementProviderMaterial::create([
+                'statement_material_id' => $statement_material->id,
+                'provider_id' => $provider,
+              ]);
+            }
           }
+          
 
         $msg = [
           'title' => 'Guardado!',

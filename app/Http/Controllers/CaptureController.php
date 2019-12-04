@@ -327,6 +327,29 @@ class CaptureController extends Controller
             $products_capture->total = $request->total;
             $products_capture->extra = $request->extra;
             $products_capture->save();
+
+            //Modificar honorario si es que hubo
+            if($capture->honorarium == 1)
+            {
+              $honorary = Honorary::where('capture_id', $capture->id)->firstOrFail();
+              $honorary_remaining = HonoraryRemaining::where('construction_id', $capture->construction_id)->firstOrFail();
+              $honorary_remaining->remaining -= $honorary->total;
+              
+              $total = (float)$capture->total;
+              $total = $total * $honorary_remaining->construction->honorary;
+              $total = $total/100;
+              $honorary->total = $total;
+              $honorary->save();
+
+              $honorary_remaining->remaining += $total;
+              $honorary_remaining->save();
+            }
+
+            //Restar al estado de cuenta
+            $capture_material = CaptureMaterial::where('capture_id', $capture->id)->firstOrFail();
+            $statement_material = StatementMaterial::find($capture_material->statement_material_id);
+            $statement_material->remaining -= $request->total;
+            $statement_material->save();
           //}
           
         }
@@ -392,6 +415,28 @@ class CaptureController extends Controller
         $fund = Fund::find($capture->fund_id);
         $fund->remaining += $product->total;
         $fund->save();
+
+        //Modificar honorario si es que hubo
+        if($capture->honorarium == 1)
+        {
+          $honorary = Honorary::where('capture_id', $capture->id)->firstOrFail();
+          $honorary_remaining = HonoraryRemaining::where('construction_id', $capture->construction_id)->firstOrFail();
+          $honorary_remaining->remaining -= $honorary->total;
+          $total = (float)$capture->total;
+          $total = $total * $honorary_remaining->construction->honorary;
+          $total = $total/100;
+          $honorary->total = $total;
+          $honorary->save();
+
+          $honorary_remaining->remaining += $total;
+          $honorary_remaining->save();
+        }
+
+        //Sumar al estado de cuenta
+        $capture_material = CaptureMaterial::where('capture_id', $capture->id)->firstOrFail();
+        $statement_material = StatementMaterial::find($capture_material->statement_material_id);
+        $statement_material->total += $product->total;
+        $statement_material->save();
 
         $product->delete();
         $msg = [
@@ -703,8 +748,8 @@ class CaptureController extends Controller
             $honorary->capture_id = $request->id;
             //$honorary->provider_id = $provider_id;
             $total = (float)$capture->total;
-            $honorary_construction = floatval($honorary_construction->honorary);
-            $total = $total * $honorary_construction;
+            //$honorary_construction = floatval($honorary_remaining->construction->honorary);
+            $total = $total * $honorary_remaining->construction->honorary;
             $total = $total/100;
             $honorary->status = 0;
             $honorary->total = $total;
@@ -734,9 +779,9 @@ class CaptureController extends Controller
         $provider_name = $provider_name->name; */
 
         //Originales
-        if($request->category != 1) { //Find from capture
+        //if($request->category != 1) { //Find from capture
 
-            $capture = Capture::select('*')->where('id',$request->id)->firstOrFail();
+            //$capture = Capture::select('*')->where('id',$request->id)->firstOrFail();
             //if($request->voucher != null && $capture->voucher != $request->voucher)
                 //Storage::delete($capture->voucher);
             //Honorarios:
@@ -808,9 +853,10 @@ class CaptureController extends Controller
             //$capture = $capture->fill($request->all());
             
 
-            $capture->save();
-            return true;
-        }
+            //$capture->save();
+            
+        //}
+        return true;
     }
 
     /**
@@ -857,23 +903,42 @@ class CaptureController extends Controller
      */
     public function destroy(Capture $capture)
     {
+      //Material
+      $provider = "";
+      if($capture->category == 1)
+      {
+        //Estado de cuenta
+        $capture_material = CaptureMaterial::where('capture_id', $capture->id)->first();
+        $statement_material = StatementMaterial::find($capture_material->statement_material_id);
+        if($statement_material != null)
+        {
+            $statement_material->remaining += $capture->total;
+            $statement_material->save();
+        }
+      }
+      else //Mano de obra / logística
+      {
+        //Estado de cuenta
+        $capture_logistic = CaptureLogistic::where('capture_id', $capture->id)->first();
         $statement = Statement::where('construction_id', '=', $capture->construction_id)
-        ->where('provider_id', '=', $capture->provider_id)
-        ->first();
+          ->where('provider_id', '=', $capture_logistic->provider_id)
+          ->first();
         if($statement != null)
         {
             $statement->remaining += $capture->total;
             $statement->save();
         }
-
+        $provider = Provider::select('name')->where('id',$capture_logistic->provider_id)->first();
+        $provider = $provider->name;
+      }
         //Ajustar fondo
         $fund = Fund::findOrFail($capture->fund_id);
         $fund->remaining += $capture->total;
         $fund->save();
 
         //Ajustar honorariosRemaining:
-        $provider = Provider::select('name')->where('id',$capture->provider_id)->first();
-        if($capture->honorarium == 1 || $provider->name == "Arq. Missael Quintero")
+        
+        if($capture->honorarium == 1 || $provider == "Arq. Missael Quintero")
         {
             $honorary_remaining = HonoraryRemaining::where('construction_id', '=', $capture->construction_id)->firstOrFail();
             $honorary = Honorary::where('capture_id', '=', $capture->id)->first();
@@ -886,7 +951,8 @@ class CaptureController extends Controller
         }
 
         //Borrar captura
-        Storage::delete($capture->voucher);
+        if($capture->voucher != null)
+          Storage::delete($capture->voucher);
         $capture->delete();
 
         $msg = [

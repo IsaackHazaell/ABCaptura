@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Fund;
+use App\Capture;
 use App\Construction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -170,7 +171,7 @@ class FundController extends Controller
     public function destroy(Fund $fund)
     {
         // 0 = muerto, 1 = vivo
-        $captures = Capture::where('provider_id', $fund->id)->first();
+        $captures = Capture::where('fund_id', $fund->id)->first();
         if($captures == null)
             $fund->delete();
         else {

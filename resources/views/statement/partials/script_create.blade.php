@@ -10,11 +10,15 @@
         {
             document.getElementById('div_material').style.display='block';
             document.getElementById('lbl_provider_id').style.display='none';
+            $('#name').prop("required", true);
+            $('#provider_material').prop("required", true);
         } 
         else
         {
             document.getElementById('div_material').style.display='none';
             document.getElementById('lbl_provider_id').style.display='block';
+            $('#name').removeAttr("required");
+            $('#provider_material').removeAttr("required");
         }
     }
 

@@ -52,7 +52,7 @@
       
       <div class="form-group col-md-6">
         <label class="required" for="provider_material">Selecciona los proveedores</label>
-        <select class="form-control" multiple="multiple" name="provider_material[]" id="provider_material">
+        <select class="form-control" multiple="multiple" name="provider_material[]" id="provider_material" required>
           @foreach($category as $cat)
             <option value={{$cat->id}}>{{$cat->name}}</option>
           @endforeach
