@@ -406,6 +406,7 @@ class CaptureController extends Controller
 
     public function deleteCaptureProduct(Request $request)
     {
+      //dd()
         $product = ProductsCapture::findOrFail($request->id);
         //Restar del total de captura
         $capture = Capture::find($product->capture_id);
@@ -435,7 +436,7 @@ class CaptureController extends Controller
         //Sumar al estado de cuenta
         $capture_material = CaptureMaterial::where('capture_id', $capture->id)->firstOrFail();
         $statement_material = StatementMaterial::find($capture_material->statement_material_id);
-        $statement_material->total += $product->total;
+        $statement_material->remaining += $product->total;
         $statement_material->save();
 
         $product->delete();
